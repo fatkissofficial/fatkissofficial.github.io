@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,13 +16,22 @@
             color: #ffffff;
             line-height: 1.6;
             padding: 20px;
-            max-width: 900px;
+            max-width: 950px;
             margin: 0 auto;
         }
         header {
             text-align: center;
-            padding: 40px 0 20px;
+            padding: 40px 20px 30px;
             border-bottom: 2px solid #1f2833;
+        }
+        .profile-img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #66fcf1;
+            margin-bottom: 15px;
+            box-shadow: 0 0 20px rgba(102, 252, 241, 0.3);
         }
         h1 {
             font-size: 2.8rem;
@@ -36,52 +45,84 @@
             margin-top: 5px;
         }
         section {
-            margin: 40px 0;
+            margin: 45px 0;
         }
         h2 {
             color: #45a29e;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             font-size: 1.8rem;
             border-left: 4px solid #66fcf1;
-            padding-left: 10px;
+            padding-left: 12px;
         }
         .music-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
         }
         .music-card {
             background-color: #1f2833;
-            border-radius: 8px;
+            border-radius: 10px;
             padding: 20px;
             text-align: center;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.3s, box-shadow 0.3s;
+            overflow: hidden;
         }
         .music-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(102, 252, 241, 0.2);
+            box-shadow: 0 8px 20px rgba(102, 252, 241, 0.25);
+        }
+        .cover-art {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
         }
         .music-card h3 {
             color: #ffffff;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            font-size: 1.3rem;
         }
         .music-card p {
             color: #c5c6c7;
             font-size: 0.9rem;
             margin-bottom: 15px;
         }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+        .gallery-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            background-color: #1f2833;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
         .btn {
             display: inline-block;
             background-color: #66fcf1;
             color: #0b0c10;
-            padding: 10px 20px;
+            padding: 10px 22px;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 6px;
             font-weight: bold;
-            transition: background-color 0.2s;
+            transition: background-color 0.2s, transform 0.2s;
         }
         .btn:hover {
             background-color: #45a29e;
+            transform: scale(1.03);
         }
         .social-links {
             display: flex;
@@ -101,6 +142,7 @@
 <body>
 
     <header>
+        <img src="20788.jpg" alt="Fatkiss Official" class="profile-img">
         <h1>Fatkiss Official</h1>
         <p class="subtitle">Official Website | Music & Legends Visuals</p>
     </header>
@@ -109,21 +151,48 @@
         <h2>Latest Releases</h2>
         <div class="music-grid">
             <div class="music-card">
+                <img src="10992.png" alt="Matum-Ungo Single Cover" class="cover-art">
                 <h3>Matum-Ungo</h3>
-                <p>Listen to the official single release.</p>
+                <p>Official single release out on all platforms.</p>
                 <a href="https://www.tiktok.com/@fatkissofficialartist" target="_blank" class="btn">Stream Now</a>
             </div>
 
             <div class="music-card">
+                <img src="11008.jpg" alt="Jakwo Single Artwork" class="cover-art">
                 <h3>Jakwo</h3>
-                <p>Listen to the official track.</p>
+                <p>Listen to the official track release.</p>
                 <a href="https://www.tiktok.com/@fatkissofficialartist" target="_blank" class="btn">Stream Now</a>
             </div>
 
             <div class="music-card">
+                <img src="11009.jpg" alt="Jamusuma Single Artwork" class="cover-art">
                 <h3>Jamusuma</h3>
-                <p>Listen to the official release.</p>
+                <p>Listen to the official track release.</p>
                 <a href="https://www.tiktok.com/@fatkissofficialartist" target="_blank" class="btn">Stream Now</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <h2>Visual Showcase & Stills</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="293.png" alt="Fatkiss Portrait">
+            </div>
+            <div class="gallery-item">
+                <img src="294.jpg" alt="Fatkiss Portrait Close-Up">
+            </div>
+            <div class="gallery-item">
+                <img src="19355.png" alt="Fatkiss Studio Portrait">
+            </div>
+            <div class="gallery-item">
+                <img src="18124.jpg" alt="Fatkiss Creative Portrait">
+            </div>
+            <div class="gallery-item">
+                <img src="295.png" alt="Fatkiss Hooded Shot">
+            </div>
+            <div class="gallery-item">
+                <img src="12dcbea3-19da-41b3-88b0-d4187c58b6b6-1_all_14.png" alt="Fatkiss Visual Still">
             </div>
         </div>
     </section>
@@ -141,4 +210,4 @@
     </footer>
 
 </body>
-        </html>
+    </html>

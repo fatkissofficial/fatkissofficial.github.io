@@ -3,211 +3,263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fatkiss Official | Music & Visuals</title>
+    <title>FATKISS OFFICIAL | MUSIC & LEGENDS VISUALS</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
         body {
-            background-color: #0b0c10;
+            background-color: #0b0d12;
             color: #ffffff;
-            line-height: 1.6;
-            padding: 20px;
-            max-width: 950px;
-            margin: 0 auto;
+            line-height: 1.5;
+            padding-bottom: 50px;
         }
-        header {
+        /* Top Navigation */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 24px;
+            background: rgba(11, 13, 18, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .logo {
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+        .logo span {
+            color: #4ef2d2;
+        }
+        .menu-icon {
+            font-size: 1.4rem;
+            cursor: pointer;
+        }
+
+        /* Hero Header */
+        .hero {
             text-align: center;
             padding: 40px 20px 30px;
-            border-bottom: 2px solid #1f2833;
+            max-width: 600px;
+            margin: 0 auto;
         }
-        .profile-img {
-            width: 170px;
-            height: 170px;
+        .avatar-container {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 20px;
+        }
+        .avatar-img {
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #66fcf1;
-            margin-bottom: 15px;
-            box-shadow: 0 0 20px rgba(102, 252, 241, 0.3);
+            border: 3px solid #4ef2d2;
+            box-shadow: 0 0 25px rgba(78, 242, 210, 0.4);
         }
-        h1 {
-            font-size: 2.8rem;
-            color: #66fcf1;
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            margin-bottom: 5px;
+        }
+        .hero h1 span {
+            color: #4ef2d2;
+        }
+        .hero-subtitle {
+            color: #4ef2d2;
+            font-weight: 700;
             letter-spacing: 2px;
+            font-size: 0.95rem;
             text-transform: uppercase;
+            margin-bottom: 15px;
         }
-        p.subtitle {
-            color: #c5c6c7;
-            font-size: 1.1rem;
-            margin-top: 5px;
-        }
-        section {
-            margin: 45px 0;
-        }
-        h2 {
-            color: #45a29e;
+        .hero-desc {
+            color: #a0a5b5;
+            font-size: 0.95rem;
             margin-bottom: 25px;
-            font-size: 1.8rem;
-            border-left: 4px solid #66fcf1;
-            padding-left: 12px;
+            padding: 0 10px;
         }
-        .music-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 25px;
-        }
-        .music-card {
-            background-color: #1f2833;
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-            overflow: hidden;
-        }
-        .music-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(102, 252, 241, 0.25);
-        }
-        .cover-art {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-        .music-card h3 {
-            color: #ffffff;
-            margin-bottom: 8px;
-            font-size: 1.3rem;
-        }
-        .music-card p {
-            color: #c5c6c7;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-        }
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-        }
-        .gallery-item {
-            position: relative;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            background-color: #1f2833;
-        }
-        .gallery-item img {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.3s;
-        }
-        .gallery-item:hover img {
-            transform: scale(1.05);
-        }
-        .btn {
-            display: inline-block;
-            background-color: #66fcf1;
-            color: #0b0c10;
-            padding: 10px 22px;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: bold;
-            transition: background-color 0.2s, transform 0.2s;
-        }
-        .btn:hover {
-            background-color: #45a29e;
-            transform: scale(1.03);
-        }
-        .social-links {
+
+        /* Action Buttons */
+        .action-btns {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             justify-content: center;
             flex-wrap: wrap;
         }
-        footer {
+        .btn-primary {
+            background-color: #4ef2d2;
+            color: #0b0d12;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+        .btn-outline {
+            background-color: transparent;
+            color: #ffffff;
+            border: 1px solid rgba(78, 242, 210, 0.5);
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+
+        /* Content Sections */
+        .section-container {
+            max-width: 900px;
+            margin: 40px auto 0;
+            padding: 0 20px;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .accent-bar {
+            width: 4px;
+            height: 24px;
+            background-color: #4ef2d2;
+            border-radius: 2px;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+        .section-title span {
+            color: #4ef2d2;
+        }
+
+        /* Grid Layouts */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background-color: #161a23;
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid rgba(255,255,255,0.05);
             text-align: center;
-            padding: 30px 0;
-            color: #c5c6c7;
-            font-size: 0.9rem;
-            border-top: 1px solid #1f2833;
+        }
+        .card-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 14px;
+        }
+        .card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 6px;
+        }
+        .card p {
+            color: #a0a5b5;
+            font-size: 0.88rem;
+            margin-bottom: 16px;
+        }
+        .card .btn-primary {
+            width: 100%;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        .gallery-item {
+            border-radius: 12px;
+            overflow: hidden;
+            height: 250px;
+            background-color: #161a23;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <img src="IMG_1790214768776.jpg" alt="Fatkiss Official" class="profile-img">
-        <h1>Fatkiss Official</h1>
-        <p class="subtitle">Official Website | Music & Legends Visuals</p>
-    </header>
+    <nav class="navbar">
+        <div class="logo">FATKISS <span>OFFICIAL</span></div>
+        <div class="menu-icon">&#9776;</div>
+    </nav>
 
-    <section id="music">
-        <h2>Latest Releases</h2>
-        <div class="music-grid">
-            <div class="music-card">
-                <img src="Screenshot_20260924040823.png" alt="Matum-Ungo Cover" class="cover-art">
+    <div class="hero">
+        <div class="avatar-container">
+            <img src="AirBrush_20260522115103.png" alt="Fatkiss Official" class="avatar-img">
+        </div>
+        <h1>FATKISS <span>OFFICIAL</span></h1>
+        <div class="hero-subtitle">MUSIC & LEGENDS VISUALS</div>
+        <p class="hero-desc">Official hub for artist releases, cinematic visuals, and exclusive sound projects.</p>
+        
+        <div class="action-btns">
+            <a href="https://www.tiktok.com/@fatkissofficialartist" target="_blank" class="btn-primary">&#9835; Listen Now</a>
+            <a href="https://www.tiktok.com/@fatkissofficialartist" target="_blank" class="btn-outline">&#43; Follow Artist</a>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <div class="section-header">
+            <div class="accent-bar"></div>
+            <div class="section-title">Latest <span>Releases</span></div>
+        </div>
+        <div class="cards-grid">
+            <div class="card">
+                <img src="AirBrush_20260924040823.png" alt="Matum-Ungo Single Cover" class="card-img">
                 <h3>Matum-Ungo</h3>
-                <p>Official single release out on all platforms.</p>
-                <a href="https://www.tiktok.com/@fatkissofficialartist" target="_blank" class="btn">Stream Now</a>
+                <p>Official single release out now.</p>
+                <a href="https://www.tiktok.com/@fatkissofficialartist" target="_blank" class="btn-primary">Stream Now</a>
             </div>
-
-            <div class="music-card">
-                <img src="Screenshot_20260507133645.png" alt="Jakwo Single Artwork" class="cover-art">
+            <div class="card">
+                <img src="AirBrush_20260507133645.png" alt="Jakwo Single Cover" class="card-img">
                 <h3>Jakwo</h3>
                 <p>Listen to the official track release.</p>
-                <a href="https://www.tiktok.com/@fatkissofficialartist" target="_blank" class="btn">Stream Now</a>
+                <a href="https://www.tiktok.com/@fatkissofficialartist" target="_blank" class="btn-primary">Stream Now</a>
             </div>
-
-            <div class="music-card">
-                <img src="Screenshot_20260524094633.png" alt="Jamusuma Single Artwork" class="cover-art">
+            <div class="card">
+                <img src="AirBrush_20260524094633.png" alt="Jamusuma Single Cover" class="card-img">
                 <h3>Jamusuma</h3>
                 <p>Listen to the official track release.</p>
-                <a href="https://www.tiktok.com/@fatkissofficialartist" target="_blank" class="btn">Stream Now</a>
+                <a href="https://www.tiktok.com/@fatkissofficialartist" target="_blank" class="btn-primary">Stream Now</a>
             </div>
         </div>
-    </section>
+    </div>
 
-    <section id="gallery">
-        <h2>Visual Showcase & Stills</h2>
+    <div class="section-container">
+        <div class="section-header">
+            <div class="accent-bar"></div>
+            <div class="section-title">Visual <span>Showcase</span></div>
+        </div>
         <div class="gallery-grid">
-            <div class="gallery-item">
-                <img src="Screenshot_20260519200506.png" alt="Fatkiss Portrait">
-            </div>
-            <div class="gallery-item">
-                <img src="Screenshot_20260522115103.png" alt="Fatkiss Portrait Close-Up">
-            </div>
-            <div class="gallery-item">
-                <img src="1722883857854.jpg" alt="Fatkiss Studio Portrait">
-            </div>
-            <div class="gallery-item">
-                <img src="17228835209216.jpg" alt="Fatkiss Creative Portrait">
-            </div>
-            <div class="gallery-item">
-                <img src="17228809996135~2.jpg" alt="Fatkiss Visual Still">
-            </div>
-            <div class="gallery-item">
-                <img src="4b86a4f348ed7ca998a8d25b669(T).jpg" alt="Fatkiss Visual Still">
-            </div>
+            <div class="gallery-item"><img src="AirBrush_20260519200506.png" alt="Visual 1"></div>
+            <div class="gallery-item"><img src="17228809996135~2.jpg" alt="Visual 2"></div>
+            <div class="gallery-item"><img src="1722883857854.jpg" alt="Visual 3"></div>
+            <div class="gallery-item"><img src="17228835209216.jpg" alt="Visual 4"></div>
+            <div class="gallery-item"><img src="4b86a4f348ed7ca998a8d25b669(T).jpg" alt="Visual 5"></div>
         </div>
-    </section>
-
-    <section id="connect">
-        <h2>Connect & Follow</h2>
-        <div class="social-links">
-            <a href="https://www.tiktok.com/@fatkissofficialartist" target="_blank" class="btn">TikTok Profile</a>
-            <a href="https://www.youtube.com" target="_blank" class="btn">YouTube Channel</a>
-        </div>
-    </section>
-
-    <footer>
-        <p>&copy; 2026 Fatkiss Official. All Rights Reserved.</p>
-    </footer>
+    </div>
 
 </body>
-</html>
+        </html>

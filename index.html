@@ -148,7 +148,7 @@
         /* Grid Layouts */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 20px;
         }
         .card {
@@ -157,6 +157,23 @@
             padding: 16px;
             border: 1px solid rgba(255,255,255,0.05);
             text-align: center;
+            position: relative;
+        }
+        .card-featured {
+            border: 2px solid #4ef2d2;
+            box-shadow: 0 0 20px rgba(78, 242, 210, 0.2);
+        }
+        .badge {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background-color: #4ef2d2;
+            color: #0b0d12;
+            font-weight: 800;
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
         }
         .card-img {
             width: 100%;
@@ -226,24 +243,40 @@
             <div class="section-title">Latest <span>Releases</span></div>
         </div>
         <div class="cards-grid">
+
+            <!-- CWINYA (NEW RELEASE) -->
+            <div class="card card-featured">
+                <span class="badge">NEW</span>
+                <img src="cwinya.jpg" alt="Cwinya Single Cover" class="card-img" onerror="this.src='AirBrush_20260924040823.png'">
+                <h3>Cwinya</h3>
+                <p>Brand new single out now on all streaming platforms!</p>
+                <a href="https://www.tiktok.com/@fatkissofficialartist" target="_blank" class="btn-primary">Stream Cwinya</a>
+            </div>
+
+            <!-- MATUM-UNGO -->
             <div class="card">
                 <img src="AirBrush_20260924040823.png" alt="Matum-Ungo Single Cover" class="card-img">
                 <h3>Matum-Ungo</h3>
-                <p>Official single release out now.</p>
+                <p>Official single release.</p>
                 <a href="https://www.tiktok.com/@fatkissofficialartist" target="_blank" class="btn-primary">Stream Now</a>
             </div>
+
+            <!-- JAKWO -->
             <div class="card">
                 <img src="AirBrush_20260507133645.png" alt="Jakwo Single Cover" class="card-img">
                 <h3>Jakwo</h3>
                 <p>Listen to the official track release.</p>
                 <a href="https://www.tiktok.com/@fatkissofficialartist" target="_blank" class="btn-primary">Stream Now</a>
             </div>
+
+            <!-- JAMUSUMA -->
             <div class="card">
                 <img src="AirBrush_20260524094633.png" alt="Jamusuma Single Cover" class="card-img">
                 <h3>Jamusuma</h3>
                 <p>Listen to the official track release.</p>
                 <a href="https://www.tiktok.com/@fatkissofficialartist" target="_blank" class="btn-primary">Stream Now</a>
             </div>
+
         </div>
     </div>
 
@@ -262,4 +295,4 @@
     </div>
 
 </body>
-        </html>
+            </html>

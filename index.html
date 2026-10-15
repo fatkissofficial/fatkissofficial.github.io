@@ -35,14 +35,52 @@
             z-index: 100;
             border-bottom: 1px solid rgba(255,255,255,0.08);
         }
+        .brand-logo-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+        .brand-svg-icon {
+            filter: drop-shadow(0 0 8px rgba(78, 242, 210, 0.5));
+        }
+        .logo-text-group {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
         .logo {
             font-weight: 900;
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             letter-spacing: 1.5px;
+            color: #ffffff;
         }
         .logo span {
             color: #4ef2d2;
-            text-shadow: 0 0 15px rgba(78, 242, 210, 0.4);
+            text-shadow: 0 0 12px rgba(78, 242, 210, 0.4);
+        }
+        .logo-sub {
+            font-size: 0.55rem;
+            letter-spacing: 3px;
+            color: #4ef2d2;
+            font-weight: 700;
+            opacity: 0.85;
+        }
+        .nav-book-btn {
+            background-color: transparent;
+            border: 1px solid #4ef2d2;
+            color: #4ef2d2;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .nav-book-btn:hover {
+            background-color: #4ef2d2;
+            color: #07090e;
+            box-shadow: 0 0 12px rgba(78, 242, 210, 0.4);
         }
 
         /* Hero Section */
@@ -160,6 +198,31 @@
             color: #4ef2d2;
         }
 
+        /* Streaming Platforms Grid */
+        .stream-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 14px;
+        }
+        .stream-card {
+            background: linear-gradient(145deg, #131722, #0e1119);
+            border-radius: 14px;
+            padding: 16px 12px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.06);
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+        .stream-card:hover {
+            transform: translateY(-4px);
+            border-color: #4ef2d2;
+            color: #4ef2d2;
+            box-shadow: 0 6px 18px rgba(78, 242, 210, 0.15);
+        }
+
         /* Video Player */
         .video-container {
             position: relative;
@@ -257,7 +320,7 @@
             box-shadow: 0 0 15px rgba(78, 242, 210, 0.5);
         }
 
-        /* Legends Visuals Services */
+        /* Services & Pricing Grid */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -269,6 +332,7 @@
             padding: 24px;
             border: 1px solid rgba(255,255,255,0.06);
             text-align: left;
+            position: relative;
         }
         .service-card h3 {
             font-size: 1.25rem;
@@ -278,7 +342,24 @@
         .service-card p {
             color: #9ea4b5;
             font-size: 0.9rem;
-            margin-bottom: 18px;
+            margin-bottom: 16px;
+        }
+        .service-list {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        .service-list li {
+            font-size: 0.85rem;
+            color: #c4c9d7;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .service-list li::before {
+            content: "✓";
+            color: #4ef2d2;
+            font-weight: 900;
         }
 
         /* Gallery Showcase */
@@ -420,8 +501,22 @@
 </head>
 <body>
 
+    <!-- Upgraded Header Navbar -->
     <nav class="navbar">
-        <div class="logo">FATKISS <span>OFFICIAL</span></div>
+        <a href="#" class="brand-logo-link">
+            <svg class="brand-svg-icon" viewBox="0 0 100 100" width="34" height="34">
+                <circle cx="50" cy="50" r="44" stroke="#4ef2d2" stroke-width="4" fill="none" opacity="0.8"/>
+                <line x1="32" y1="50" x2="32" y2="50" stroke="#4ef2d2" stroke-width="5" stroke-linecap="round"/>
+                <line x1="43" y1="34" x2="43" y2="66" stroke="#4ef2d2" stroke-width="5" stroke-linecap="round"/>
+                <line x1="57" y1="24" x2="57" y2="76" stroke="#4ef2d2" stroke-width="5" stroke-linecap="round"/>
+                <line x1="68" y1="40" x2="68" y2="60" stroke="#4ef2d2" stroke-width="5" stroke-linecap="round"/>
+            </svg>
+            <div class="logo-text-group">
+                <div class="logo">FATKISS <span>OFFICIAL</span></div>
+                <div class="logo-sub">LEGENDS VISUALS</div>
+            </div>
+        </a>
+        <a href="https://wa.me/256768444578?text=Hello%20Fatkiss%2C%20I%20want%20to%20book%20a%20session!" target="_blank" class="nav-book-btn">Book Now</a>
     </nav>
 
     <!-- Hero Section -->
@@ -439,6 +534,21 @@
             <a href="https://www.instagram.com/fatkisskiss" target="_blank" class="btn-base btn-instagram">&#128247; Instagram</a>
             <a href="https://youtube.com/@fatkissofficial?si=NMsjeh0wWUcb3eTF" target="_blank" class="btn-base btn-youtube">&#9654; YouTube</a>
             <a href="https://www.facebook.com/share/1MEaDJwhxB/" target="_blank" class="btn-base btn-facebook">&#10003; Facebook</a>
+        </div>
+    </div>
+
+    <!-- Music Streaming Platforms Section -->
+    <div class="section-container">
+        <div class="section-header">
+            <div class="accent-bar"></div>
+            <div class="section-title">Stream <span>My Music</span></div>
+        </div>
+        <div class="stream-grid">
+            <a href="https://mdundo.com" target="_blank" class="stream-card">🎵 Mdundo</a>
+            <a href="https://youtube.com/@fatkissofficial" target="_blank" class="stream-card">▶️ YouTube Music</a>
+            <a href="https://spotify.com" target="_blank" class="stream-card">🎧 Spotify</a>
+            <a href="https://apple.com" target="_blank" class="stream-card">🍎 Apple Music</a>
+            <a href="https://audiomack.com" target="_blank" class="stream-card">🔥 Audiomack</a>
         </div>
     </div>
 
@@ -500,7 +610,7 @@
         </div>
     </div>
 
-    <!-- Legends Visuals Services -->
+    <!-- Legends Visuals Services & Packages -->
     <div class="section-container">
         <div class="section-header">
             <div class="accent-bar"></div>
@@ -510,11 +620,21 @@
             <div class="service-card">
                 <h3>🎬 Music Video Directing & Shooting</h3>
                 <p>Cinematic videography and professional camera work designed to make your visual releases stand out.</p>
+                <ul class="service-list">
+                    <li>4K Resolution Video Capture</li>
+                    <li>Professional Lighting Setups</li>
+                    <li>Creative Concept & Scripting</li>
+                </ul>
                 <a href="https://wa.me/256768444578?text=Hello%20Fatkiss%2C%20I%20want%20to%20book%20a%20video%20shoot%20with%20Legends%20Visuals!" target="_blank" class="card-btn">Book Video Shoot</a>
             </div>
             <div class="service-card">
                 <h3>💻 Video Editing & Motion Graphics</h3>
                 <p>High-end editing, color grading, visual effects, and custom graphic animations for artists and brands.</p>
+                <ul class="service-list">
+                    <li>Advanced Color Grading</li>
+                    <li>Custom Visual Effects & Text FX</li>
+                    <li>Social Media Promo Cuts</li>
+                </ul>
                 <a href="https://wa.me/256768444578?text=Hello%20Fatkiss%2C%20I%20need%20video%20editing%20services%20from%20Legends%20Visuals!" target="_blank" class="card-btn">Inquire for Editing</a>
             </div>
         </div>
@@ -618,4 +738,4 @@
     </footer>
 
 </body>
-    </html>
+                </html>

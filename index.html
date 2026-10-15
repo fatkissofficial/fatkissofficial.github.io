@@ -11,6 +11,9 @@
             box-sizing: border-box;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
+        html {
+            scroll-behavior: smooth;
+        }
         body {
             background-color: #07090e;
             color: #ffffff;
@@ -43,6 +46,10 @@
         }
         .brand-svg-icon {
             filter: drop-shadow(0 0 8px rgba(78, 242, 210, 0.5));
+            transition: transform 0.3s ease;
+        }
+        .brand-logo-link:hover .brand-svg-icon {
+            transform: rotate(45deg);
         }
         .logo-text-group {
             display: flex;
@@ -70,7 +77,7 @@
             background-color: transparent;
             border: 1px solid #4ef2d2;
             color: #4ef2d2;
-            padding: 6px 14px;
+            padding: 6px 16px;
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 700;
@@ -161,6 +168,8 @@
             font-size: 0.9rem;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border: none;
+            cursor: pointer;
         }
         .btn-base:hover {
             transform: translateY(-3px);
@@ -170,6 +179,7 @@
         .btn-instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #ffffff; }
         .btn-youtube { background-color: #ff0000; color: #ffffff; }
         .btn-facebook { background-color: #1877f2; color: #ffffff; }
+        .btn-share { background-color: #2a3142; color: #4ef2d2; border: 1px solid rgba(78, 242, 210, 0.3); }
 
         /* Content Containers */
         .section-container {
@@ -297,6 +307,32 @@
             font-size: 0.85rem;
             margin-bottom: 14px;
         }
+
+        /* Audio Visualizer Effect */
+        .visualizer-box {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 4px;
+            height: 20px;
+            margin-bottom: 12px;
+        }
+        .v-bar {
+            width: 4px;
+            background-color: #4ef2d2;
+            border-radius: 2px;
+            height: 6px;
+            animation: bounce 1.2s ease-in-out infinite alternate;
+        }
+        .v-bar:nth-child(2) { animation-delay: 0.2s; }
+        .v-bar:nth-child(3) { animation-delay: 0.4s; }
+        .v-bar:nth-child(4) { animation-delay: 0.1s; }
+        .v-bar:nth-child(5) { animation-delay: 0.5s; }
+        @keyframes bounce {
+            0% { height: 4px; opacity: 0.4; }
+            100% { height: 18px; opacity: 1; }
+        }
+
         .audio-preview {
             width: 100%;
             margin-bottom: 14px;
@@ -320,7 +356,7 @@
             box-shadow: 0 0 15px rgba(78, 242, 210, 0.5);
         }
 
-        /* Services & Pricing Grid */
+        /* Services Grid */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -332,7 +368,6 @@
             padding: 24px;
             border: 1px solid rgba(255,255,255,0.06);
             text-align: left;
-            position: relative;
         }
         .service-card h3 {
             font-size: 1.25rem;
@@ -362,7 +397,7 @@
             font-weight: 900;
         }
 
-        /* Gallery Showcase */
+        /* Lightbox Gallery Grid */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -374,11 +409,50 @@
             height: 240px;
             background-color: #131722;
             border: 1px solid rgba(255,255,255,0.06);
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover {
+            transform: scale(1.02);
+            border-color: #4ef2d2;
         }
         .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        /* Lightbox Modal */
+        .lightbox-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(7, 9, 14, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .lightbox-modal.active {
+            display: flex;
+        }
+        .lightbox-img {
+            max-width: 90%;
+            max-height: 85vh;
+            border-radius: 12px;
+            border: 2px solid #4ef2d2;
+            box-shadow: 0 0 30px rgba(78, 242, 210, 0.3);
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 25px;
+            right: 30px;
+            font-size: 2.5rem;
+            color: #ffffff;
+            cursor: pointer;
+            line-height: 1;
         }
 
         /* Booking Form */
@@ -419,7 +493,7 @@
             height: 120px;
         }
 
-        /* EPK / Press Kit */
+        /* EPK Box */
         .epk-box {
             background: linear-gradient(145deg, #131722, #0e1119);
             border-radius: 18px;
@@ -470,6 +544,25 @@
             font-size: 0.8rem;
         }
 
+        /* Toast Alert */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #4ef2d2;
+            color: #07090e;
+            padding: 10px 24px;
+            border-radius: 30px;
+            font-weight: 800;
+            box-shadow: 0 6px 20px rgba(78, 242, 210, 0.4);
+            transition: transform 0.3s ease;
+            z-index: 3000;
+        }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
         /* Floating WhatsApp Button */
         .floating-whatsapp {
             position: fixed;
@@ -501,7 +594,7 @@
 </head>
 <body>
 
-    <!-- Upgraded Header Navbar -->
+    <!-- Header Navbar -->
     <nav class="navbar">
         <a href="#" class="brand-logo-link">
             <svg class="brand-svg-icon" viewBox="0 0 100 100" width="34" height="34">
@@ -516,7 +609,7 @@
                 <div class="logo-sub">LEGENDS VISUALS</div>
             </div>
         </a>
-        <a href="https://wa.me/256768444578?text=Hello%20Fatkiss%2C%20I%20want%20to%20book%20a%20session!" target="_blank" class="nav-book-btn">Book Now</a>
+        <a href="#booking" class="nav-book-btn">Book Now</a>
     </nav>
 
     <!-- Hero Section -->
@@ -533,11 +626,11 @@
             <a href="https://www.tiktok.com/@fatkissofficialartist" target="_blank" class="btn-base btn-tiktok">&#9835; TikTok</a>
             <a href="https://www.instagram.com/fatkisskiss" target="_blank" class="btn-base btn-instagram">&#128247; Instagram</a>
             <a href="https://youtube.com/@fatkissofficial?si=NMsjeh0wWUcb3eTF" target="_blank" class="btn-base btn-youtube">&#9654; YouTube</a>
-            <a href="https://www.facebook.com/share/1MEaDJwhxB/" target="_blank" class="btn-base btn-facebook">&#10003; Facebook</a>
+            <button onclick="copyHubLink()" class="btn-base btn-share">🔗 Share Hub</button>
         </div>
     </div>
 
-    <!-- Music Streaming Platforms Section -->
+    <!-- Music Streaming Section -->
     <div class="section-container">
         <div class="section-header">
             <div class="accent-bar"></div>
@@ -563,7 +656,7 @@
         </div>
     </div>
 
-    <!-- Latest Releases -->
+    <!-- Latest Releases Section -->
     <div class="section-container">
         <div class="section-header">
             <div class="accent-bar"></div>
@@ -577,6 +670,9 @@
                 <img src="cwinya.jpg" alt="Cwinya Single Cover" class="card-img" onerror="this.src='AirBrush_20260924040823.png'">
                 <h3>Cwinya</h3>
                 <p>Brand new single out now!</p>
+                <div class="visualizer-box">
+                    <div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div>
+                </div>
                 <audio controls class="audio-preview">
                     <source src="cwinya.mp3" type="audio/mpeg">
                 </audio>
@@ -588,6 +684,9 @@
                 <img src="AirBrush_20260924040823.png" alt="Matum-Ungo Single Cover" class="card-img">
                 <h3>Matum-Ungo</h3>
                 <p>Official single release.</p>
+                <div class="visualizer-box">
+                    <div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div>
+                </div>
                 <a href="https://youtube.com/@fatkissofficial?si=NMsjeh0wWUcb3eTF" target="_blank" class="card-btn">Stream on YouTube</a>
             </div>
 
@@ -596,6 +695,9 @@
                 <img src="AirBrush_20260507133645.png" alt="Jakwo Single Cover" class="card-img">
                 <h3>Jakwo</h3>
                 <p>Listen to the official track release.</p>
+                <div class="visualizer-box">
+                    <div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div>
+                </div>
                 <a href="https://youtube.com/@fatkissofficial?si=NMsjeh0wWUcb3eTF" target="_blank" class="card-btn">Stream on YouTube</a>
             </div>
 
@@ -604,13 +706,16 @@
                 <img src="AirBrush_20260524094633.png" alt="Jamusuma Single Cover" class="card-img">
                 <h3>Jamusuma</h3>
                 <p>Listen to the official track release.</p>
+                <div class="visualizer-box">
+                    <div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div>
+                </div>
                 <a href="https://youtube.com/@fatkissofficial?si=NMsjeh0wWUcb3eTF" target="_blank" class="card-btn">Stream on YouTube</a>
             </div>
 
         </div>
     </div>
 
-    <!-- Legends Visuals Services & Packages -->
+    <!-- Legends Visuals Services -->
     <div class="section-container">
         <div class="section-header">
             <div class="accent-bar"></div>
@@ -640,36 +745,36 @@
         </div>
     </div>
 
-    <!-- Visual Showcase -->
+    <!-- Lightbox Visual Showcase -->
     <div class="section-container">
         <div class="section-header">
             <div class="accent-bar"></div>
             <div class="section-title">Visual <span>Showcase</span></div>
         </div>
         <div class="gallery-grid">
-            <div class="gallery-item"><img src="AirBrush_20260519200506.png" alt="Visual 1"></div>
-            <div class="gallery-item"><img src="17228809996135~2.jpg" alt="Visual 2"></div>
-            <div class="gallery-item"><img src="1722883857854.jpg" alt="Visual 3"></div>
-            <div class="gallery-item"><img src="17228835209216.jpg" alt="Visual 4"></div>
-            <div class="gallery-item"><img src="4b86a4f348ed7ca998a8d25b669(T).jpg" alt="Visual 5"></div>
+            <div class="gallery-item" onclick="openLightbox('AirBrush_20260519200506.png')"><img src="AirBrush_20260519200506.png" alt="Visual 1"></div>
+            <div class="gallery-item" onclick="openLightbox('17228809996135~2.jpg')"><img src="17228809996135~2.jpg" alt="Visual 2"></div>
+            <div class="gallery-item" onclick="openLightbox('1722883857854.jpg')"><img src="1722883857854.jpg" alt="Visual 3"></div>
+            <div class="gallery-item" onclick="openLightbox('17228835209216.jpg')"><img src="17228835209216.jpg" alt="Visual 4"></div>
+            <div class="gallery-item" onclick="openLightbox('4b86a4f348ed7ca998a8d25b669(T).jpg')"><img src="4b86a4f348ed7ca998a8d25b669(T).jpg" alt="Visual 5"></div>
         </div>
     </div>
 
-    <!-- Booking & Contact Form -->
-    <div class="section-container">
+    <!-- Booking Section -->
+    <div class="section-container" id="booking">
         <div class="section-header">
             <div class="accent-bar"></div>
             <div class="section-title">Booking & <span>Inquiries</span></div>
         </div>
         <div class="form-box">
-            <form action="https://wa.me/256768444578" method="get" target="_blank">
+            <form onsubmit="sendWhatsAppBooking(event)">
                 <div class="form-group">
                     <label>Your Name / Organization</label>
-                    <input type="text" class="form-control" name="text" placeholder="Enter your full name" required>
+                    <input type="text" id="booking-name" class="form-control" placeholder="Enter your full name" required>
                 </div>
                 <div class="form-group">
                     <label>Inquiry Type</label>
-                    <select class="form-control">
+                    <select id="booking-type" class="form-control">
                         <option>Show / Event Booking</option>
                         <option>Video Production (Legends Visuals)</option>
                         <option>Feature / Collaboration</option>
@@ -678,14 +783,14 @@
                 </div>
                 <div class="form-group">
                     <label>Message / Project Details</label>
-                    <textarea class="form-control" placeholder="Tell me about your project or event..."></textarea>
+                    <textarea id="booking-msg" class="form-control" placeholder="Tell me about your project or event..." required></textarea>
                 </div>
                 <button type="submit" class="card-btn">Send Message via WhatsApp</button>
             </form>
         </div>
     </div>
 
-    <!-- EPK / Press Kit Section -->
+    <!-- EPK Section -->
     <div class="section-container">
         <div class="section-header">
             <div class="accent-bar"></div>
@@ -700,7 +805,7 @@
         </div>
     </div>
 
-    <!-- Follow & Connect -->
+    <!-- Social Grid -->
     <div class="section-container">
         <div class="section-header">
             <div class="accent-bar"></div>
@@ -730,6 +835,15 @@
         </div>
     </div>
 
+    <!-- Lightbox Modal -->
+    <div class="lightbox-modal" id="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img src="" id="lightbox-img" class="lightbox-img" alt="Enlarged View">
+    </div>
+
+    <!-- Toast Alert -->
+    <div class="toast" id="toast">Link copied to clipboard!</div>
+
     <!-- Floating WhatsApp Button -->
     <a href="https://wa.me/256768444578?text=Hello%20Fatkiss%2C%20I%20am%20reaching%20out%20from%20your%20website%21" target="_blank" class="floating-whatsapp" title="Chat on WhatsApp">&#128172;</a>
 
@@ -737,5 +851,36 @@
         <p>&copy; 2026 Fatkiss Official & Legends Visuals. All Rights Reserved.</p>
     </footer>
 
+    <!-- Interactive Scripts -->
+    <script>
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').classList.add('active');
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+        function copyHubLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                showToast("Website link copied!");
+            }).catch(() => {
+                showToast("Link: " + window.location.href);
+            });
+        }
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+        function sendWhatsAppBooking(e) {
+            e.preventDefault();
+            const name = document.getElementById('booking-name').value;
+            const type = document.getElementById('booking-type').value;
+            const msg = document.getElementById('booking-msg').value;
+            const text = `Hello Fatkiss, my name is ${name}. Inquiry: ${type}. Details: ${msg}`;
+            window.open(`https://wa.me/256768444578?text=${encodeURIComponent(text)}`, '_blank');
+        }
+    </script>
 </body>
-                </html>
+    </html>

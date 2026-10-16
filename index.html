@@ -4,25 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FATKISS OFFICIAL & LEGENDS VISUALS</title>
+    
+    <!-- FontAwesome 6 for Fresh Modern Official Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
     <style>
+        :root {
+            --bg-base: #05070a;
+            --bg-surface: linear-gradient(145deg, #0e131f, #080b13);
+            --accent-cyan: #00f2fe;
+            --accent-blue: #4facfe;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --border-glow: rgba(0, 242, 254, 0.25);
+            --card-border: rgba(255, 255, 255, 0.08);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
+
         html {
             scroll-behavior: smooth;
         }
+
         body {
-            background-color: #07090e;
-            color: #ffffff;
+            background-color: var(--bg-base);
+            color: var(--text-main);
             line-height: 1.6;
-            padding-bottom: 80px;
+            padding-bottom: 90px;
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(78, 242, 210, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(24, 119, 242, 0.06) 0%, transparent 40%);
+                radial-gradient(circle at 15% 15%, rgba(0, 242, 254, 0.06) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(79, 172, 254, 0.05) 0%, transparent 45%);
             background-attachment: fixed;
+            overflow-x: hidden;
         }
 
         /* Top Navigation */
@@ -30,220 +48,317 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 24px;
-            background: rgba(7, 9, 14, 0.85);
-            backdrop-filter: blur(12px);
+            padding: 14px 24px;
+            background: rgba(5, 7, 10, 0.85);
+            backdrop-filter: blur(16px);
             position: sticky;
             top: 0;
             z-index: 100;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
+            border-bottom: 1px solid var(--card-border);
         }
+
         .brand-logo-link {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             text-decoration: none;
         }
+
         .brand-svg-icon {
-            filter: drop-shadow(0 0 8px rgba(78, 242, 210, 0.5));
-            transition: transform 0.3s ease;
+            filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.6));
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
         .brand-logo-link:hover .brand-svg-icon {
-            transform: rotate(45deg);
+            transform: rotate(90deg);
         }
+
         .logo-text-group {
             display: flex;
             flex-direction: column;
             line-height: 1.1;
         }
+
         .logo {
             font-weight: 900;
             font-size: 1.15rem;
             letter-spacing: 1.5px;
-            color: #ffffff;
+            color: var(--text-main);
         }
+
         .logo span {
-            color: #4ef2d2;
-            text-shadow: 0 0 12px rgba(78, 242, 210, 0.4);
+            color: var(--accent-cyan);
+            text-shadow: 0 0 14px rgba(0, 242, 254, 0.4);
         }
+
         .logo-sub {
             font-size: 0.55rem;
             letter-spacing: 3px;
-            color: #4ef2d2;
+            color: var(--accent-cyan);
             font-weight: 700;
-            opacity: 0.85;
+            opacity: 0.9;
         }
+
         .nav-book-btn {
-            background-color: transparent;
-            border: 1px solid #4ef2d2;
-            color: #4ef2d2;
-            padding: 6px 16px;
+            background: transparent;
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            padding: 7px 18px;
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 700;
             text-decoration: none;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.15);
         }
+
         .nav-book-btn:hover {
-            background-color: #4ef2d2;
-            color: #07090e;
-            box-shadow: 0 0 12px rgba(78, 242, 210, 0.4);
+            background-color: var(--accent-cyan);
+            color: var(--bg-base);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
         }
 
         /* Hero Section */
         .hero {
             text-align: center;
-            padding: 50px 20px 35px;
-            max-width: 700px;
+            padding: 55px 20px 35px;
+            max-width: 720px;
             margin: 0 auto;
         }
+
         .avatar-container {
-            width: 155px;
-            height: 155px;
-            margin: 0 auto 22px;
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 24px;
             position: relative;
         }
+
         .avatar-container::after {
             content: '';
             position: absolute;
-            inset: -4px;
+            inset: -6px;
             border-radius: 50%;
-            background: linear-gradient(45deg, #4ef2d2, #1877f2, #ff0055);
+            background: linear-gradient(135deg, var(--accent-cyan), #ff007f, var(--accent-blue));
             z-index: -1;
-            opacity: 0.7;
-            filter: blur(8px);
-            animation: pulseGlow 4s ease-in-out infinite alternate;
+            opacity: 0.8;
+            filter: blur(10px);
+            animation: pulseGlow 5s ease-in-out infinite alternate;
         }
+
         @keyframes pulseGlow {
-            0% { opacity: 0.5; filter: blur(6px); }
-            100% { opacity: 0.9; filter: blur(12px); }
+            0% { opacity: 0.6; filter: blur(8px); transform: scale(0.98); }
+            100% { opacity: 1; filter: blur(14px); transform: scale(1.02); }
         }
+
         .avatar-img {
             width: 100%;
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #07090e;
+            border: 4px solid var(--bg-base);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
         }
+
         .hero h1 {
-            font-size: 2.4rem;
+            font-size: 2.6rem;
             font-weight: 900;
             letter-spacing: 1.5px;
             margin-bottom: 6px;
-        }
-        .hero h1 span {
-            color: #4ef2d2;
-        }
-        .hero-subtitle {
-            color: #4ef2d2;
-            font-weight: 700;
-            letter-spacing: 2.5px;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            margin-bottom: 16px;
-            opacity: 0.9;
-        }
-        .hero-desc {
-            color: #b4b9c7;
-            font-size: 1rem;
-            margin-bottom: 28px;
-            padding: 0 15px;
+            background: linear-gradient(135deg, #ffffff, var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        /* Action Buttons */
+        .hero-subtitle {
+            color: var(--accent-cyan);
+            font-weight: 700;
+            letter-spacing: 3px;
+            font-size: 0.88rem;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .hero-desc {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 30px;
+            padding: 0 15px;
+            line-height: 1.7;
+        }
+
+        /* Modern Glassmorphic Action Buttons */
         .action-btns {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             justify-content: center;
             flex-wrap: wrap;
         }
+
         .btn-base {
-            padding: 11px 22px;
+            padding: 12px 22px;
             border-radius: 30px;
             font-weight: 700;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            border: none;
+            gap: 10px;
+            font-size: 0.92rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(8px);
             cursor: pointer;
         }
+
+        .btn-base i {
+            font-size: 1.15rem;
+            transition: transform 0.3s ease;
+        }
+
         .btn-base:hover {
             transform: translateY(-3px);
         }
-        .btn-whatsapp { background-color: #25d366; color: #ffffff; }
-        .btn-tiktok { background-color: #111111; border: 1px solid rgba(255,255,255,0.2); color: #ffffff; }
-        .btn-instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #ffffff; }
-        .btn-youtube { background-color: #ff0000; color: #ffffff; }
-        .btn-facebook { background-color: #1877f2; color: #ffffff; }
-        .btn-share { background-color: #2a3142; color: #4ef2d2; border: 1px solid rgba(78, 242, 210, 0.3); }
 
-        /* Content Containers */
+        .btn-base:hover i {
+            transform: scale(1.15);
+        }
+
+        /* Platform Specific Modern Styling */
+        .btn-whatsapp { 
+            background: rgba(37, 211, 102, 0.12); 
+            border-color: rgba(37, 211, 102, 0.4); 
+            color: #25d366; 
+        }
+        .btn-whatsapp:hover { 
+            background: #25d366; 
+            color: #000; 
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4); 
+        }
+
+        .btn-tiktok { 
+            background: rgba(255, 255, 255, 0.08); 
+            border-color: rgba(255, 255, 255, 0.25); 
+            color: #ffffff; 
+        }
+        .btn-tiktok:hover { 
+            background: #ffffff; 
+            color: #000; 
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3); 
+        }
+
+        .btn-instagram { 
+            background: rgba(225, 48, 108, 0.12); 
+            border-color: rgba(225, 48, 108, 0.4); 
+            color: #e1306c; 
+        }
+        .btn-instagram:hover { 
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); 
+            color: #ffffff; 
+            box-shadow: 0 6px 20px rgba(225, 48, 108, 0.4); 
+        }
+
+        .btn-youtube { 
+            background: rgba(255, 0, 0, 0.12); 
+            border-color: rgba(255, 0, 0, 0.4); 
+            color: #ff0000; 
+        }
+        .btn-youtube:hover { 
+            background: #ff0000; 
+            color: #ffffff; 
+            box-shadow: 0 6px 20px rgba(255, 0, 0, 0.4); 
+        }
+
+        .btn-share { 
+            background: rgba(0, 242, 254, 0.1); 
+            color: var(--accent-cyan); 
+            border-color: rgba(0, 242, 254, 0.4); 
+        }
+        .btn-share:hover { 
+            background: var(--accent-cyan); 
+            color: var(--bg-base); 
+            box-shadow: 0 6px 20px rgba(0, 242, 254, 0.4); 
+        }
+
+        /* Section Layouts */
         .section-container {
-            max-width: 950px;
-            margin: 45px auto 0;
+            max-width: 980px;
+            margin: 50px auto 0;
             padding: 0 20px;
         }
+
         .section-header {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 22px;
+            gap: 14px;
+            margin-bottom: 24px;
         }
+
         .accent-bar {
-            width: 5px;
-            height: 26px;
-            background: linear-gradient(to bottom, #4ef2d2, #1877f2);
-            border-radius: 3px;
+            width: 6px;
+            height: 28px;
+            background: linear-gradient(to bottom, var(--accent-cyan), var(--accent-blue));
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
         }
+
         .section-title {
-            font-size: 1.6rem;
+            font-size: 1.65rem;
             font-weight: 800;
             letter-spacing: 0.5px;
         }
+
         .section-title span {
-            color: #4ef2d2;
+            color: var(--accent-cyan);
         }
 
-        /* Streaming Platforms Grid */
+        /* Stream Grid */
         .stream-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 14px;
-        }
-        .stream-card {
-            background: linear-gradient(145deg, #131722, #0e1119);
-            border-radius: 14px;
-            padding: 16px 12px;
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.06);
-            text-decoration: none;
-            color: #ffffff;
-            font-weight: 700;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
-        }
-        .stream-card:hover {
-            transform: translateY(-4px);
-            border-color: #4ef2d2;
-            color: #4ef2d2;
-            box-shadow: 0 6px 18px rgba(78, 242, 210, 0.15);
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
         }
 
-        /* Video Player */
+        .stream-card {
+            background: var(--bg-surface);
+            border-radius: 16px;
+            padding: 18px 14px;
+            text-align: center;
+            border: 1px solid var(--card-border);
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 0.92rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .stream-card i {
+            font-size: 1.2rem;
+        }
+
+        .stream-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.2);
+        }
+
+        /* Video Container */
         .video-container {
             position: relative;
             padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
-            border-radius: 18px;
-            border: 2px solid rgba(78, 242, 210, 0.25);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-            background: #11141d;
+            border-radius: 20px;
+            border: 2px solid rgba(0, 242, 254, 0.3);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+            background: #080b13;
         }
+
         .video-container iframe {
             position: absolute;
             top: 0;
@@ -256,171 +371,214 @@
         /* Cards Grid */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
             gap: 22px;
         }
+
         .card {
-            background: linear-gradient(145deg, #131722, #0e1119);
-            border-radius: 18px;
-            padding: 16px;
-            border: 1px solid rgba(255,255,255,0.06);
+            background: var(--bg-surface);
+            border-radius: 20px;
+            padding: 18px;
+            border: 1px solid var(--card-border);
             text-align: center;
             position: relative;
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
         }
+
         .card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(78, 242, 210, 0.4);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+            transform: translateY(-8px);
+            border-color: rgba(0, 242, 254, 0.5);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 20px rgba(0, 242, 254, 0.15);
         }
+
         .card-featured {
-            border: 2px solid #4ef2d2;
-            box-shadow: 0 0 25px rgba(78, 242, 210, 0.15);
+            border: 2px solid var(--accent-cyan);
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.2);
         }
+
         .badge {
             position: absolute;
-            top: 24px;
-            right: 24px;
-            background: linear-gradient(135deg, #4ef2d2, #10b981);
-            color: #07090e;
+            top: 26px;
+            right: 26px;
+            background: linear-gradient(135deg, var(--accent-cyan), #10b981);
+            color: #05070a;
             font-weight: 900;
             font-size: 0.7rem;
             padding: 5px 12px;
             border-radius: 20px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            box-shadow: 0 4px 12px rgba(0, 242, 254, 0.4);
         }
+
         .card-img {
             width: 100%;
             height: 230px;
             object-fit: cover;
-            border-radius: 12px;
-            margin-bottom: 14px;
+            border-radius: 14px;
+            margin-bottom: 15px;
         }
+
         .card h3 {
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             margin-bottom: 6px;
             font-weight: 800;
         }
+
         .card p {
-            color: #9ea4b5;
-            font-size: 0.85rem;
-            margin-bottom: 14px;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin-bottom: 16px;
         }
 
-        /* Audio Visualizer Effect */
         .visualizer-box {
             display: flex;
             align-items: flex-end;
             justify-content: center;
-            gap: 4px;
-            height: 20px;
-            margin-bottom: 12px;
+            gap: 5px;
+            height: 24px;
+            margin-bottom: 14px;
         }
+
         .v-bar {
             width: 4px;
-            background-color: #4ef2d2;
+            background-color: var(--accent-cyan);
             border-radius: 2px;
             height: 6px;
-            animation: bounce 1.2s ease-in-out infinite alternate;
+            opacity: 0.4;
+            transition: height 0.2s ease;
         }
-        .v-bar:nth-child(2) { animation-delay: 0.2s; }
-        .v-bar:nth-child(3) { animation-delay: 0.4s; }
+
+        .card.playing .v-bar {
+            animation: bounce 0.8s ease-in-out infinite alternate;
+        }
+
+        .v-bar:nth-child(2) { animation-delay: 0.15s; }
+        .v-bar:nth-child(3) { animation-delay: 0.3s; }
         .v-bar:nth-child(4) { animation-delay: 0.1s; }
-        .v-bar:nth-child(5) { animation-delay: 0.5s; }
+        .v-bar:nth-child(5) { animation-delay: 0.4s; }
+
         @keyframes bounce {
-            0% { height: 4px; opacity: 0.4; }
-            100% { height: 18px; opacity: 1; }
+            0% { height: 6px; opacity: 0.4; }
+            100% { height: 22px; opacity: 1; }
         }
 
         .audio-preview {
             width: 100%;
-            margin-bottom: 14px;
-            height: 35px;
-            accent-color: #4ef2d2;
+            margin-bottom: 15px;
+            height: 38px;
+            accent-color: var(--accent-cyan);
+            border-radius: 8px;
         }
+
         .card-btn {
-            background-color: #4ef2d2;
-            color: #07090e;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            color: #05070a;
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             border-radius: 25px;
             font-weight: 800;
             text-decoration: none;
-            display: inline-block;
-            font-size: 0.88rem;
-            transition: background-color 0.2s, box-shadow 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
         }
+
         .card-btn:hover {
-            background-color: #38dec0;
-            box-shadow: 0 0 15px rgba(78, 242, 210, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 242, 254, 0.5);
+            filter: brightness(1.1);
         }
 
         /* Services Grid */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 22px;
         }
+
         .service-card {
-            background: linear-gradient(145deg, #131722, #0e1119);
-            border-radius: 18px;
-            padding: 24px;
-            border: 1px solid rgba(255,255,255,0.06);
+            background: var(--bg-surface);
+            border-radius: 20px;
+            padding: 28px;
+            border: 1px solid var(--card-border);
             text-align: left;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease, border-color 0.3s ease;
         }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 242, 254, 0.4);
+        }
+
         .service-card h3 {
-            font-size: 1.25rem;
-            color: #4ef2d2;
-            margin-bottom: 10px;
-        }
-        .service-card p {
-            color: #9ea4b5;
-            font-size: 0.9rem;
-            margin-bottom: 16px;
-        }
-        .service-list {
-            list-style: none;
-            margin-bottom: 20px;
-        }
-        .service-list li {
-            font-size: 0.85rem;
-            color: #c4c9d7;
-            margin-bottom: 8px;
+            font-size: 1.3rem;
+            color: var(--accent-cyan);
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
+
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            margin-bottom: 18px;
+        }
+
+        .service-list {
+            list-style: none;
+            margin-bottom: 22px;
+        }
+
+        .service-list li {
+            font-size: 0.88rem;
+            color: #cbd5e1;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         .service-list li::before {
             content: "✓";
-            color: #4ef2d2;
+            color: var(--accent-cyan);
             font-weight: 900;
         }
 
-        /* Lightbox Gallery Grid */
+        /* Gallery Grid */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 14px;
+            gap: 16px;
         }
+
         .gallery-item {
-            border-radius: 16px;
+            border-radius: 18px;
             overflow: hidden;
-            height: 240px;
-            background-color: #131722;
-            border: 1px solid rgba(255,255,255,0.06);
+            height: 250px;
+            background-color: var(--bg-surface);
+            border: 1px solid var(--card-border);
             cursor: pointer;
             position: relative;
-            transition: transform 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
         }
-        .gallery-item:hover {
-            transform: scale(1.02);
-            border-color: #4ef2d2;
-        }
+
         .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.08);
         }
 
         /* Lightbox Modal */
@@ -428,120 +586,158 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(7, 9, 14, 0.95);
-            backdrop-filter: blur(15px);
+            background: rgba(5, 7, 10, 0.96);
+            backdrop-filter: blur(18px);
             z-index: 2000;
             justify-content: center;
             align-items: center;
             padding: 20px;
         }
+
         .lightbox-modal.active {
             display: flex;
         }
+
         .lightbox-img {
             max-width: 90%;
             max-height: 85vh;
-            border-radius: 12px;
-            border: 2px solid #4ef2d2;
-            box-shadow: 0 0 30px rgba(78, 242, 210, 0.3);
+            border-radius: 16px;
+            border: 2px solid var(--accent-cyan);
+            box-shadow: 0 0 40px rgba(0, 242, 254, 0.4);
         }
+
         .lightbox-close {
             position: absolute;
             top: 25px;
-            right: 30px;
-            font-size: 2.5rem;
-            color: #ffffff;
+            right: 35px;
+            font-size: 2.8rem;
+            color: var(--text-main);
             cursor: pointer;
             line-height: 1;
+            transition: color 0.2s;
+        }
+
+        .lightbox-close:hover {
+            color: var(--accent-cyan);
         }
 
         /* Booking Form */
         .form-box {
-            background: linear-gradient(145deg, #131722, #0e1119);
-            border-radius: 18px;
-            padding: 30px;
-            border: 1px solid rgba(255,255,255,0.06);
-            max-width: 650px;
+            background: var(--bg-surface);
+            border-radius: 20px;
+            padding: 32px;
+            border: 1px solid var(--card-border);
+            max-width: 680px;
             margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
+
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 20px;
             text-align: left;
         }
+
         .form-group label {
             display: block;
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             font-weight: 700;
-            margin-bottom: 6px;
-            color: #b4b9c7;
+            margin-bottom: 8px;
+            color: var(--text-muted);
         }
+
         .form-control {
             width: 100%;
-            padding: 12px 16px;
-            background-color: #07090e;
+            padding: 14px 18px;
+            background-color: var(--bg-base);
             border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 10px;
-            color: #ffffff;
-            font-size: 0.95rem;
+            border-radius: 12px;
+            color: var(--text-main);
+            font-size: 0.98rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
+
         .form-control:focus {
             outline: none;
-            border-color: #4ef2d2;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
         }
+
         textarea.form-control {
             resize: vertical;
-            height: 120px;
+            height: 130px;
         }
 
         /* EPK Box */
         .epk-box {
-            background: linear-gradient(145deg, #131722, #0e1119);
-            border-radius: 18px;
-            padding: 25px;
-            border: 1px solid rgba(255,255,255,0.06);
+            background: var(--bg-surface);
+            border-radius: 20px;
+            padding: 28px;
+            border: 1px solid var(--card-border);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
         }
+
         .epk-text h3 {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             margin-bottom: 6px;
         }
+
         .epk-text p {
-            color: #9ea4b5;
-            font-size: 0.88rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
 
         /* Social Grid */
         .social-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+            gap: 16px;
         }
+
         .social-card {
-            background: linear-gradient(145deg, #131722, #0e1119);
-            border-radius: 16px;
-            padding: 22px 15px;
+            background: var(--bg-surface);
+            border-radius: 18px;
+            padding: 24px 16px;
             text-align: center;
-            border: 1px solid rgba(255,255,255,0.06);
+            border: 1px solid var(--card-border);
             text-decoration: none;
-            color: #ffffff;
-            transition: transform 0.2s ease, border-color 0.2s ease;
+            color: var(--text-main);
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
         }
+
+        .social-card i {
+            font-size: 1.8rem;
+            color: var(--accent-cyan);
+            transition: transform 0.3s ease;
+        }
+
         .social-card:hover {
-            transform: translateY(-4px);
-            border-color: #4ef2d2;
+            transform: translateY(-5px);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 10px 25px rgba(0, 242, 254, 0.2);
         }
+
+        .social-card:hover i {
+            transform: scale(1.15);
+        }
+
         .social-card h4 {
             font-size: 1.05rem;
-            margin-bottom: 4px;
             font-weight: 700;
         }
+
         .social-card p {
-            color: #9ea4b5;
-            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-size: 0.82rem;
         }
 
         /* Toast Alert */
@@ -549,16 +745,17 @@
             position: fixed;
             bottom: 30px;
             left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: #4ef2d2;
-            color: #07090e;
-            padding: 10px 24px;
+            transform: translateX(-50%) translateY(120px);
+            background: var(--accent-cyan);
+            color: var(--bg-base);
+            padding: 12px 28px;
             border-radius: 30px;
             font-weight: 800;
-            box-shadow: 0 6px 20px rgba(78, 242, 210, 0.4);
-            transition: transform 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.5);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 3000;
         }
+
         .toast.show {
             transform: translateX(-50%) translateY(0);
         }
@@ -566,29 +763,34 @@
         /* Floating WhatsApp Button */
         .floating-whatsapp {
             position: fixed;
-            bottom: 24px;
-            right: 24px;
-            background-color: #25d366;
+            bottom: 28px;
+            right: 28px;
+            background: linear-gradient(135deg, #25d366, #128c7e);
             color: #ffffff;
-            width: 60px;
-            height: 60px;
+            width: 65px;
+            height: 65px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
             text-decoration: none;
             font-size: 2rem;
             z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .floating-whatsapp:hover {
+            transform: scale(1.1);
         }
 
         footer {
             text-align: center;
-            margin-top: 60px;
-            color: #8b92a5;
-            font-size: 0.85rem;
-            border-top: 1px solid rgba(255,255,255,0.06);
-            padding-top: 30px;
+            margin-top: 70px;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            border-top: 1px solid var(--card-border);
+            padding-top: 35px;
         }
     </style>
 </head>
@@ -597,12 +799,12 @@
     <!-- Header Navbar -->
     <nav class="navbar">
         <a href="#" class="brand-logo-link">
-            <svg class="brand-svg-icon" viewBox="0 0 100 100" width="34" height="34">
-                <circle cx="50" cy="50" r="44" stroke="#4ef2d2" stroke-width="4" fill="none" opacity="0.8"/>
-                <line x1="32" y1="50" x2="32" y2="50" stroke="#4ef2d2" stroke-width="5" stroke-linecap="round"/>
-                <line x1="43" y1="34" x2="43" y2="66" stroke="#4ef2d2" stroke-width="5" stroke-linecap="round"/>
-                <line x1="57" y1="24" x2="57" y2="76" stroke="#4ef2d2" stroke-width="5" stroke-linecap="round"/>
-                <line x1="68" y1="40" x2="68" y2="60" stroke="#4ef2d2" stroke-width="5" stroke-linecap="round"/>
+            <svg class="brand-svg-icon" viewBox="0 0 100 100" width="36" height="36">
+                <circle cx="50" cy="50" r="44" stroke="#00f2fe" stroke-width="4" fill="none" opacity="0.85"/>
+                <line x1="32" y1="50" x2="32" y2="50" stroke="#00f2fe" stroke-width="5" stroke-linecap="round"/>
+                <line x1="43" y1="34" x2="43" y2="66" stroke="#00f2fe" stroke-width="5" stroke-linecap="round"/>
+                <line x1="57" y1="24" x2="57" y2="76" stroke="#00f2fe" stroke-width="5" stroke-linecap="round"/>
+                <line x1="68" y1="40" x2="68" y2="60" stroke="#00f2fe" stroke-width="5" stroke-linecap="round"/>
             </svg>
             <div class="logo-text-group">
                 <div class="logo">FATKISS <span>OFFICIAL</span></div>
@@ -621,12 +823,23 @@
         <div class="hero-subtitle">MUSIC & LEGENDS VISUALS</div>
         <p class="hero-desc">Official digital hub for Afro Zouk & Hip-hop artist releases, cinematic video shoots, and professional motion graphics.</p>
         
+        <!-- Modernized Action Buttons with FontAwesome Vectors -->
         <div class="action-btns">
-            <a href="https://wa.me/256768444578?text=Hello%20Fatkiss%2C%20I%20am%20reaching%20out%20from%20your%20website%21" target="_blank" class="btn-base btn-whatsapp">&#128172; WhatsApp</a>
-            <a href="https://www.tiktok.com/@fatkissofficialartist" target="_blank" class="btn-base btn-tiktok">&#9835; TikTok</a>
-            <a href="https://www.instagram.com/fatkisskiss" target="_blank" class="btn-base btn-instagram">&#128247; Instagram</a>
-            <a href="https://youtube.com/@fatkissofficial?si=NMsjeh0wWUcb3eTF" target="_blank" class="btn-base btn-youtube">&#9654; YouTube</a>
-            <button onclick="copyHubLink()" class="btn-base btn-share">🔗 Share Hub</button>
+            <a href="https://wa.me/256768444578?text=Hello%20Fatkiss%2C%20I%20am%20reaching%20out%20from%20your%20website%21" target="_blank" class="btn-base btn-whatsapp">
+                <i class="fa-brands fa-whatsapp"></i> WhatsApp
+            </a>
+            <a href="https://www.tiktok.com/@fatkissofficialartist" target="_blank" class="btn-base btn-tiktok">
+                <i class="fa-brands fa-tiktok"></i> TikTok
+            </a>
+            <a href="https://www.instagram.com/fatkisskiss" target="_blank" class="btn-base btn-instagram">
+                <i class="fa-brands fa-instagram"></i> Instagram
+            </a>
+            <a href="https://youtube.com/@fatkissofficial?si=NMsjeh0wWUcb3eTF" target="_blank" class="btn-base btn-youtube">
+                <i class="fa-brands fa-youtube"></i> YouTube
+            </a>
+            <button onclick="copyHubLink()" class="btn-base btn-share">
+                <i class="fa-solid fa-share-nodes"></i> Share Hub
+            </button>
         </div>
     </div>
 
@@ -637,11 +850,11 @@
             <div class="section-title">Stream <span>My Music</span></div>
         </div>
         <div class="stream-grid">
-            <a href="https://mdundo.com" target="_blank" class="stream-card">🎵 Mdundo</a>
-            <a href="https://youtube.com/@fatkissofficial" target="_blank" class="stream-card">▶️ YouTube Music</a>
-            <a href="https://spotify.com" target="_blank" class="stream-card">🎧 Spotify</a>
-            <a href="https://apple.com" target="_blank" class="stream-card">🍎 Apple Music</a>
-            <a href="https://audiomack.com" target="_blank" class="stream-card">🔥 Audiomack</a>
+            <a href="https://mdundo.com" target="_blank" class="stream-card"><i class="fa-solid fa-music"></i> Mdundo</a>
+            <a href="https://youtube.com/@fatkissofficial" target="_blank" class="stream-card"><i class="fa-brands fa-youtube"></i> YouTube Music</a>
+            <a href="https://spotify.com" target="_blank" class="stream-card"><i class="fa-brands fa-spotify"></i> Spotify</a>
+            <a href="https://apple.com" target="_blank" class="stream-card"><i class="fa-brands fa-apple"></i> Apple Music</a>
+            <a href="https://audiomack.com" target="_blank" class="stream-card"><i class="fa-solid fa-bolt"></i> Audiomack</a>
         </div>
     </div>
 
@@ -670,13 +883,15 @@
                 <img src="cwinya.jpg" alt="Cwinya Single Cover" class="card-img" onerror="this.src='AirBrush_20260924040823.png'">
                 <h3>Cwinya</h3>
                 <p>Brand new single out now!</p>
-                <div class="visualizer-box">
+                <div class="visualizer-box" id="viz-1">
                     <div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div>
                 </div>
-                <audio controls class="audio-preview">
+                <audio controls class="audio-preview" onplay="toggleVisualizer(1, true)" onpause="toggleVisualizer(1, false)" onended="toggleVisualizer(1, false)">
                     <source src="cwinya.mp3" type="audio/mpeg">
                 </audio>
-                <a href="https://youtu.be/CI5CowUAlVI?si=F6XNoNK0606H746N" target="_blank" class="card-btn">&#9654; Watch Video</a>
+                <a href="https://youtu.be/CI5CowUAlVI?si=F6XNoNK0606H746N" target="_blank" class="card-btn">
+                    <i class="fa-solid fa-circle-play"></i> Watch Video
+                </a>
             </div>
 
             <!-- MATUM-UNGO -->
@@ -687,7 +902,9 @@
                 <div class="visualizer-box">
                     <div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div>
                 </div>
-                <a href="https://youtube.com/@fatkissofficial?si=NMsjeh0wWUcb3eTF" target="_blank" class="card-btn">Stream on YouTube</a>
+                <a href="https://youtube.com/@fatkissofficial?si=NMsjeh0wWUcb3eTF" target="_blank" class="card-btn">
+                    <i class="fa-brands fa-youtube"></i> Stream on YouTube
+                </a>
             </div>
 
             <!-- JAKWO -->
@@ -698,7 +915,9 @@
                 <div class="visualizer-box">
                     <div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div>
                 </div>
-                <a href="https://youtube.com/@fatkissofficial?si=NMsjeh0wWUcb3eTF" target="_blank" class="card-btn">Stream on YouTube</a>
+                <a href="https://youtube.com/@fatkissofficial?si=NMsjeh0wWUcb3eTF" target="_blank" class="card-btn">
+                    <i class="fa-brands fa-youtube"></i> Stream on YouTube
+                </a>
             </div>
 
             <!-- JAMUSUMA -->
@@ -709,7 +928,9 @@
                 <div class="visualizer-box">
                     <div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div>
                 </div>
-                <a href="https://youtube.com/@fatkissofficial?si=NMsjeh0wWUcb3eTF" target="_blank" class="card-btn">Stream on YouTube</a>
+                <a href="https://youtube.com/@fatkissofficial?si=NMsjeh0wWUcb3eTF" target="_blank" class="card-btn">
+                    <i class="fa-brands fa-youtube"></i> Stream on YouTube
+                </a>
             </div>
 
         </div>
@@ -723,24 +944,28 @@
         </div>
         <div class="services-grid">
             <div class="service-card">
-                <h3>🎬 Music Video Directing & Shooting</h3>
+                <h3><i class="fa-solid fa-video"></i> Music Video Directing & Shooting</h3>
                 <p>Cinematic videography and professional camera work designed to make your visual releases stand out.</p>
                 <ul class="service-list">
                     <li>4K Resolution Video Capture</li>
                     <li>Professional Lighting Setups</li>
                     <li>Creative Concept & Scripting</li>
                 </ul>
-                <a href="https://wa.me/256768444578?text=Hello%20Fatkiss%2C%20I%20want%20to%20book%20a%20video%20shoot%20with%20Legends%20Visuals!" target="_blank" class="card-btn">Book Video Shoot</a>
+                <a href="https://wa.me/256768444578?text=Hello%20Fatkiss%2C%20I%20want%20to%20book%20a%20video%20shoot%20with%20Legends%20Visuals!" target="_blank" class="card-btn">
+                    <i class="fa-solid fa-calendar-check"></i> Book Video Shoot
+                </a>
             </div>
             <div class="service-card">
-                <h3>💻 Video Editing & Motion Graphics</h3>
+                <h3><i class="fa-solid fa-wand-magic-sparkles"></i> Video Editing & Motion Graphics</h3>
                 <p>High-end editing, color grading, visual effects, and custom graphic animations for artists and brands.</p>
                 <ul class="service-list">
                     <li>Advanced Color Grading</li>
                     <li>Custom Visual Effects & Text FX</li>
                     <li>Social Media Promo Cuts</li>
                 </ul>
-                <a href="https://wa.me/256768444578?text=Hello%20Fatkiss%2C%20I%20need%20video%20editing%20services%20from%20Legends%20Visuals!" target="_blank" class="card-btn">Inquire for Editing</a>
+                <a href="https://wa.me/256768444578?text=Hello%20Fatkiss%2C%20I%20need%20video%20editing%20services%20from%20Legends%20Visuals!" target="_blank" class="card-btn">
+                    <i class="fa-solid fa-envelope"></i> Inquire for Editing
+                </a>
             </div>
         </div>
     </div>
@@ -749,138 +974,3 @@
     <div class="section-container">
         <div class="section-header">
             <div class="accent-bar"></div>
-            <div class="section-title">Visual <span>Showcase</span></div>
-        </div>
-        <div class="gallery-grid">
-            <div class="gallery-item" onclick="openLightbox('AirBrush_20260519200506.png')"><img src="AirBrush_20260519200506.png" alt="Visual 1"></div>
-            <div class="gallery-item" onclick="openLightbox('17228809996135~2.jpg')"><img src="17228809996135~2.jpg" alt="Visual 2"></div>
-            <div class="gallery-item" onclick="openLightbox('1722883857854.jpg')"><img src="1722883857854.jpg" alt="Visual 3"></div>
-            <div class="gallery-item" onclick="openLightbox('17228835209216.jpg')"><img src="17228835209216.jpg" alt="Visual 4"></div>
-            <div class="gallery-item" onclick="openLightbox('4b86a4f348ed7ca998a8d25b669(T).jpg')"><img src="4b86a4f348ed7ca998a8d25b669(T).jpg" alt="Visual 5"></div>
-        </div>
-    </div>
-
-    <!-- Booking Section -->
-    <div class="section-container" id="booking">
-        <div class="section-header">
-            <div class="accent-bar"></div>
-            <div class="section-title">Booking & <span>Inquiries</span></div>
-        </div>
-        <div class="form-box">
-            <form onsubmit="sendWhatsAppBooking(event)">
-                <div class="form-group">
-                    <label>Your Name / Organization</label>
-                    <input type="text" id="booking-name" class="form-control" placeholder="Enter your full name" required>
-                </div>
-                <div class="form-group">
-                    <label>Inquiry Type</label>
-                    <select id="booking-type" class="form-control">
-                        <option>Show / Event Booking</option>
-                        <option>Video Production (Legends Visuals)</option>
-                        <option>Feature / Collaboration</option>
-                        <option>General Inquiry</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Message / Project Details</label>
-                    <textarea id="booking-msg" class="form-control" placeholder="Tell me about your project or event..." required></textarea>
-                </div>
-                <button type="submit" class="card-btn">Send Message via WhatsApp</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- EPK Section -->
-    <div class="section-container">
-        <div class="section-header">
-            <div class="accent-bar"></div>
-            <div class="section-title">Media & <span>Press Kit (EPK)</span></div>
-        </div>
-        <div class="epk-box">
-            <div class="epk-text">
-                <h3>Official Electronic Press Kit</h3>
-                <p>Download official artist biography, logos, and high-resolution press photos for event promotion and media features.</p>
-            </div>
-            <a href="https://wa.me/256768444578?text=Hello%20Fatkiss%2C%20please%20send%20me%20your%20Press%20Kit%20EPK." target="_blank" class="card-btn" style="max-width: 180px;">Request EPK</a>
-        </div>
-    </div>
-
-    <!-- Social Grid -->
-    <div class="section-container">
-        <div class="section-header">
-            <div class="accent-bar"></div>
-            <div class="section-title">Follow <span>& Connect</span></div>
-        </div>
-        <div class="social-grid">
-            <a href="https://wa.me/256768444578?text=Hello%20Fatkiss%2C%20I%20am%20reaching%20out%20from%20your%20website%21" target="_blank" class="social-card">
-                <h4>WhatsApp</h4>
-                <p>+256 768 444 578</p>
-            </a>
-            <a href="https://www.tiktok.com/@fatkissofficialartist" target="_blank" class="social-card">
-                <h4>TikTok</h4>
-                <p>@fatkissofficialartist</p>
-            </a>
-            <a href="https://www.instagram.com/fatkisskiss" target="_blank" class="social-card">
-                <h4>Instagram</h4>
-                <p>@fatkisskiss</p>
-            </a>
-            <a href="https://youtube.com/@fatkissofficial?si=NMsjeh0wWUcb3eTF" target="_blank" class="social-card">
-                <h4>YouTube</h4>
-                <p>@fatkissofficial</p>
-            </a>
-            <a href="https://www.facebook.com/share/1MEaDJwhxB/" target="_blank" class="social-card">
-                <h4>Facebook</h4>
-                <p>Fatkiss Official Page</p>
-            </a>
-        </div>
-    </div>
-
-    <!-- Lightbox Modal -->
-    <div class="lightbox-modal" id="lightbox" onclick="closeLightbox()">
-        <span class="lightbox-close">&times;</span>
-        <img src="" id="lightbox-img" class="lightbox-img" alt="Enlarged View">
-    </div>
-
-    <!-- Toast Alert -->
-    <div class="toast" id="toast">Link copied to clipboard!</div>
-
-    <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/256768444578?text=Hello%20Fatkiss%2C%20I%20am%20reaching%20out%20from%20your%20website%21" target="_blank" class="floating-whatsapp" title="Chat on WhatsApp">&#128172;</a>
-
-    <footer>
-        <p>&copy; 2026 Fatkiss Official & Legends Visuals. All Rights Reserved.</p>
-    </footer>
-
-    <!-- Interactive Scripts -->
-    <script>
-        function openLightbox(src) {
-            document.getElementById('lightbox-img').src = src;
-            document.getElementById('lightbox').classList.add('active');
-        }
-        function closeLightbox() {
-            document.getElementById('lightbox').classList.remove('active');
-        }
-        function copyHubLink() {
-            navigator.clipboard.writeText(window.location.href).then(() => {
-                showToast("Website link copied!");
-            }).catch(() => {
-                showToast("Link: " + window.location.href);
-            });
-        }
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            toast.innerText = msg;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2500);
-        }
-        function sendWhatsAppBooking(e) {
-            e.preventDefault();
-            const name = document.getElementById('booking-name').value;
-            const type = document.getElementById('booking-type').value;
-            const msg = document.getElementById('booking-msg').value;
-            const text = `Hello Fatkiss, my name is ${name}. Inquiry: ${type}. Details: ${msg}`;
-            window.open(`https://wa.me/256768444578?text=${encodeURIComponent(text)}`, '_blank');
-        }
-    </script>
-</body>
-    </html>

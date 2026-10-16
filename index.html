@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,13 +11,15 @@
     <style>
         :root {
             --bg-base: #05070a;
-            --bg-surface: linear-gradient(145deg, #0e131f, #080b13);
+            /* Translucent frosted glass surface */
+            --bg-surface: rgba(15, 20, 32, 0.65);
+            --bg-surface-hover: rgba(22, 28, 45, 0.75);
             --accent-cyan: #00f2fe;
             --accent-blue: #4facfe;
             --text-main: #ffffff;
             --text-muted: #94a3b8;
-            --border-glow: rgba(0, 242, 254, 0.25);
-            --card-border: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(0, 242, 254, 0.35);
+            --card-border: rgba(255, 255, 255, 0.12);
         }
 
         * {
@@ -36,25 +38,29 @@
             color: var(--text-main);
             line-height: 1.6;
             padding-bottom: 90px;
+            /* Rich ambient background glows to make glassmorphism stand out */
             background-image: 
-                radial-gradient(circle at 15% 15%, rgba(0, 242, 254, 0.06) 0%, transparent 45%),
-                radial-gradient(circle at 85% 85%, rgba(79, 172, 254, 0.05) 0%, transparent 45%);
+                radial-gradient(circle at 10% 20%, rgba(0, 242, 254, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 0, 127, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(79, 172, 254, 0.08) 0%, transparent 60%);
             background-attachment: fixed;
             overflow-x: hidden;
         }
 
-        /* Top Navigation */
+        /* Top Translucent Navigation */
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 14px 24px;
-            background: rgba(5, 7, 10, 0.85);
-            backdrop-filter: blur(16px);
+            background: rgba(5, 7, 10, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             position: sticky;
             top: 0;
             z-index: 100;
             border-bottom: 1px solid var(--card-border);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
         }
 
         .brand-logo-link {
@@ -65,7 +71,7 @@
         }
 
         .brand-svg-icon {
-            filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.6));
+            filter: drop-shadow(0 0 12px rgba(0, 242, 254, 0.7));
             transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -88,7 +94,7 @@
 
         .logo span {
             color: var(--accent-cyan);
-            text-shadow: 0 0 14px rgba(0, 242, 254, 0.4);
+            text-shadow: 0 0 14px rgba(0, 242, 254, 0.5);
         }
 
         .logo-sub {
@@ -100,7 +106,8 @@
         }
 
         .nav-book-btn {
-            background: transparent;
+            background: rgba(0, 242, 254, 0.08);
+            backdrop-filter: blur(10px);
             border: 1px solid var(--accent-cyan);
             color: var(--accent-cyan);
             padding: 7px 18px;
@@ -109,13 +116,13 @@
             font-weight: 700;
             text-decoration: none;
             transition: all 0.3s ease;
-            box-shadow: 0 0 10px rgba(0, 242, 254, 0.15);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
         }
 
         .nav-book-btn:hover {
             background-color: var(--accent-cyan);
             color: var(--bg-base);
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.6);
         }
 
         /* Hero Section */
@@ -140,14 +147,14 @@
             border-radius: 50%;
             background: linear-gradient(135deg, var(--accent-cyan), #ff007f, var(--accent-blue));
             z-index: -1;
-            opacity: 0.8;
-            filter: blur(10px);
+            opacity: 0.85;
+            filter: blur(12px);
             animation: pulseGlow 5s ease-in-out infinite alternate;
         }
 
         @keyframes pulseGlow {
-            0% { opacity: 0.6; filter: blur(8px); transform: scale(0.98); }
-            100% { opacity: 1; filter: blur(14px); transform: scale(1.02); }
+            0% { opacity: 0.6; filter: blur(10px); transform: scale(0.98); }
+            100% { opacity: 1; filter: blur(16px); transform: scale(1.03); }
         }
 
         .avatar-img {
@@ -155,8 +162,8 @@
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid var(--bg-base);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            border: 4px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
         }
 
         .hero h1 {
@@ -186,7 +193,7 @@
             line-height: 1.7;
         }
 
-        /* Modern Glassmorphic Action Buttons */
+        /* Glassmorphic Action Buttons */
         .action-btns {
             display: flex;
             gap: 12px;
@@ -204,9 +211,10 @@
             gap: 10px;
             font-size: 0.92rem;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
             border: 1px solid var(--card-border);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             cursor: pointer;
         }
 
@@ -216,23 +224,23 @@
         }
 
         .btn-base:hover {
-            transform: translateY(-3px);
+            transform: translateY(-4px);
         }
 
         .btn-base:hover i {
             transform: scale(1.15);
         }
 
-        /* Platform Specific Modern Styling */
+        /* Platform Translucent Styles */
         .btn-whatsapp { 
-            background: rgba(37, 211, 102, 0.12); 
+            background: rgba(37, 211, 102, 0.15); 
             border-color: rgba(37, 211, 102, 0.4); 
             color: #25d366; 
         }
         .btn-whatsapp:hover { 
             background: #25d366; 
             color: #000; 
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4); 
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5); 
         }
 
         .btn-tiktok { 
@@ -243,40 +251,40 @@
         .btn-tiktok:hover { 
             background: #ffffff; 
             color: #000; 
-            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3); 
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.4); 
         }
 
         .btn-instagram { 
-            background: rgba(225, 48, 108, 0.12); 
+            background: rgba(225, 48, 108, 0.15); 
             border-color: rgba(225, 48, 108, 0.4); 
             color: #e1306c; 
         }
         .btn-instagram:hover { 
             background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); 
             color: #ffffff; 
-            box-shadow: 0 6px 20px rgba(225, 48, 108, 0.4); 
+            box-shadow: 0 8px 25px rgba(225, 48, 108, 0.5); 
         }
 
         .btn-youtube { 
-            background: rgba(255, 0, 0, 0.12); 
+            background: rgba(255, 0, 0, 0.15); 
             border-color: rgba(255, 0, 0, 0.4); 
-            color: #ff0000; 
+            color: #ff4d4d; 
         }
         .btn-youtube:hover { 
             background: #ff0000; 
             color: #ffffff; 
-            box-shadow: 0 6px 20px rgba(255, 0, 0, 0.4); 
+            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.5); 
         }
 
         .btn-facebook { 
-            background: rgba(24, 119, 242, 0.12); 
+            background: rgba(24, 119, 242, 0.15); 
             border-color: rgba(24, 119, 242, 0.4); 
             color: #1877f2; 
         }
         .btn-facebook:hover { 
             background: #1877f2; 
             color: #ffffff; 
-            box-shadow: 0 6px 20px rgba(24, 119, 242, 0.4); 
+            box-shadow: 0 8px 25px rgba(24, 119, 242, 0.5); 
         }
 
         .btn-x-twitter { 
@@ -287,24 +295,24 @@
         .btn-x-twitter:hover { 
             background: #ffffff; 
             color: #000; 
-            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3); 
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.4); 
         }
 
         .btn-share { 
-            background: rgba(0, 242, 254, 0.1); 
+            background: rgba(0, 242, 254, 0.12); 
             color: var(--accent-cyan); 
             border-color: rgba(0, 242, 254, 0.4); 
         }
         .btn-share:hover { 
             background: var(--accent-cyan); 
             color: var(--bg-base); 
-            box-shadow: 0 6px 20px rgba(0, 242, 254, 0.4); 
+            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.5); 
         }
 
         /* Section Layouts */
         .section-container {
             max-width: 980px;
-            margin: 50px auto 0;
+            margin: 55px auto 0;
             padding: 0 20px;
         }
 
@@ -320,7 +328,7 @@
             height: 28px;
             background: linear-gradient(to bottom, var(--accent-cyan), var(--accent-blue));
             border-radius: 4px;
-            box-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.7);
         }
 
         .section-title {
@@ -331,9 +339,10 @@
 
         .section-title span {
             color: var(--accent-cyan);
+            text-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
         }
 
-        /* Stream Grid */
+        /* Stream Grid Glassmorphism */
         .stream-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -342,6 +351,8 @@
 
         .stream-card {
             background: var(--bg-surface);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             border-radius: 16px;
             padding: 18px 14px;
             text-align: center;
@@ -355,7 +366,7 @@
             justify-content: center;
             gap: 10px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         }
 
         .stream-card i {
@@ -364,9 +375,10 @@
 
         .stream-card:hover {
             transform: translateY(-5px);
+            background: var(--bg-surface-hover);
             border-color: var(--accent-cyan);
             color: var(--accent-cyan);
-            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.2);
+            box-shadow: 0 12px 30px rgba(0, 242, 254, 0.25);
         }
 
         /* Video Container */
@@ -376,9 +388,10 @@
             height: 0;
             overflow: hidden;
             border-radius: 20px;
-            border: 2px solid rgba(0, 242, 254, 0.3);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.7);
-            background: #080b13;
+            border: 2px solid rgba(0, 242, 254, 0.4);
+            box-shadow: 0 15px 45px rgba(0,0,0,0.7), 0 0 25px rgba(0, 242, 254, 0.2);
+            background: var(--bg-surface);
+            backdrop-filter: blur(16px);
         }
 
         .video-container iframe {
@@ -390,7 +403,7 @@
             border: 0;
         }
 
-        /* Cards Grid */
+        /* Glassmorphic Cards Grid */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
@@ -399,24 +412,27 @@
 
         .card {
             background: var(--bg-surface);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-radius: 20px;
             padding: 18px;
             border: 1px solid var(--card-border);
             text-align: center;
             position: relative;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
         }
 
         .card:hover {
             transform: translateY(-8px);
-            border-color: rgba(0, 242, 254, 0.5);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 20px rgba(0, 242, 254, 0.15);
+            background: var(--bg-surface-hover);
+            border-color: rgba(0, 242, 254, 0.6);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.6), 0 0 25px rgba(0, 242, 254, 0.25);
         }
 
         .card-featured {
             border: 2px solid var(--accent-cyan);
-            box-shadow: 0 0 30px rgba(0, 242, 254, 0.2);
+            box-shadow: 0 0 35px rgba(0, 242, 254, 0.25);
         }
 
         .badge {
@@ -431,7 +447,7 @@
             border-radius: 20px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            box-shadow: 0 4px 12px rgba(0, 242, 254, 0.4);
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.5);
         }
 
         .card-img {
@@ -440,6 +456,7 @@
             object-fit: cover;
             border-radius: 14px;
             margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .card h3 {
@@ -508,18 +525,18 @@
             gap: 8px;
             font-size: 0.9rem;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 242, 254, 0.35);
             border: none;
             cursor: pointer;
         }
 
         .card-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 242, 254, 0.5);
+            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.6);
             filter: brightness(1.1);
         }
 
-        /* Services Grid */
+        /* Services Grid Glassmorphic */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
@@ -528,17 +545,20 @@
 
         .service-card {
             background: var(--bg-surface);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-radius: 20px;
             padding: 28px;
             border: 1px solid var(--card-border);
             text-align: left;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
         }
 
         .service-card:hover {
             transform: translateY(-5px);
-            border-color: rgba(0, 242, 254, 0.4);
+            background: var(--bg-surface-hover);
+            border-color: rgba(0, 242, 254, 0.5);
         }
 
         .service-card h3 {
@@ -576,15 +596,17 @@
             font-weight: 900;
         }
 
-        /* Booking Form Section */
+        /* Booking Form Glassmorphic */
         .form-box {
             background: var(--bg-surface);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-radius: 20px;
             padding: 32px;
             border: 1px solid var(--card-border);
             max-width: 680px;
             margin: 0 auto;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.5);
         }
 
         .form-group {
@@ -603,8 +625,8 @@
         .form-control {
             width: 100%;
             padding: 14px 18px;
-            background-color: var(--bg-base);
-            border: 1px solid rgba(255,255,255,0.1);
+            background-color: rgba(5, 7, 10, 0.6);
+            border: 1px solid rgba(255,255,255,0.12);
             border-radius: 12px;
             color: var(--text-main);
             font-size: 0.98rem;
@@ -614,7 +636,7 @@
         .form-control:focus {
             outline: none;
             border-color: var(--accent-cyan);
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
         }
 
         textarea.form-control {
@@ -622,9 +644,11 @@
             height: 130px;
         }
 
-        /* EPK Box */
+        /* EPK Box Glassmorphic */
         .epk-box {
             background: var(--bg-surface);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-radius: 20px;
             padding: 28px;
             border: 1px solid var(--card-border);
@@ -633,7 +657,7 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 20px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
         }
 
         .epk-text h3 {
@@ -646,7 +670,7 @@
             font-size: 0.9rem;
         }
 
-        /* Social Grid */
+        /* Social Grid Glassmorphic */
         .social-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
@@ -655,6 +679,8 @@
 
         .social-card {
             background: var(--bg-surface);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-radius: 18px;
             padding: 24px 16px;
             text-align: center;
@@ -662,7 +688,7 @@
             text-decoration: none;
             color: var(--text-main);
             transition: all 0.3s ease;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -677,8 +703,9 @@
 
         .social-card:hover {
             transform: translateY(-5px);
+            background: var(--bg-surface-hover);
             border-color: var(--accent-cyan);
-            box-shadow: 0 10px 25px rgba(0, 242, 254, 0.2);
+            box-shadow: 0 12px 30px rgba(0, 242, 254, 0.25);
         }
 
         .social-card:hover i {
@@ -706,7 +733,7 @@
             padding: 12px 28px;
             border-radius: 30px;
             font-weight: 800;
-            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.6);
             transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 3000;
         }
@@ -728,7 +755,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.6);
             text-decoration: none;
             font-size: 2rem;
             z-index: 1000;
@@ -747,12 +774,14 @@
             border-top: 1px solid var(--card-border);
             padding-top: 35px;
             padding-bottom: 20px;
+            background: rgba(5, 7, 10, 0.5);
+            backdrop-filter: blur(10px);
         }
     </style>
 </head>
 <body>
 
-    <!-- Header Navbar -->
+    <!-- Header Translucent Navbar -->
     <nav class="navbar">
         <a href="#" class="brand-logo-link">
             <svg class="brand-svg-icon" viewBox="0 0 100 100" width="36" height="36">
@@ -773,14 +802,13 @@
     <!-- Hero Section -->
     <div class="hero">
         <div class="avatar-container">
-            <!-- Updated to your clear new portrait photo -->
             <img src="11008.jpg" alt="Fatkiss Official Profile" class="avatar-img" onerror="this.src='AirBrush_20260522115103.png'">
         </div>
         <h1>FATKISS <span>OFFICIAL</span></h1>
         <div class="hero-subtitle">MUSIC & LEGENDS VISUALS</div>
         <p class="hero-desc">Official digital hub for Afro Zouk & Hip-hop artist releases, cinematic video shoots, and professional motion graphics.</p>
         
-        <!-- Action Buttons -->
+        <!-- Glassmorphic Action Buttons -->
         <div class="action-btns">
             <a href="https://wa.me/256768444578?text=Hello%20Fatkiss%2C%20I%20am%20reaching%20out%20from%20your%20website%21" target="_blank" class="btn-base btn-whatsapp">
                 <i class="fa-brands fa-whatsapp"></i> WhatsApp

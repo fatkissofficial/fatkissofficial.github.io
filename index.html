@@ -127,8 +127,8 @@
         }
 
         .avatar-container {
-            width: 160px;
-            height: 160px;
+            width: 165px;
+            height: 165px;
             margin: 0 auto 24px;
             position: relative;
         }
@@ -266,6 +266,28 @@
             background: #ff0000; 
             color: #ffffff; 
             box-shadow: 0 6px 20px rgba(255, 0, 0, 0.4); 
+        }
+
+        .btn-facebook { 
+            background: rgba(24, 119, 242, 0.12); 
+            border-color: rgba(24, 119, 242, 0.4); 
+            color: #1877f2; 
+        }
+        .btn-facebook:hover { 
+            background: #1877f2; 
+            color: #ffffff; 
+            box-shadow: 0 6px 20px rgba(24, 119, 242, 0.4); 
+        }
+
+        .btn-x-twitter { 
+            background: rgba(255, 255, 255, 0.08); 
+            border-color: rgba(255, 255, 255, 0.25); 
+            color: #ffffff; 
+        }
+        .btn-x-twitter:hover { 
+            background: #ffffff; 
+            color: #000; 
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3); 
         }
 
         .btn-share { 
@@ -487,6 +509,8 @@
             font-size: 0.9rem;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+            border: none;
+            cursor: pointer;
         }
 
         .card-btn:hover {
@@ -552,76 +576,7 @@
             font-weight: 900;
         }
 
-        /* Gallery Grid */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
-        }
-
-        .gallery-item {
-            border-radius: 18px;
-            overflow: hidden;
-            height: 250px;
-            background-color: var(--bg-surface);
-            border: 1px solid var(--card-border);
-            cursor: pointer;
-            position: relative;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.08);
-        }
-
-        /* Lightbox Modal */
-        .lightbox-modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(5, 7, 10, 0.96);
-            backdrop-filter: blur(18px);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .lightbox-modal.active {
-            display: flex;
-        }
-
-        .lightbox-img {
-            max-width: 90%;
-            max-height: 85vh;
-            border-radius: 16px;
-            border: 2px solid var(--accent-cyan);
-            box-shadow: 0 0 40px rgba(0, 242, 254, 0.4);
-        }
-
-        .lightbox-close {
-            position: absolute;
-            top: 25px;
-            right: 35px;
-            font-size: 2.8rem;
-            color: var(--text-main);
-            cursor: pointer;
-            line-height: 1;
-            transition: color 0.2s;
-        }
-
-        .lightbox-close:hover {
-            color: var(--accent-cyan);
-        }
-
-        /* Booking Form */
+        /* Booking Form Section */
         .form-box {
             background: var(--bg-surface);
             border-radius: 20px;
@@ -791,6 +746,7 @@
             font-size: 0.88rem;
             border-top: 1px solid var(--card-border);
             padding-top: 35px;
+            padding-bottom: 20px;
         }
     </style>
 </head>
@@ -817,13 +773,14 @@
     <!-- Hero Section -->
     <div class="hero">
         <div class="avatar-container">
-            <img src="AirBrush_20260522115103.png" alt="Fatkiss Official" class="avatar-img">
+            <!-- Updated to your clear new portrait photo -->
+            <img src="11008.jpg" alt="Fatkiss Official Profile" class="avatar-img" onerror="this.src='AirBrush_20260522115103.png'">
         </div>
         <h1>FATKISS <span>OFFICIAL</span></h1>
         <div class="hero-subtitle">MUSIC & LEGENDS VISUALS</div>
         <p class="hero-desc">Official digital hub for Afro Zouk & Hip-hop artist releases, cinematic video shoots, and professional motion graphics.</p>
         
-        <!-- Modernized Action Buttons with FontAwesome Vectors -->
+        <!-- Action Buttons -->
         <div class="action-btns">
             <a href="https://wa.me/256768444578?text=Hello%20Fatkiss%2C%20I%20am%20reaching%20out%20from%20your%20website%21" target="_blank" class="btn-base btn-whatsapp">
                 <i class="fa-brands fa-whatsapp"></i> WhatsApp
@@ -836,6 +793,12 @@
             </a>
             <a href="https://youtube.com/@fatkissofficial?si=NMsjeh0wWUcb3eTF" target="_blank" class="btn-base btn-youtube">
                 <i class="fa-brands fa-youtube"></i> YouTube
+            </a>
+            <a href="https://www.facebook.com/share/1MEaDJwhxB/" target="_blank" class="btn-base btn-facebook">
+                <i class="fa-brands fa-facebook-f"></i> Facebook
+            </a>
+            <a href="https://x.com" target="_blank" class="btn-base btn-x-twitter">
+                <i class="fa-brands fa-x-twitter"></i> X
             </a>
             <button onclick="copyHubLink()" class="btn-base btn-share">
                 <i class="fa-solid fa-share-nodes"></i> Share Hub
@@ -970,7 +933,142 @@
         </div>
     </div>
 
-    <!-- Lightbox Visual Showcase -->
+    <!-- Booking & Inquiries Section -->
+    <div class="section-container" id="booking">
+        <div class="section-header">
+            <div class="accent-bar"></div>
+            <div class="section-title">Booking & <span>Inquiries</span></div>
+        </div>
+        <div class="form-box">
+            <form onsubmit="sendWhatsAppBooking(event)">
+                <div class="form-group">
+                    <label>Your Name / Organization</label>
+                    <input type="text" id="booking-name" class="form-control" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label>Inquiry Type</label>
+                    <select id="booking-type" class="form-control">
+                        <option>Show / Event Booking</option>
+                        <option>Video Production (Legends Visuals)</option>
+                        <option>Feature / Collaboration</option>
+                        <option>General Inquiry</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Message / Project Details</label>
+                    <textarea id="booking-msg" class="form-control" placeholder="Tell me about your project or event..." required></textarea>
+                </div>
+                <button type="submit" class="card-btn">
+                    <i class="fa-brands fa-whatsapp"></i> Send Message via WhatsApp
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- EPK Section -->
     <div class="section-container">
         <div class="section-header">
             <div class="accent-bar"></div>
+            <div class="section-title">Media & <span>Press Kit (EPK)</span></div>
+        </div>
+        <div class="epk-box">
+            <div class="epk-text">
+                <h3>Official Electronic Press Kit</h3>
+                <p>Download official artist biography, logos, and high-resolution press photos for event promotion and media features.</p>
+            </div>
+            <a href="https://wa.me/256768444578?text=Hello%20Fatkiss%2C%20please%20send%20me%20your%20Press%20Kit%20EPK." target="_blank" class="card-btn" style="max-width: 200px;">
+                <i class="fa-solid fa-file-arrow-down"></i> Request EPK
+            </a>
+        </div>
+    </div>
+
+    <!-- Follow & Connect Social Grid -->
+    <div class="section-container">
+        <div class="section-header">
+            <div class="accent-bar"></div>
+            <div class="section-title">Follow <span>& Connect</span></div>
+        </div>
+        <div class="social-grid">
+            <a href="https://wa.me/256768444578?text=Hello%20Fatkiss%2C%20I%20am%20reaching%20out%20from%20your%20website%21" target="_blank" class="social-card">
+                <i class="fa-brands fa-whatsapp"></i>
+                <h4>WhatsApp</h4>
+                <p>+256 768 444 578</p>
+            </a>
+            <a href="https://www.tiktok.com/@fatkissofficialartist" target="_blank" class="social-card">
+                <i class="fa-brands fa-tiktok"></i>
+                <h4>TikTok</h4>
+                <p>@fatkissofficialartist</p>
+            </a>
+            <a href="https://www.instagram.com/fatkisskiss" target="_blank" class="social-card">
+                <i class="fa-brands fa-instagram"></i>
+                <h4>Instagram</h4>
+                <p>@fatkisskiss</p>
+            </a>
+            <a href="https://youtube.com/@fatkissofficial?si=NMsjeh0wWUcb3eTF" target="_blank" class="social-card">
+                <i class="fa-brands fa-youtube"></i>
+                <h4>YouTube</h4>
+                <p>@fatkissofficial</p>
+            </a>
+            <a href="https://www.facebook.com/share/1MEaDJwhxB/" target="_blank" class="social-card">
+                <i class="fa-brands fa-facebook-f"></i>
+                <h4>Facebook</h4>
+                <p>Fatkiss Official Page</p>
+            </a>
+            <a href="https://x.com" target="_blank" class="social-card">
+                <i class="fa-brands fa-x-twitter"></i>
+                <h4>X (Twitter)</h4>
+                <p>@fatkissofficial</p>
+            </a>
+        </div>
+    </div>
+
+    <!-- Toast Alert -->
+    <div class="toast" id="toast">Link copied to clipboard!</div>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/256768444578?text=Hello%20Fatkiss%2C%20I%20am%20reaching%20out%20from%20your%20website%21" target="_blank" class="floating-whatsapp" title="Chat on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Official Professional Footer -->
+    <footer>
+        <p>&copy; 2026 Fatkiss Official & Legends Visuals. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        function copyHubLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                showToast("Website link copied!");
+            }).catch(() => {
+                showToast("Link: " + window.location.href);
+            });
+        }
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+        function sendWhatsAppBooking(e) {
+            e.preventDefault();
+            const name = document.getElementById('booking-name').value;
+            const type = document.getElementById('booking-type').value;
+            const msg = document.getElementById('booking-msg').value;
+            const text = `Hello Fatkiss, my name is ${name}. Inquiry: ${type}. Details: ${msg}`;
+            window.open(`https://wa.me/256768444578?text=${encodeURIComponent(text)}`, '_blank');
+        }
+        function toggleVisualizer(id, isPlaying) {
+            const vizBox = document.getElementById('viz-' + id);
+            if (vizBox) {
+                const card = vizBox.closest('.card');
+                if (isPlaying) {
+                    card.classList.add('playing');
+                } else {
+                    card.classList.remove('playing');
+                }
+            }
+        }
+    </script>
+</body>
+    </html>

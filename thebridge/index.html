@@ -11,14 +11,14 @@
     <style>
         :root {
             --bg-dark: #05070a;
-            --bg-card: rgba(15, 20, 32, 0.65);
-            --bg-card-hover: rgba(22, 28, 45, 0.8);
+            --bg-card: rgba(15, 20, 32, 0.7);
+            --bg-card-hover: rgba(22, 28, 45, 0.85);
             --accent-cyan: #00f2fe;
             --accent-pink: #ff007f;
             --accent-gold: #ffb703;
             --text-main: #ffffff;
             --text-sub: #94a3b8;
-            --border: rgba(255, 255, 255, 0.1);
+            --border: rgba(255, 255, 255, 0.12);
         }
 
         * {
@@ -32,7 +32,7 @@
             background-color: var(--bg-dark);
             color: var(--text-main);
             line-height: 1.6;
-            padding-bottom: 110px;
+            padding-bottom: 120px;
             background-image: 
                 radial-gradient(circle at 10% 10%, rgba(0, 242, 254, 0.08) 0%, transparent 40%),
                 radial-gradient(circle at 90% 90%, rgba(255, 0, 127, 0.06) 0%, transparent 40%);
@@ -46,7 +46,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 12px 20px;
-            background: rgba(5, 7, 10, 0.75);
+            background: rgba(5, 7, 10, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             position: sticky;
@@ -63,8 +63,8 @@
         }
 
         .logo-bubble-svg {
-            width: 44px;
-            height: 44px;
+            width: 42px;
+            height: 42px;
             filter: drop-shadow(0 0 12px rgba(0, 242, 254, 0.4));
             transition: transform 0.3s ease;
         }
@@ -80,7 +80,7 @@
         }
 
         .logo-title {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 900;
             letter-spacing: 1px;
             color: #ffffff;
@@ -92,9 +92,9 @@
         }
 
         .logo-sub {
-            font-size: 0.55rem;
+            font-size: 0.5rem;
             font-weight: 800;
-            letter-spacing: 2.5px;
+            letter-spacing: 2px;
             color: var(--accent-pink);
             text-transform: uppercase;
         }
@@ -104,7 +104,7 @@
             color: #fff;
             padding: 8px 16px;
             border-radius: 25px;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 800;
             text-decoration: none;
             display: flex;
@@ -121,7 +121,7 @@
 
         /* Main Container */
         .main-container {
-            max-width: 920px;
+            max-width: 960px;
             margin: 20px auto;
             padding: 0 16px;
         }
@@ -129,7 +129,7 @@
         /* Search Box */
         .search-box {
             position: relative;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .search-input {
@@ -158,42 +158,41 @@
             color: var(--text-sub);
         }
 
-        /* Category Scroll */
-        .category-scroll {
+        /* Alphabet & Category Bar */
+        .filter-row {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             overflow-x: auto;
             padding-bottom: 8px;
-            margin-bottom: 28px;
+            margin-bottom: 20px;
             scrollbar-width: none;
         }
 
-        .category-scroll::-webkit-scrollbar {
+        .filter-row::-webkit-scrollbar {
             display: none;
         }
 
-        .cat-btn {
+        .filter-chip {
             background: var(--bg-card);
-            backdrop-filter: blur(10px);
             color: var(--text-sub);
-            padding: 8px 18px;
-            border-radius: 25px;
-            font-size: 0.85rem;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
             font-weight: 700;
             border: 1px solid var(--border);
             white-space: nowrap;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
-        .cat-btn.active, .cat-btn:hover {
+        .filter-chip.active, .filter-chip:hover {
             background: var(--accent-cyan);
             color: #000;
             border-color: var(--accent-cyan);
-            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.35);
+            box-shadow: 0 4px 12px rgba(0, 242, 254, 0.3);
         }
 
-        /* Section Titles */
+        /* Section Header */
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -202,7 +201,7 @@
         }
 
         .section-title {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 800;
             display: flex;
             align-items: center;
@@ -214,114 +213,117 @@
         }
 
         .section-sub {
-            font-size: 0.78rem;
-            color: var(--text-sub);
-        }
-
-        /* Music Downloads Feed */
-        .song-feed {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            margin-bottom: 40px;
-        }
-
-        .song-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-radius: 16px;
-            padding: 14px;
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            transition: all 0.25s ease;
-        }
-
-        .song-card:hover {
-            transform: translateY(-2px);
-            background: var(--bg-card-hover);
-            border-color: var(--accent-cyan);
-            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.15);
-        }
-
-        .song-thumb {
-            width: 70px;
-            height: 70px;
-            border-radius: 12px;
-            object-fit: cover;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .song-info {
-            flex: 1;
-        }
-
-        .song-title {
-            font-size: 1rem;
-            font-weight: 800;
-            margin-bottom: 2px;
-        }
-
-        .song-artist {
-            color: var(--accent-cyan);
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        .song-meta {
-            display: flex;
-            gap: 12px;
             font-size: 0.75rem;
             color: var(--text-sub);
         }
 
-        .song-controls {
-            display: flex;
-            gap: 8px;
+        /* Grid Track Cards (Modern Portal Style) */
+        .track-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            gap: 16px;
+            margin-bottom: 40px;
         }
 
-        .btn-circle-play {
+        .track-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .track-card:hover {
+            transform: translateY(-4px);
+            background: var(--bg-card-hover);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.2);
+        }
+
+        .track-img-wrap {
+            position: relative;
+            width: 100%;
+            height: 160px;
+        }
+
+        .track-thumb {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .track-overlay-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
             background: var(--accent-cyan);
             color: #000;
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             border: none;
             cursor: pointer;
-            font-size: 1rem;
-            box-shadow: 0 4px 12px rgba(0, 242, 254, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 242, 254, 0.4);
             transition: transform 0.2s;
         }
 
-        .btn-circle-play:hover {
-            transform: scale(1.1);
+        .track-overlay-btn:hover {
+            transform: scale(1.12);
         }
 
-        .btn-circle-download {
-            background: rgba(255, 255, 255, 0.08);
-            color: var(--text-main);
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+        .track-details {
+            padding: 12px;
+            flex: 1;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            font-size: 0.95rem;
-            border: 1px solid var(--border);
-            transition: background 0.2s, border-color 0.2s;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        .btn-circle-download:hover {
+        .track-name {
+            font-size: 0.92rem;
+            font-weight: 800;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .track-artist {
+            color: var(--accent-cyan);
+            font-size: 0.78rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .track-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.72rem;
+            color: var(--text-sub);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding-top: 8px;
+        }
+
+        .download-link {
+            color: var(--text-main);
+            background: rgba(255,255,255,0.08);
+            padding: 4px 10px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: background 0.2s;
+        }
+
+        .download-link:hover {
             background: var(--accent-pink);
-            color: #ffffff;
-            border-color: var(--accent-pink);
+            color: #fff;
         }
 
         /* Street Gossip Section */
@@ -350,7 +352,7 @@
 
         .gossip-img {
             width: 100%;
-            height: 165px;
+            height: 160px;
             object-fit: cover;
         }
 
@@ -371,7 +373,7 @@
         }
 
         .gossip-title {
-            font-size: 0.98rem;
+            font-size: 0.95rem;
             font-weight: 800;
             line-height: 1.4;
             margin-bottom: 8px;
@@ -380,78 +382,8 @@
         .gossip-meta {
             display: flex;
             justify-content: space-between;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             color: var(--text-sub);
-        }
-
-        /* Promotion Tiers */
-        .promo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 18px;
-            margin-bottom: 45px;
-        }
-
-        .promo-card {
-            background: var(--bg-card);
-            backdrop-filter: blur(16px);
-            border-radius: 18px;
-            padding: 22px;
-            border: 1px solid var(--border);
-            text-align: center;
-            position: relative;
-        }
-
-        .promo-card.featured {
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 25px rgba(0, 242, 254, 0.15);
-        }
-
-        .promo-title {
-            font-size: 1.15rem;
-            font-weight: 800;
-            margin-bottom: 6px;
-        }
-
-        .promo-price {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--accent-cyan);
-            margin-bottom: 14px;
-        }
-
-        .promo-features {
-            list-style: none;
-            font-size: 0.82rem;
-            color: var(--text-sub);
-            margin-bottom: 18px;
-            text-align: left;
-        }
-
-        .promo-features li {
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .promo-features li::before {
-            content: "✓";
-            color: var(--accent-cyan);
-            font-weight: 900;
-        }
-
-        .btn-promo {
-            background: linear-gradient(135deg, var(--accent-cyan), #00b4d8);
-            color: #000;
-            width: 100%;
-            padding: 10px;
-            border-radius: 20px;
-            font-weight: 800;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 0.85rem;
-            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
         }
 
         /* Social Handles Grid */
@@ -472,7 +404,7 @@
             text-decoration: none;
             color: var(--text-main);
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -481,7 +413,7 @@
         }
 
         .social-card i {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             color: var(--accent-cyan);
         }
 
@@ -498,7 +430,7 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: rgba(7, 9, 14, 0.92);
+            background: rgba(7, 9, 14, 0.94);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-top: 1px solid var(--border);
@@ -517,19 +449,19 @@
         }
 
         .player-thumb {
-            width: 45px;
-            height: 45px;
+            width: 44px;
+            height: 44px;
             border-radius: 8px;
             object-fit: cover;
         }
 
         .player-details h4 {
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             font-weight: 800;
         }
 
         .player-details p {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             color: var(--accent-cyan);
         }
 
@@ -543,7 +475,7 @@
             background: none;
             border: none;
             color: #fff;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             cursor: pointer;
             transition: color 0.2s;
         }
@@ -555,13 +487,13 @@
         .main-play-btn {
             background: var(--accent-cyan);
             color: #000;
-            width: 42px;
-            height: 42px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
+            font-size: 0.95rem;
             border: none;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
@@ -571,16 +503,16 @@
         .floating-wa {
             position: fixed;
             bottom: 85px;
-            right: 24px;
+            right: 20px;
             background: #25d366;
             color: #ffffff;
-            width: 55px;
-            height: 55px;
+            width: 52px;
+            height: 52px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
             text-decoration: none;
             z-index: 1500;
@@ -595,7 +527,7 @@
             text-align: center;
             padding: 30px 16px;
             color: var(--text-sub);
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             border-top: 1px solid var(--border);
             background: rgba(5, 7, 10, 0.5);
         }
@@ -603,7 +535,7 @@
 </head>
 <body>
 
-    <!-- Header Navbar with Suspension Bridge Logo -->
+    <!-- Header Navbar -->
     <nav class="navbar">
         <a href="#" class="logo-container">
             <svg class="logo-bubble-svg" viewBox="0 0 120 120">
@@ -627,7 +559,7 @@
             </div>
         </a>
 
-        <a href="https://wa.me/256768444578?text=Hello%20The%20Bridge%20Music%2C%20I%20want%20to%20submit%20my%20song%20for%20upload%20and%20promotion!" target="_blank" class="btn-upload">
+        <a href="https://wa.me/256768444578?text=Hello%20The%20Bridge%20Music%2C%20I%20want%20to%20submit%20my%20song%20for%20upload!" target="_blank" class="btn-upload">
             <i class="fa-solid fa-cloud-arrow-up"></i> Submit Song
         </a>
     </nav>
@@ -635,75 +567,104 @@
     <!-- Main Container -->
     <div class="main-container">
 
-        <!-- Search Bar -->
+        <!-- Search Box -->
         <div class="search-box">
             <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            <input type="text" class="search-input" placeholder="Search trending songs, artists, street gossip news...">
+            <input type="text" class="search-input" placeholder="Search songs, artists, street scoops...">
         </div>
 
-        <!-- Category Scroll Filters -->
-        <div class="category-scroll">
-            <button class="cat-btn active">🔥 Trending Mp3s</button>
-            <button class="cat-btn">📰 Street Gossip</button>
-            <button class="cat-btn">🎬 Video Shoots</button>
-            <button class="cat-btn">⭐ Artist Promo</button>
-            <button class="cat-btn">💬 Interviews</button>
+        <!-- Filter Row (Alphabet & Categories) -->
+        <div class="filter-row">
+            <button class="filter-chip active">🔥 Trending</button>
+            <button class="filter-chip">⭐ New Releases</button>
+            <button class="filter-chip">A</button>
+            <button class="filter-chip">B</button>
+            <button class="filter-chip">C</button>
+            <button class="filter-chip">D</button>
+            <button class="filter-chip">E</button>
+            <button class="filter-chip">F</button>
+            <button class="filter-chip">G</button>
+            <button class="filter-chip">H</button>
+            <button class="filter-chip">J</button>
+            <button class="filter-chip">K</button>
+            <button class="filter-chip">M</button>
+            <button class="filter-chip">P</button>
+            <button class="filter-chip">S</button>
+            <button class="filter-chip">W</button>
         </div>
 
-        <!-- Music Downloads Section -->
+        <!-- Music Track Grid -->
         <div class="section-header">
-            <div class="section-title"><i class="fa-solid fa-fire"></i> Latest Track Downloads</div>
-            <div class="section-sub">Direct High Quality MP3</div>
+            <div class="section-title"><i class="fa-solid fa-fire"></i> Top New Songs</div>
+            <div class="section-sub">High Quality MP3</div>
         </div>
 
-        <div class="song-feed">
-            <!-- Song 1 -->
-            <div class="song-card">
-                <img src="../cwinya.jpg" alt="Cwinya" class="song-thumb" onerror="this.src='../AirBrush_20260924040823.png'">
-                <div class="song-info">
-                    <div class="song-title">Cwinya</div>
-                    <div class="song-artist">Fatkiss</div>
-                    <div class="song-meta">
-                        <span><i class="fa-solid fa-download"></i> 3,420</span>
-                        <span><i class="fa-solid fa-music"></i> MP3</span>
-                    </div>
-                </div>
-                <div class="song-controls">
-                    <button class="btn-circle-play" onclick="playTrack('Cwinya', 'Fatkiss', '../cwinya.jpg')">
+        <div class="track-grid">
+            <!-- Track 1 -->
+            <div class="track-card">
+                <div class="track-img-wrap">
+                    <img src="../cwinya.jpg" alt="Cwinya" class="track-thumb" onerror="this.src='../AirBrush_20260924040823.png'">
+                    <button class="track-overlay-btn" onclick="playTrack('Cwinya', 'Fatkiss', '../cwinya.jpg')">
                         <i class="fa-solid fa-play"></i>
                     </button>
-                    <a href="../cwinya.mp3" download class="btn-circle-download" title="Download MP3">
-                        <i class="fa-solid fa-arrow-down"></i>
-                    </a>
+                </div>
+                <div class="track-details">
+                    <div>
+                        <div class="track-name">Cwinya</div>
+                        <div class="track-artist">Fatkiss</div>
+                    </div>
+                    <div class="track-actions">
+                        <span><i class="fa-solid fa-download"></i> 3.4k</span>
+                        <a href="../cwinya.mp3" download class="download-link">Download</a>
+                    </div>
                 </div>
             </div>
 
-            <!-- Song 2 -->
-            <div class="song-card">
-                <img src="../AirBrush_20260924040823.png" alt="Matum-Ungo" class="song-thumb">
-                <div class="song-info">
-                    <div class="song-title">Matum-Ungo</div>
-                    <div class="song-artist">Fatkiss</div>
-                    <div class="song-meta">
-                        <span><i class="fa-solid fa-download"></i> 5,180</span>
-                        <span><i class="fa-solid fa-music"></i> MP3</span>
-                    </div>
-                </div>
-                <div class="song-controls">
-                    <button class="btn-circle-play" onclick="playTrack('Matum-Ungo', 'Fatkiss', '../AirBrush_20260924040823.png')">
+            <!-- Track 2 -->
+            <div class="track-card">
+                <div class="track-img-wrap">
+                    <img src="../AirBrush_20260924040823.png" alt="Matum-Ungo" class="track-thumb">
+                    <button class="track-overlay-btn" onclick="playTrack('Matum-Ungo', 'Fatkiss', '../AirBrush_20260924040823.png')">
                         <i class="fa-solid fa-play"></i>
                     </button>
-                    <a href="#" class="btn-circle-download" title="Download MP3">
-                        <i class="fa-solid fa-arrow-down"></i>
-                    </a>
+                </div>
+                <div class="track-details">
+                    <div>
+                        <div class="track-name">Matum-Ungo</div>
+                        <div class="track-artist">Fatkiss</div>
+                    </div>
+                    <div class="track-actions">
+                        <span><i class="fa-solid fa-download"></i> 5.2k</span>
+                        <a href="#" class="download-link">Download</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Track 3 -->
+            <div class="track-card">
+                <div class="track-img-wrap">
+                    <img src="../11008.jpg" alt="Jakwo" class="track-thumb" onerror="this.src='../AirBrush_20260924040823.png'">
+                    <button class="track-overlay-btn" onclick="playTrack('Jakwo', 'Fatkiss', '../11008.jpg')">
+                        <i class="fa-solid fa-play"></i>
+                    </button>
+                </div>
+                <div class="track-details">
+                    <div>
+                        <div class="track-name">Jakwo</div>
+                        <div class="track-artist">Fatkiss</div>
+                    </div>
+                    <div class="track-actions">
+                        <span><i class="fa-solid fa-download"></i> 4.1k</span>
+                        <a href="#" class="download-link">Download</a>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Street Gossip Section -->
         <div class="section-header">
-            <div class="section-title"><i class="fa-solid fa-newspaper"></i> Street Gossip & Entertainment</div>
-            <div class="section-sub">Hot Scoops & Vibes</div>
+            <div class="section-title"><i class="fa-solid fa-newspaper"></i> Street Gossip & Scoops</div>
+            <div class="section-sub">Latest Updates</div>
         </div>
 
         <div class="gossip-grid">
@@ -732,36 +693,6 @@
             </div>
         </div>
 
-        <!-- Artist Promotion Packages -->
-        <div class="section-header">
-            <div class="section-title"><i class="fa-solid fa-bullhorn"></i> Artist Promotion Packages</div>
-            <div class="section-sub">Get Featured & Boost Reach</div>
-        </div>
-
-        <div class="promo-grid">
-            <div class="promo-card">
-                <div class="promo-title">Basic Track Upload</div>
-                <div class="promo-price">Standard</div>
-                <ul class="promo-features">
-                    <li>MP3 Song Upload & Download Link</li>
-                    <li>Social Media Announcement Post</li>
-                    <li>Basic Platform Indexing</li>
-                </ul>
-                <a href="https://wa.me/256768444578?text=Hello%20The%20Bridge%20Music%2C%20I%20want%20to%20book%20a%20Basic%20Track%20Upload!" target="_blank" class="btn-promo">Book Upload</a>
-            </div>
-
-            <div class="promo-card featured">
-                <div class="promo-title">VIP Banner Promo</div>
-                <div class="promo-price">Featured</div>
-                <ul class="promo-features">
-                    <li>Top Home Page Featured Placement</li>
-                    <li>Gossip Article Feature & Interview</li>
-                    <li>TikTok & Instagram Reels Boost</li>
-                </ul>
-                <a href="https://wa.me/256768444578?text=Hello%20The%20Bridge%20Music%2C%20I%20want%20to%20book%20a%20VIP%20Featured%20Promo!" target="_blank" class="btn-promo">Book VIP Package</a>
-            </div>
-        </div>
-
         <!-- Social Connect Grid -->
         <div class="section-header">
             <div class="section-title"><i class="fa-solid fa-hashtag"></i> Connect With Us</div>
@@ -784,16 +715,12 @@
                 <i class="fa-brands fa-facebook-f"></i>
                 <span>Facebook</span>
             </a>
-            <a href="https://x.com" target="_blank" class="social-card">
-                <i class="fa-brands fa-x-twitter"></i>
-                <span>X (Twitter)</span>
-            </a>
         </div>
 
     </div>
 
     <!-- Sticky Bottom Audio Player Bar -->
-    <div class="audio-player-bar" id="audioPlayerBar">
+    <div class="audio-player-bar">
         <div class="player-info">
             <img src="../cwinya.jpg" alt="Cover" class="player-thumb" id="playerThumb" onerror="this.src='../AirBrush_20260924040823.png'">
             <div class="player-details">
@@ -803,7 +730,7 @@
         </div>
         <div class="player-controls">
             <button class="player-btn"><i class="fa-solid fa-backward-step"></i></button>
-            <button class="main-play-btn" id="mainPlayBtn" onclick="togglePlayState()">
+            <button class="main-play-btn" onclick="togglePlayState()">
                 <i class="fa-solid fa-play" id="playIcon"></i>
             </button>
             <button class="player-btn"><i class="fa-solid fa-forward-step"></i></button>
@@ -836,4 +763,4 @@
         }
     </script>
 </body>
-  </html>
+    </html>

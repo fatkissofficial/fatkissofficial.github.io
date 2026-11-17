@@ -1,32 +1,40 @@
- <!DOCTYPE html>
+!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FATKISS OFFICIAL & LEGENDS VISUALS</title>
-    
-    <!-- FontAwesome 6 for Fresh Modern Official Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <title>FATKISS OFFICIAL | The Bridge Music & Legends Visuals</title>
+
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Tailwind CSS (for layout utilities) -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
         :root {
             --bg-base: #05070a;
-            /* Translucent frosted glass surface */
-            --bg-surface: rgba(15, 20, 32, 0.65);
-            --bg-surface-hover: rgba(22, 28, 45, 0.75);
+            --bg-surface: rgba(15, 20, 32, 0.7);
+            --bg-surface-hover: rgba(22, 28, 45, 0.88);
             --accent-cyan: #00f2fe;
+            --accent-pink: #ff007f;
             --accent-blue: #4facfe;
+            --accent-gold: #ffb703;
             --text-main: #ffffff;
             --text-muted: #94a3b8;
-            --border-glow: rgba(0, 242, 254, 0.35);
             --card-border: rgba(255, 255, 255, 0.12);
+            --glow-cyan: rgba(0, 242, 254, 0.35);
+            --glow-pink: rgba(255, 0, 127, 0.35);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         html {
@@ -37,30 +45,61 @@
             background-color: var(--bg-base);
             color: var(--text-main);
             line-height: 1.6;
-            padding-bottom: 90px;
-            /* Rich ambient background glows to make glassmorphism stand out */
+            padding-bottom: 110px;
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(0, 242, 254, 0.12) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(255, 0, 127, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 50% 50%, rgba(79, 172, 254, 0.08) 0%, transparent 60%);
+                radial-gradient(circle at 10% 15%, rgba(0, 242, 254, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 85%, rgba(255, 0, 127, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(255, 183, 3, 0.06) 0%, transparent 60%);
             background-attachment: fixed;
             overflow-x: hidden;
         }
 
-        /* Top Translucent Navigation */
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #05070a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-cyan);
+        }
+
+        /* Glassmorphic Panel Styling */
+        .glass-panel {
+            background: var(--bg-surface);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 22px;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .glass-panel:hover {
+            background: var(--bg-surface-hover);
+            border-color: rgba(0, 242, 254, 0.4);
+            box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 242, 254, 0.15);
+        }
+
+        /* Top Sticky Navigation Bar */
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 14px 24px;
-            background: rgba(5, 7, 10, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            padding: 12px 24px;
+            background: rgba(5, 7, 10, 0.85);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
             border-bottom: 1px solid var(--card-border);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
         }
 
         .brand-logo-link {
@@ -71,12 +110,12 @@
         }
 
         .brand-svg-icon {
-            filter: drop-shadow(0 0 12px rgba(0, 242, 254, 0.7));
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: drop-shadow(0 0 12px rgba(0, 242, 254, 0.8));
+            transition: transform 0.4s ease;
         }
 
         .brand-logo-link:hover .brand-svg-icon {
-            transform: rotate(90deg);
+            transform: rotate(15deg) scale(1.1);
         }
 
         .logo-text-group {
@@ -85,57 +124,76 @@
             line-height: 1.1;
         }
 
-        .logo {
+        .logo-title {
             font-weight: 900;
-            font-size: 1.15rem;
-            letter-spacing: 1.5px;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
             color: var(--text-main);
         }
 
-        .logo span {
+        .logo-title span.cyan {
             color: var(--accent-cyan);
-            text-shadow: 0 0 14px rgba(0, 242, 254, 0.5);
+            text-shadow: 0 0 12px rgba(0, 242, 254, 0.6);
+        }
+
+        .logo-title span.pink {
+            color: var(--accent-pink);
+            text-shadow: 0 0 12px rgba(255, 0, 127, 0.6);
         }
 
         .logo-sub {
-            font-size: 0.55rem;
-            letter-spacing: 3px;
+            font-size: 0.56rem;
+            letter-spacing: 2.5px;
             color: var(--accent-cyan);
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 6px;
+        }
+
+        .nav-item {
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 0.82rem;
             font-weight: 700;
-            opacity: 0.9;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: #000;
+            background: var(--accent-cyan);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
         }
 
         .nav-book-btn {
-            background: rgba(0, 242, 254, 0.08);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--accent-cyan);
-            color: var(--accent-cyan);
-            padding: 7px 18px;
+            background: rgba(255, 0, 127, 0.15);
+            border: 1px solid var(--accent-pink);
+            color: var(--accent-pink);
+            padding: 8px 18px;
             border-radius: 20px;
             font-size: 0.8rem;
-            font-weight: 700;
+            font-weight: 800;
             text-decoration: none;
             transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.3);
         }
 
         .nav-book-btn:hover {
-            background-color: var(--accent-cyan);
-            color: var(--bg-base);
-            box-shadow: 0 0 25px rgba(0, 242, 254, 0.6);
+            background: var(--accent-pink);
+            color: #ffffff;
+            box-shadow: 0 0 25px rgba(255, 0, 127, 0.8);
         }
 
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 55px 20px 35px;
-            max-width: 720px;
-            margin: 0 auto;
-        }
-
+        /* Hero Avatar Animation */
         .avatar-container {
-            width: 165px;
-            height: 165px;
+            width: 175px;
+            height: 175px;
             margin: 0 auto 24px;
             position: relative;
         }
@@ -143,18 +201,18 @@
         .avatar-container::after {
             content: '';
             position: absolute;
-            inset: -6px;
+            inset: -8px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-cyan), #ff007f, var(--accent-blue));
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-pink), var(--accent-gold));
             z-index: -1;
             opacity: 0.85;
-            filter: blur(12px);
-            animation: pulseGlow 5s ease-in-out infinite alternate;
+            filter: blur(16px);
+            animation: pulseGlow 4.5s ease-in-out infinite alternate;
         }
 
         @keyframes pulseGlow {
-            0% { opacity: 0.6; filter: blur(10px); transform: scale(0.98); }
-            100% { opacity: 1; filter: blur(16px); transform: scale(1.03); }
+            0% { opacity: 0.5; filter: blur(10px); transform: scale(0.96); }
+            100% { opacity: 1; filter: blur(20px); transform: scale(1.05); }
         }
 
         .avatar-img {
@@ -162,45 +220,211 @@
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.7);
         }
 
-        .hero h1 {
-            font-size: 2.6rem;
-            font-weight: 900;
-            letter-spacing: 1.5px;
-            margin-bottom: 6px;
-            background: linear-gradient(135deg, #ffffff, var(--accent-cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-subtitle {
-            color: var(--accent-cyan);
-            font-weight: 700;
-            letter-spacing: 3px;
-            font-size: 0.88rem;
-            text-transform: uppercase;
-            margin-bottom: 16px;
-        }
-
-        .hero-desc {
-            color: var(--text-muted);
-            font-size: 1rem;
-            margin-bottom: 30px;
-            padding: 0 15px;
-            line-height: 1.7;
-        }
-
-        /* Glassmorphic Action Buttons */
-        .action-btns {
-            display: flex;
+        /* Platform Grid Cards */
+        .stream-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
         }
 
+        .stream-card {
+            background: var(--bg-surface);
+            backdrop-filter: blur(14px);
+            border-radius: 14px;
+            padding: 14px 10px;
+            text-align: center;
+            border: 1px solid var(--card-border);
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .stream-card:hover {
+            transform: translateY(-4px);
+            background: var(--bg-surface-hover);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.25);
+        }
+
+        /* Search Box & Categories */
+        .search-box {
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 18px 14px 46px;
+            background: var(--bg-surface);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--card-border);
+            border-radius: 30px;
+            color: #ffffff;
+            font-size: 0.92rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+        }
+
+        .category-scroll {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            scrollbar-width: none;
+        }
+
+        .category-scroll::-webkit-scrollbar { display: none; }
+
+        .cat-btn {
+            background: var(--bg-surface);
+            backdrop-filter: blur(10px);
+            color: var(--text-muted);
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border: 1px solid var(--card-border);
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cat-btn.active, .cat-btn:hover {
+            background: var(--accent-cyan);
+            color: #000;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.35);
+        }
+
+        /* Equalizer Wave Animation inside active song card */
+        .equalizer-box {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            height: 18px;
+        }
+
+        .eq-bar {
+            width: 3px;
+            background: var(--accent-cyan);
+            border-radius: 2px;
+            height: 4px;
+            transition: height 0.2s ease;
+        }
+
+        .song-card.playing .eq-bar {
+            animation: bounceEq 0.7s infinite alternate ease-in-out;
+        }
+
+        .song-card.playing .eq-bar:nth-child(1) { animation-delay: 0.1s; }
+        .song-card.playing .eq-bar:nth-child(2) { animation-delay: 0.3s; }
+        .song-card.playing .eq-bar:nth-child(3) { animation-delay: 0.2s; }
+        .song-card.playing .eq-bar:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes bounceEq {
+            0% { height: 4px; }
+            100% { height: 18px; }
+        }
+
+        /* Sticky Bottom Audio Player Bar */
+        .audio-player-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(5, 7, 10, 0.95);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-top: 1px solid var(--card-border);
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 2000;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.85);
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-width: 200px;
+        }
+
+        .player-thumb {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            object-fit: cover;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .player-details h4 {
+            font-size: 0.9rem;
+            font-weight: 800;
+        }
+
+        .player-details p {
+            font-size: 0.78rem;
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .player-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .player-btn:hover {
+            color: var(--accent-cyan);
+        }
+
+        .main-play-btn {
+            background: var(--accent-cyan);
+            color: #000;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
+            transition: transform 0.2s;
+        }
+
+        .main-play-btn:hover {
+            transform: scale(1.08);
+        }
+
+        /* Buttons & Social Platform Styles */
         .btn-base {
             padding: 12px 22px;
             border-radius: 30px;
@@ -209,189 +433,47 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            font-size: 0.92rem;
+            font-size: 0.9rem;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 8px 25px rgba(0,0,0,0.4);
             border: 1px solid var(--card-border);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             cursor: pointer;
         }
 
-        .btn-base i {
-            font-size: 1.15rem;
-            transition: transform 0.3s ease;
-        }
+        .btn-base:hover { transform: translateY(-3px); }
 
-        .btn-base:hover {
-            transform: translateY(-4px);
-        }
+        .btn-whatsapp { background: rgba(37, 211, 102, 0.15); border-color: rgba(37, 211, 102, 0.4); color: #25d366; }
+        .btn-whatsapp:hover { background: #25d366; color: #000; box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5); }
 
-        .btn-base:hover i {
-            transform: scale(1.15);
-        }
+        .btn-tiktok { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.25); color: #ffffff; }
+        .btn-tiktok:hover { background: #ffffff; color: #000; box-shadow: 0 8px 25px rgba(255, 255, 255, 0.4); }
 
-        /* Platform Translucent Styles */
-        .btn-whatsapp { 
-            background: rgba(37, 211, 102, 0.15); 
-            border-color: rgba(37, 211, 102, 0.4); 
-            color: #25d366; 
-        }
-        .btn-whatsapp:hover { 
-            background: #25d366; 
-            color: #000; 
-            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5); 
-        }
+        .btn-instagram { background: rgba(225, 48, 108, 0.15); border-color: rgba(225, 48, 108, 0.4); color: #e1306c; }
+        .btn-instagram:hover { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #ffffff; }
 
-        .btn-tiktok { 
-            background: rgba(255, 255, 255, 0.08); 
-            border-color: rgba(255, 255, 255, 0.25); 
-            color: #ffffff; 
-        }
-        .btn-tiktok:hover { 
-            background: #ffffff; 
-            color: #000; 
-            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.4); 
-        }
+        .btn-youtube { background: rgba(255, 0, 0, 0.15); border-color: rgba(255, 0, 0, 0.4); color: #ff4d4d; }
+        .btn-youtube:hover { background: #ff0000; color: #ffffff; box-shadow: 0 8px 25px rgba(255, 0, 0, 0.5); }
 
-        .btn-instagram { 
-            background: rgba(225, 48, 108, 0.15); 
-            border-color: rgba(225, 48, 108, 0.4); 
-            color: #e1306c; 
-        }
-        .btn-instagram:hover { 
-            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); 
-            color: #ffffff; 
-            box-shadow: 0 8px 25px rgba(225, 48, 108, 0.5); 
-        }
+        .btn-facebook { background: rgba(24, 119, 242, 0.15); border-color: rgba(24, 119, 242, 0.4); color: #1877f2; }
+        .btn-facebook:hover { background: #1877f2; color: #ffffff; }
 
-        .btn-youtube { 
-            background: rgba(255, 0, 0, 0.15); 
-            border-color: rgba(255, 0, 0, 0.4); 
-            color: #ff4d4d; 
-        }
-        .btn-youtube:hover { 
-            background: #ff0000; 
-            color: #ffffff; 
-            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.5); 
-        }
+        .btn-x-twitter { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.25); color: #ffffff; }
+        .btn-x-twitter:hover { background: #ffffff; color: #000; }
 
-        .btn-facebook { 
-            background: rgba(24, 119, 242, 0.15); 
-            border-color: rgba(24, 119, 242, 0.4); 
-            color: #1877f2; 
-        }
-        .btn-facebook:hover { 
-            background: #1877f2; 
-            color: #ffffff; 
-            box-shadow: 0 8px 25px rgba(24, 119, 242, 0.5); 
-        }
+        .btn-share { background: rgba(0, 242, 254, 0.12); color: var(--accent-cyan); border-color: rgba(0, 242, 254, 0.4); }
+        .btn-share:hover { background: var(--accent-cyan); color: #000; }
 
-        .btn-x-twitter { 
-            background: rgba(255, 255, 255, 0.08); 
-            border-color: rgba(255, 255, 255, 0.25); 
-            color: #ffffff; 
-        }
-        .btn-x-twitter:hover { 
-            background: #ffffff; 
-            color: #000; 
-            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.4); 
-        }
-
-        .btn-share { 
-            background: rgba(0, 242, 254, 0.12); 
-            color: var(--accent-cyan); 
-            border-color: rgba(0, 242, 254, 0.4); 
-        }
-        .btn-share:hover { 
-            background: var(--accent-cyan); 
-            color: var(--bg-base); 
-            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.5); 
-        }
-
-        /* Section Layouts */
-        .section-container {
-            max-width: 980px;
-            margin: 55px auto 0;
-            padding: 0 20px;
-        }
-
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 24px;
-        }
-
-        .accent-bar {
-            width: 6px;
-            height: 28px;
-            background: linear-gradient(to bottom, var(--accent-cyan), var(--accent-blue));
-            border-radius: 4px;
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.7);
-        }
-
-        .section-title {
-            font-size: 1.65rem;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-        }
-
-        .section-title span {
-            color: var(--accent-cyan);
-            text-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
-        }
-
-        /* Stream Grid Glassmorphism */
-        .stream-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 15px;
-        }
-
-        .stream-card {
-            background: var(--bg-surface);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border-radius: 16px;
-            padding: 18px 14px;
-            text-align: center;
-            border: 1px solid var(--card-border);
-            text-decoration: none;
-            color: var(--text-main);
-            font-weight: 700;
-            font-size: 0.92rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-        }
-
-        .stream-card i {
-            font-size: 1.2rem;
-        }
-
-        .stream-card:hover {
-            transform: translateY(-5px);
-            background: var(--bg-surface-hover);
-            border-color: var(--accent-cyan);
-            color: var(--accent-cyan);
-            box-shadow: 0 12px 30px rgba(0, 242, 254, 0.25);
-        }
-
-        /* Video Container */
+        /* Responsive Video Container */
         .video-container {
             position: relative;
             padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
             border-radius: 20px;
-            border: 2px solid rgba(0, 242, 254, 0.4);
-            box-shadow: 0 15px 45px rgba(0,0,0,0.7), 0 0 25px rgba(0, 242, 254, 0.2);
+            border: 2px solid rgba(0, 242, 254, 0.35);
+            box-shadow: 0 15px 45px rgba(0,0,0,0.7), 0 0 25px rgba(0, 242, 254, 0.25);
             background: var(--bg-surface);
-            backdrop-filter: blur(16px);
         }
 
         .video-container iframe {
@@ -403,333 +485,38 @@
             border: 0;
         }
 
-        /* Glassmorphic Cards Grid */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
-            gap: 22px;
-        }
-
-        .card {
-            background: var(--bg-surface);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-radius: 20px;
-            padding: 18px;
-            border: 1px solid var(--card-border);
-            text-align: center;
-            position: relative;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            background: var(--bg-surface-hover);
-            border-color: rgba(0, 242, 254, 0.6);
-            box-shadow: 0 18px 40px rgba(0,0,0,0.6), 0 0 25px rgba(0, 242, 254, 0.25);
-        }
-
-        .card-featured {
-            border: 2px solid var(--accent-cyan);
-            box-shadow: 0 0 35px rgba(0, 242, 254, 0.25);
-        }
-
-        .badge {
-            position: absolute;
-            top: 26px;
-            right: 26px;
-            background: linear-gradient(135deg, var(--accent-cyan), #10b981);
-            color: #05070a;
-            font-weight: 900;
-            font-size: 0.7rem;
-            padding: 5px 12px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(0, 242, 254, 0.5);
-        }
-
-        .card-img {
-            width: 100%;
-            height: 230px;
-            object-fit: cover;
-            border-radius: 14px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 6px;
-            font-weight: 800;
-        }
-
-        .card p {
-            color: var(--text-muted);
-            font-size: 0.88rem;
-            margin-bottom: 16px;
-        }
-
-        .visualizer-box {
+        /* Floating WhatsApp Icon */
+        .floating-wa {
+            position: fixed;
+            bottom: 85px;
+            right: 24px;
+            background: linear-gradient(135deg, #25d366, #128c7e);
+            color: #ffffff;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
             display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            gap: 5px;
-            height: 24px;
-            margin-bottom: 14px;
-        }
-
-        .v-bar {
-            width: 4px;
-            background-color: var(--accent-cyan);
-            border-radius: 2px;
-            height: 6px;
-            opacity: 0.4;
-            transition: height 0.2s ease;
-        }
-
-        .card.playing .v-bar {
-            animation: bounce 0.8s ease-in-out infinite alternate;
-        }
-
-        .v-bar:nth-child(2) { animation-delay: 0.15s; }
-        .v-bar:nth-child(3) { animation-delay: 0.3s; }
-        .v-bar:nth-child(4) { animation-delay: 0.1s; }
-        .v-bar:nth-child(5) { animation-delay: 0.4s; }
-
-        @keyframes bounce {
-            0% { height: 6px; opacity: 0.4; }
-            100% { height: 22px; opacity: 1; }
-        }
-
-        .audio-preview {
-            width: 100%;
-            margin-bottom: 15px;
-            height: 38px;
-            accent-color: var(--accent-cyan);
-            border-radius: 8px;
-        }
-
-        .card-btn {
-            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
-            color: #05070a;
-            width: 100%;
-            padding: 12px;
-            border-radius: 25px;
-            font-weight: 800;
-            text-decoration: none;
-            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 6px 20px rgba(0, 242, 254, 0.35);
-            border: none;
-            cursor: pointer;
-        }
-
-        .card-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.6);
-            filter: brightness(1.1);
-        }
-
-        /* Services Grid Glassmorphic */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-            gap: 22px;
-        }
-
-        .service-card {
-            background: var(--bg-surface);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-radius: 20px;
-            padding: 28px;
-            border: 1px solid var(--card-border);
-            text-align: left;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-            transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
-        }
-
-        .service-card:hover {
-            transform: translateY(-5px);
-            background: var(--bg-surface-hover);
-            border-color: rgba(0, 242, 254, 0.5);
-        }
-
-        .service-card h3 {
-            font-size: 1.3rem;
-            color: var(--accent-cyan);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .service-card p {
-            color: var(--text-muted);
-            font-size: 0.92rem;
-            margin-bottom: 18px;
-        }
-
-        .service-list {
-            list-style: none;
-            margin-bottom: 22px;
-        }
-
-        .service-list li {
-            font-size: 0.88rem;
-            color: #cbd5e1;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .service-list li::before {
-            content: "✓";
-            color: var(--accent-cyan);
-            font-weight: 900;
-        }
-
-        /* Booking Form Glassmorphic */
-        .form-box {
-            background: var(--bg-surface);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-radius: 20px;
-            padding: 32px;
-            border: 1px solid var(--card-border);
-            max-width: 680px;
-            margin: 0 auto;
-            box-shadow: 0 12px 35px rgba(0,0,0,0.5);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.88rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--text-muted);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 14px 18px;
-            background-color: rgba(5, 7, 10, 0.6);
-            border: 1px solid rgba(255,255,255,0.12);
-            border-radius: 12px;
-            color: var(--text-main);
-            font-size: 0.98rem;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
-        }
-
-        textarea.form-control {
-            resize: vertical;
-            height: 130px;
-        }
-
-        /* EPK Box Glassmorphic */
-        .epk-box {
-            background: var(--bg-surface);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-radius: 20px;
-            padding: 28px;
-            border: 1px solid var(--card-border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-        }
-
-        .epk-text h3 {
-            font-size: 1.25rem;
-            margin-bottom: 6px;
-        }
-
-        .epk-text p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* Social Grid Glassmorphic */
-        .social-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
-            gap: 16px;
-        }
-
-        .social-card {
-            background: var(--bg-surface);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-radius: 18px;
-            padding: 24px 16px;
-            text-align: center;
-            border: 1px solid var(--card-border);
-            text-decoration: none;
-            color: var(--text-main);
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .social-card i {
             font-size: 1.8rem;
-            color: var(--accent-cyan);
-            transition: transform 0.3s ease;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+            text-decoration: none;
+            z-index: 1500;
+            transition: transform 0.25s ease;
         }
 
-        .social-card:hover {
-            transform: translateY(-5px);
-            background: var(--bg-surface-hover);
-            border-color: var(--accent-cyan);
-            box-shadow: 0 12px 30px rgba(0, 242, 254, 0.25);
+        .floating-wa:hover {
+            transform: scale(1.12);
         }
 
-        .social-card:hover i {
-            transform: scale(1.15);
-        }
-
-        .social-card h4 {
-            font-size: 1.05rem;
-            font-weight: 700;
-        }
-
-        .social-card p {
-            color: var(--text-muted);
-            font-size: 0.82rem;
-        }
-
-        /* Toast Alert */
+        /* Toast Container */
         .toast {
             position: fixed;
-            bottom: 30px;
+            bottom: 95px;
             left: 50%;
             transform: translateX(-50%) translateY(120px);
             background: var(--accent-cyan);
-            color: var(--bg-base);
+            color: #000;
             padding: 12px 28px;
             border-radius: 30px;
             font-weight: 800;
@@ -741,362 +528,598 @@
         .toast.show {
             transform: translateX(-50%) translateY(0);
         }
-
-        /* Floating WhatsApp Button */
-        .floating-whatsapp {
-            position: fixed;
-            bottom: 28px;
-            right: 28px;
-            background: linear-gradient(135deg, #25d366, #128c7e);
-            color: #ffffff;
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.6);
-            text-decoration: none;
-            font-size: 2rem;
-            z-index: 1000;
-            transition: transform 0.3s ease;
-        }
-
-        .floating-whatsapp:hover {
-            transform: scale(1.1);
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 70px;
-            color: var(--text-muted);
-            font-size: 0.88rem;
-            border-top: 1px solid var(--card-border);
-            padding-top: 35px;
-            padding-bottom: 20px;
-            background: rgba(5, 7, 10, 0.5);
-            backdrop-filter: blur(10px);
-        }
     </style>
 </head>
 <body>
 
-    <!-- Header Translucent Navbar -->
+    <!-- Unified Sticky Top Navbar -->
     <nav class="navbar">
-        <a href="#" class="brand-logo-link">
-            <svg class="brand-svg-icon" viewBox="0 0 100 100" width="36" height="36">
-                <circle cx="50" cy="50" r="44" stroke="#00f2fe" stroke-width="4" fill="none" opacity="0.85"/>
-                <line x1="32" y1="50" x2="32" y2="50" stroke="#00f2fe" stroke-width="5" stroke-linecap="round"/>
-                <line x1="43" y1="34" x2="43" y2="66" stroke="#00f2fe" stroke-width="5" stroke-linecap="round"/>
-                <line x1="57" y1="24" x2="57" y2="76" stroke="#00f2fe" stroke-width="5" stroke-linecap="round"/>
-                <line x1="68" y1="40" x2="68" y2="60" stroke="#00f2fe" stroke-width="5" stroke-linecap="round"/>
+        <a href="#home" class="brand-logo-link">
+            <svg class="brand-svg-icon w-9 h-9" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="45" stroke="url(#cyanGlow)" stroke-width="6"/>
+                <path d="M30 68V32L72 50L30 68Z" fill="url(#pinkGlow)"/>
+                <defs>
+                    <linearGradient id="cyanGlow" x1="0" y1="0" x2="100" y2="100">
+                        <stop offset="0%" stop-color="#00f2fe"/>
+                        <stop offset="100%" stop-color="#4facfe"/>
+                    </linearGradient>
+                    <linearGradient id="pinkGlow" x1="0" y1="0" x2="100" y2="100">
+                        <stop offset="0%" stop-color="#ff007f"/>
+                        <stop offset="100%" stop-color="#ffb703"/>
+                    </linearGradient>
+                </defs>
             </svg>
             <div class="logo-text-group">
-                <div class="logo">FATKISS <span>OFFICIAL</span></div>
-                <div class="logo-sub">LEGENDS VISUALS</div>
+                <div class="logo-title">FATKISS<span class="cyan"> x </span><span class="pink">LEGENDS</span></div>
+                <div class="logo-sub">THE BRIDGE MUSIC HUB</div>
             </div>
         </a>
-        <a href="#booking" class="nav-book-btn">Book Now</a>
+
+        <!-- Nav Desktop Links -->
+        <div class="hidden md:flex nav-links">
+            <a href="#home" class="nav-item active">Home</a>
+            <a href="#music-hub" class="nav-item">Music & Downloads</a>
+            <a href="#gossip-hub" class="nav-item">Street Gossip</a>
+            <a href="#visuals-hub" class="nav-item">Legends Visuals</a>
+            <a href="#promo-hub" class="nav-item">Promo & Booking</a>
+        </div>
+
+        <a href="#booking-form" class="nav-book-btn"><i class="fa-brands fa-whatsapp mr-1"></i> Book Now</a>
     </nav>
 
-    <!-- Hero Section -->
-    <div class="hero">
-        <div class="avatar-container">
-            <img src="11008.jpg" alt="Fatkiss Official Profile" class="avatar-img" onerror="this.src='AirBrush_20260522115103.png'">
-        </div>
-        <h1>FATKISS <span>OFFICIAL</span></h1>
-        <div class="hero-subtitle">MUSIC & LEGENDS VISUALS</div>
-        <p class="hero-desc">Official digital hub for Afro Zouk & Hip-hop artist releases, cinematic video shoots, and professional motion graphics.</p>
-        
-        <!-- Glassmorphic Action Buttons -->
-        <div class="action-btns">
-            <a href="https://wa.me/256768444578?text=Hello%20Fatkiss%2C%20I%20am%20reaching%20out%20from%20your%20website%21" target="_blank" class="btn-base btn-whatsapp">
-                <i class="fa-brands fa-whatsapp"></i> WhatsApp
-            </a>
-            <a href="https://www.tiktok.com/@fatkissofficialartist" target="_blank" class="btn-base btn-tiktok">
-                <i class="fa-brands fa-tiktok"></i> TikTok
-            </a>
-            <a href="https://www.instagram.com/fatkisskiss" target="_blank" class="btn-base btn-instagram">
-                <i class="fa-brands fa-instagram"></i> Instagram
-            </a>
-            <a href="https://youtube.com/@fatkissofficial?si=NMsjeh0wWUcb3eTF" target="_blank" class="btn-base btn-youtube">
-                <i class="fa-brands fa-youtube"></i> YouTube
-            </a>
-            <a href="https://www.facebook.com/share/1MEaDJwhxB/" target="_blank" class="btn-base btn-facebook">
-                <i class="fa-brands fa-facebook-f"></i> Facebook
-            </a>
-            <a href="https://x.com" target="_blank" class="btn-base btn-x-twitter">
-                <i class="fa-brands fa-x-twitter"></i> X
-            </a>
-            <button onclick="copyHubLink()" class="btn-base btn-share">
-                <i class="fa-solid fa-share-nodes"></i> Share Hub
-            </button>
-        </div>
-    </div>
+    <!-- Main Content Container -->
+    <main class="max-w-5xl mx-auto px-4 pt-6">
 
-    <!-- Music Streaming Section -->
-    <div class="section-container">
-        <div class="section-header">
-            <div class="accent-bar"></div>
-            <div class="section-title">Stream <span>My Music</span></div>
-        </div>
-        <div class="stream-grid">
-            <a href="https://mdundo.com" target="_blank" class="stream-card"><i class="fa-solid fa-music"></i> Mdundo</a>
-            <a href="https://youtube.com/@fatkissofficial" target="_blank" class="stream-card"><i class="fa-brands fa-youtube"></i> YouTube Music</a>
-            <a href="https://spotify.com" target="_blank" class="stream-card"><i class="fa-brands fa-spotify"></i> Spotify</a>
-            <a href="https://apple.com" target="_blank" class="stream-card"><i class="fa-brands fa-apple"></i> Apple Music</a>
-            <a href="https://audiomack.com" target="_blank" class="stream-card"><i class="fa-solid fa-bolt"></i> Audiomack</a>
-        </div>
-    </div>
-
-    <!-- Featured Video Section -->
-    <div class="section-container">
-        <div class="section-header">
-            <div class="accent-bar"></div>
-            <div class="section-title">Featured <span>Music Video</span></div>
-        </div>
-        <div class="video-container">
-            <iframe src="https://www.youtube.com/embed/CI5CowUAlVI" title="Fatkiss Song Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-    </div>
-
-    <!-- Latest Releases Section -->
-    <div class="section-container">
-        <div class="section-header">
-            <div class="accent-bar"></div>
-            <div class="section-title">Latest <span>Releases</span></div>
-        </div>
-        <div class="cards-grid">
-
-            <!-- CWINYA -->
-            <div class="card card-featured">
-                <span class="badge">NEW</span>
-                <img src="cwinya.jpg" alt="Cwinya Single Cover" class="card-img" onerror="this.src='AirBrush_20260924040823.png'">
-                <h3>Cwinya</h3>
-                <p>Brand new single out now!</p>
-                <div class="visualizer-box" id="viz-1">
-                    <div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div>
-                </div>
-                <audio controls class="audio-preview" onplay="toggleVisualizer(1, true)" onpause="toggleVisualizer(1, false)" onended="toggleVisualizer(1, false)">
-                    <source src="cwinya.mp3" type="audio/mpeg">
-                </audio>
-                <a href="https://youtu.be/CI5CowUAlVI?si=F6XNoNK0606H746N" target="_blank" class="card-btn">
-                    <i class="fa-solid fa-circle-play"></i> Watch Video
-                </a>
+        <!-- HERO SECTION -->
+        <section id="home" class="text-center py-8">
+            <div class="avatar-container">
+                <img src="https://placehold.co/300x300/0f1420/00f2fe?text=FATKISS+OFFICIAL" alt="Fatkiss Official" class="avatar-img" onerror="this.src='https://placehold.co/300x300/05070a/ffffff?text=FATKISS'">
             </div>
 
-            <!-- MATUM-UNGO -->
-            <div class="card">
-                <img src="AirBrush_20260924040823.png" alt="Matum-Ungo Single Cover" class="card-img">
-                <h3>Matum-Ungo</h3>
-                <p>Official single release.</p>
-                <div class="visualizer-box">
-                    <div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div>
-                </div>
-                <a href="https://youtube.com/@fatkissofficial?si=NMsjeh0wWUcb3eTF" target="_blank" class="card-btn">
-                    <i class="fa-brands fa-youtube"></i> Stream on YouTube
-                </a>
-            </div>
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-2 bg-gradient-to-r from-white via-cyan-300 to-cyan-500 bg-clip-text text-transparent">
+                FATKISS OFFICIAL
+            </h1>
+            <p class="text-cyan-400 font-extrabold tracking-widest text-xs md:text-sm uppercase mb-4">
+                Afro Zouk & Hip-Hop Artist • Founder of Legends Visuals
+            </p>
+            <p class="text-slate-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed mb-8">
+                Official Digital Hub for Afro-pop, Afrobeats & Hip-hop Releases, Cinematic Video Shoots, Motion Graphics & Music Downloads.
+            </p>
 
-            <!-- JAKWO -->
-            <div class="card">
-                <img src="AirBrush_20260507133645.png" alt="Jakwo Single Cover" class="card-img">
-                <h3>Jakwo</h3>
-                <p>Listen to the official track release.</p>
-                <div class="visualizer-box">
-                    <div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div>
-                </div>
-                <a href="https://youtube.com/@fatkissofficial?si=NMsjeh0wWUcb3eTF" target="_blank" class="card-btn">
-                    <i class="fa-brands fa-youtube"></i> Stream on YouTube
+            <!-- Social Action Buttons -->
+            <div class="flex flex-wrap gap-3 justify-center mb-10">
+                <a href="https://wa.me/256768444578" target="_blank" class="btn-base btn-whatsapp">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp
                 </a>
-            </div>
-
-            <!-- JAMUSUMA -->
-            <div class="card">
-                <img src="AirBrush_20260524094633.png" alt="Jamusuma Single Cover" class="card-img">
-                <h3>Jamusuma</h3>
-                <p>Listen to the official track release.</p>
-                <div class="visualizer-box">
-                    <div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div><div class="v-bar"></div>
-                </div>
-                <a href="https://youtube.com/@fatkissofficial?si=NMsjeh0wWUcb3eTF" target="_blank" class="card-btn">
-                    <i class="fa-brands fa-youtube"></i> Stream on YouTube
+                <a href="https://www.tiktok.com/@fatkissofficialartist" target="_blank" class="btn-base btn-tiktok">
+                    <i class="fa-brands fa-tiktok"></i> TikTok
                 </a>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- Legends Visuals Services -->
-    <div class="section-container">
-        <div class="section-header">
-            <div class="accent-bar"></div>
-            <div class="section-title">Legends <span>Visuals Services</span></div>
-        </div>
-        <div class="services-grid">
-            <div class="service-card">
-                <h3><i class="fa-solid fa-video"></i> Music Video Directing & Shooting</h3>
-                <p>Cinematic videography and professional camera work designed to make your visual releases stand out.</p>
-                <ul class="service-list">
-                    <li>4K Resolution Video Capture</li>
-                    <li>Professional Lighting Setups</li>
-                    <li>Creative Concept & Scripting</li>
-                </ul>
-                <a href="https://wa.me/256768444578?text=Hello%20Fatkiss%2C%20I%20want%20to%20book%20a%20video%20shoot%20with%20Legends%20Visuals!" target="_blank" class="card-btn">
-                    <i class="fa-solid fa-calendar-check"></i> Book Video Shoot
+                <a href="https://www.instagram.com/fatkisskiss" target="_blank" class="btn-base btn-instagram">
+                    <i class="fa-brands fa-instagram"></i> Instagram
                 </a>
-            </div>
-            <div class="service-card">
-                <h3><i class="fa-solid fa-wand-magic-sparkles"></i> Video Editing & Motion Graphics</h3>
-                <p>High-end editing, color grading, visual effects, and custom graphic animations for artists and brands.</p>
-                <ul class="service-list">
-                    <li>Advanced Color Grading</li>
-                    <li>Custom Visual Effects & Text FX</li>
-                    <li>Social Media Promo Cuts</li>
-                </ul>
-                <a href="https://wa.me/256768444578?text=Hello%20Fatkiss%2C%20I%20need%20video%20editing%20services%20from%20Legends%20Visuals!" target="_blank" class="card-btn">
-                    <i class="fa-solid fa-envelope"></i> Inquire for Editing
+                <a href="https://www.youtube.com/@fatkissofficial" target="_blank" class="btn-base btn-youtube">
+                    <i class="fa-brands fa-youtube"></i> YouTube
                 </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Booking & Inquiries Section -->
-    <div class="section-container" id="booking">
-        <div class="section-header">
-            <div class="accent-bar"></div>
-            <div class="section-title">Booking & <span>Inquiries</span></div>
-        </div>
-        <div class="form-box">
-            <form onsubmit="sendWhatsAppBooking(event)">
-                <div class="form-group">
-                    <label>Your Name / Organization</label>
-                    <input type="text" id="booking-name" class="form-control" placeholder="Enter your full name" required>
-                </div>
-                <div class="form-group">
-                    <label>Inquiry Type</label>
-                    <select id="booking-type" class="form-control">
-                        <option>Show / Event Booking</option>
-                        <option>Video Production (Legends Visuals)</option>
-                        <option>Feature / Collaboration</option>
-                        <option>General Inquiry</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Message / Project Details</label>
-                    <textarea id="booking-msg" class="form-control" placeholder="Tell me about your project or event..." required></textarea>
-                </div>
-                <button type="submit" class="card-btn">
-                    <i class="fa-brands fa-whatsapp"></i> Send Message via WhatsApp
+                <a href="https://facebook.com" target="_blank" class="btn-base btn-facebook">
+                    <i class="fa-brands fa-facebook"></i> Facebook
+                </a>
+                <a href="https://twitter.com" target="_blank" class="btn-base btn-x-twitter">
+                    <i class="fa-brands fa-x-twitter"></i> X
+                </a>
+                <button onclick="copyHubLink()" class="btn-base btn-share">
+                    <i class="fa-solid fa-share-nodes"></i> Share Hub
                 </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- EPK Section -->
-    <div class="section-container">
-        <div class="section-header">
-            <div class="accent-bar"></div>
-            <div class="section-title">Media & <span>Press Kit (EPK)</span></div>
-        </div>
-        <div class="epk-box">
-            <div class="epk-text">
-                <h3>Official Electronic Press Kit</h3>
-                <p>Download official artist biography, logos, and high-resolution press photos for event promotion and media features.</p>
             </div>
-            <a href="https://wa.me/256768444578?text=Hello%20Fatkiss%2C%20please%20send%20me%20your%20Press%20Kit%20EPK." target="_blank" class="card-btn" style="max-width: 200px;">
-                <i class="fa-solid fa-file-arrow-down"></i> Request EPK
-            </a>
-        </div>
-    </div>
 
-    <!-- Follow & Connect Social Grid -->
-    <div class="section-container">
-        <div class="section-header">
-            <div class="accent-bar"></div>
-            <div class="section-title">Follow <span>& Connect</span></div>
-        </div>
-        <div class="social-grid">
-            <a href="https://wa.me/256768444578?text=Hello%20Fatkiss%2C%20I%20am%20reaching%20out%20from%20your%20website%21" target="_blank" class="social-card">
-                <i class="fa-brands fa-whatsapp"></i>
-                <h4>WhatsApp</h4>
-                <p>+256 768 444 578</p>
-            </a>
-            <a href="https://www.tiktok.com/@fatkissofficialartist" target="_blank" class="social-card">
-                <i class="fa-brands fa-tiktok"></i>
-                <h4>TikTok</h4>
-                <p>@fatkissofficialartist</p>
-            </a>
-            <a href="https://www.instagram.com/fatkisskiss" target="_blank" class="social-card">
-                <i class="fa-brands fa-instagram"></i>
-                <h4>Instagram</h4>
-                <p>@fatkisskiss</p>
-            </a>
-            <a href="https://youtube.com/@fatkissofficial?si=NMsjeh0wWUcb3eTF" target="_blank" class="social-card">
-                <i class="fa-brands fa-youtube"></i>
-                <h4>YouTube</h4>
-                <p>@fatkissofficial</p>
-            </a>
-            <a href="https://www.facebook.com/share/1MEaDJwhxB/" target="_blank" class="social-card">
-                <i class="fa-brands fa-facebook-f"></i>
-                <h4>Facebook</h4>
-                <p>Fatkiss Official Page</p>
-            </a>
-            <a href="https://x.com" target="_blank" class="social-card">
-                <i class="fa-brands fa-x-twitter"></i>
-                <h4>X (Twitter)</h4>
-                <p>@fatkissofficial</p>
-            </a>
-        </div>
-    </div>
+            <!-- Music Streaming Platforms -->
+            <div class="glass-panel p-6 mb-12">
+                <h3 class="text-xs font-extrabold uppercase tracking-widest text-slate-400 mb-4 text-left">
+                    <i class="fa-solid fa-compact-disc text-cyan-400 mr-2"></i> Stream Fatkiss Music Across Platforms
+                </h3>
+                <div class="stream-grid">
+                    <a href="https://mdundo.com" target="_blank" class="stream-card">
+                        <i class="fa-solid fa-music text-yellow-400"></i> Mdundo
+                    </a>
+                    <a href="https://youtube.com/@fatkissofficial" target="_blank" class="stream-card">
+                        <i class="fa-brands fa-youtube text-red-500"></i> YouTube
+                    </a>
+                    <a href="https://open.spotify.com" target="_blank" class="stream-card">
+                        <i class="fa-brands fa-spotify text-green-400"></i> Spotify
+                    </a>
+                    <a href="https://music.apple.com" target="_blank" class="stream-card">
+                        <i class="fa-brands fa-apple text-pink-500"></i> Apple Music
+                    </a>
+                    <a href="https://audiomack.com" target="_blank" class="stream-card">
+                        <i class="fa-solid fa-bolt text-orange-400"></i> Audiomack
+                    </a>
+                </div>
+            </div>
+        </section>
 
-    <!-- Toast Alert -->
-    <div class="toast" id="toast">Link copied to clipboard!</div>
+        <!-- THE BRIDGE MUSIC & SONG DOWNLOADS SECTION -->
+        <section id="music-hub" class="pt-8 mb-16">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-2 h-7 bg-gradient-to-b from-cyan-400 to-pink-500 rounded-sm"></div>
+                <h2 class="text-2xl font-black tracking-wide">
+                    THE BRIDGE MUSIC <span class="text-cyan-400">TRACK DOWNLOADS</span>
+                </h2>
+            </div>
+
+            <!-- Search Bar & Filters -->
+            <div class="mb-6 space-y-4">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="searchInput" onkeyup="filterSongs()" placeholder="Search tracks by title or artist..." class="search-input">
+                </div>
+
+                <div class="category-scroll">
+                    <button class="cat-btn active" onclick="filterCategory('all', this)">🔥 All Updates</button>
+                    <button class="cat-btn" onclick="filterCategory('mp3', this)">🎵 Trending MP3s</button>
+                    <button class="cat-btn" onclick="filterCategory('gossip', this)">📰 Street Gossip</button>
+                    <button class="cat-btn" onclick="filterCategory('shoots', this)">🎬 Video Shoots</button>
+                    <button class="cat-btn" onclick="filterCategory('promo', this)">⭐ Artist Promo</button>
+                </div>
+            </div>
+
+            <!-- Track Downloads Grid -->
+            <div class="grid md:grid-cols-2 gap-4 mb-10" id="songsContainer">
+                <!-- Track 1: Cwinya -->
+                <div class="glass-panel p-4 flex items-center justify-between gap-4 song-card song-item" data-title="Cwinya" data-category="mp3" id="card-Cwinya">
+                    <div class="flex items-center gap-3">
+                        <img src="https://placehold.co/100x100/0f1420/00f2fe?text=Cwinya" alt="Cwinya" class="w-16 h-16 rounded-xl object-cover border border-white/10">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h3 class="font-bold text-base">Cwinya</h3>
+                                <div class="equalizer-box">
+                                    <div class="eq-bar"></div>
+                                    <div class="eq-bar"></div>
+                                    <div class="eq-bar"></div>
+                                    <div class="eq-bar"></div>
+                                </div>
+                            </div>
+                            <p class="text-cyan-400 text-xs font-semibold">Fatkiss Official</p>
+                            <span class="text-slate-400 text-xs"><i class="fa-solid fa-download text-pink-500 mr-1"></i> 3,420 High Quality MP3</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="playTrack('Cwinya', 'Fatkiss Official', 'https://placehold.co/100x100/0f1420/00f2fe?text=Cwinya')" class="w-10 h-10 rounded-full bg-cyan-400 text-black flex items-center justify-center hover:scale-105 transition shadow-lg shadow-cyan-500/30">
+                            <i class="fa-solid fa-play"></i>
+                        </button>
+                        <a href="#" onclick="triggerDownload('Cwinya'); return false;" class="w-10 h-10 rounded-full bg-white/10 border border-white/10 text-white flex items-center justify-center hover:bg-pink-600 transition">
+                            <i class="fa-solid fa-arrow-down"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Track 2: Matum-Ungo -->
+                <div class="glass-panel p-4 flex items-center justify-between gap-4 song-card song-item" data-title="Matum-Ungo" data-category="mp3" id="card-Matum-Ungo">
+                    <div class="flex items-center gap-3">
+                        <img src="https://placehold.co/100x100/0f1420/ff007f?text=Matum-Ungo" alt="Matum-Ungo" class="w-16 h-16 rounded-xl object-cover border border-white/10">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h3 class="font-bold text-base">Matum-Ungo</h3>
+                                <div class="equalizer-box">
+                                    <div class="eq-bar"></div>
+                                    <div class="eq-bar"></div>
+                                    <div class="eq-bar"></div>
+                                    <div class="eq-bar"></div>
+                                </div>
+                            </div>
+                            <p class="text-cyan-400 text-xs font-semibold">Fatkiss Official</p>
+                            <span class="text-slate-400 text-xs"><i class="fa-solid fa-download text-pink-500 mr-1"></i> 5,180 High Quality MP3</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="playTrack('Matum-Ungo', 'Fatkiss Official', 'https://placehold.co/100x100/0f1420/ff007f?text=Matum-Ungo')" class="w-10 h-10 rounded-full bg-cyan-400 text-black flex items-center justify-center hover:scale-105 transition shadow-lg shadow-cyan-500/30">
+                            <i class="fa-solid fa-play"></i>
+                        </button>
+                        <a href="#" onclick="triggerDownload('Matum-Ungo'); return false;" class="w-10 h-10 rounded-full bg-white/10 border border-white/10 text-white flex items-center justify-center hover:bg-pink-600 transition">
+                            <i class="fa-solid fa-arrow-down"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Track 3: Jakwo -->
+                <div class="glass-panel p-4 flex items-center justify-between gap-4 song-card song-item" data-title="Jakwo" data-category="mp3" id="card-Jakwo">
+                    <div class="flex items-center gap-3">
+                        <img src="https://placehold.co/100x100/0f1420/4facfe?text=Jakwo" alt="Jakwo" class="w-16 h-16 rounded-xl object-cover border border-white/10">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h3 class="font-bold text-base">Jakwo</h3>
+                                <div class="equalizer-box">
+                                    <div class="eq-bar"></div>
+                                    <div class="eq-bar"></div>
+                                    <div class="eq-bar"></div>
+                                    <div class="eq-bar"></div>
+                                </div>
+                            </div>
+                            <p class="text-cyan-400 text-xs font-semibold">Fatkiss Official</p>
+                            <span class="text-slate-400 text-xs"><i class="fa-solid fa-download text-pink-500 mr-1"></i> 2,890 High Quality MP3</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="playTrack('Jakwo', 'Fatkiss Official', 'https://placehold.co/100x100/0f1420/4facfe?text=Jakwo')" class="w-10 h-10 rounded-full bg-cyan-400 text-black flex items-center justify-center hover:scale-105 transition shadow-lg shadow-cyan-500/30">
+                            <i class="fa-solid fa-play"></i>
+                        </button>
+                        <a href="#" onclick="triggerDownload('Jakwo'); return false;" class="w-10 h-10 rounded-full bg-white/10 border border-white/10 text-white flex items-center justify-center hover:bg-pink-600 transition">
+                            <i class="fa-solid fa-arrow-down"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Track 4: Jamusuma -->
+                <div class="glass-panel p-4 flex items-center justify-between gap-4 song-card song-item" data-title="Jamusuma" data-category="mp3" id="card-Jamusuma">
+                    <div class="flex items-center gap-3">
+                        <img src="https://placehold.co/100x100/0f1420/ffb703?text=Jamusuma" alt="Jamusuma" class="w-16 h-16 rounded-xl object-cover border border-white/10">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h3 class="font-bold text-base">Jamusuma</h3>
+                                <div class="equalizer-box">
+                                    <div class="eq-bar"></div>
+                                    <div class="eq-bar"></div>
+                                    <div class="eq-bar"></div>
+                                    <div class="eq-bar"></div>
+                                </div>
+                            </div>
+                            <p class="text-cyan-400 text-xs font-semibold">Fatkiss Official</p>
+                            <span class="text-slate-400 text-xs"><i class="fa-solid fa-download text-pink-500 mr-1"></i> 4,110 High Quality MP3</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="playTrack('Jamusuma', 'Fatkiss Official', 'https://placehold.co/100x100/0f1420/ffb703?text=Jamusuma')" class="w-10 h-10 rounded-full bg-cyan-400 text-black flex items-center justify-center hover:scale-105 transition shadow-lg shadow-cyan-500/30">
+                            <i class="fa-solid fa-play"></i>
+                        </button>
+                        <a href="#" onclick="triggerDownload('Jamusuma'); return false;" class="w-10 h-10 rounded-full bg-white/10 border border-white/10 text-white flex items-center justify-center hover:bg-pink-600 transition">
+                            <i class="fa-solid fa-arrow-down"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- STREET GOSSIP & NEWS SECTION -->
+        <section id="gossip-hub" class="pt-8 mb-16">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-2 h-7 bg-gradient-to-b from-pink-500 to-yellow-500 rounded-sm"></div>
+                <h2 class="text-2xl font-black tracking-wide">
+                    STREET GOSSIP & <span class="text-pink-500">ENTERTAINMENT SCOOPS</span>
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="glass-panel overflow-hidden gossip-item" data-category="gossip">
+                    <img src="https://placehold.co/600x300/0f1420/00f2fe?text=The+Bridge+Digital+Launch" alt="Gossip 1" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="bg-pink-500/20 text-pink-400 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Hot Scoop</span>
+                        <h3 class="font-bold text-lg mt-3 mb-2">Fatkiss Launches The Bridge Music Digital Platform For Artists & Fast Downloads</h3>
+                        <p class="text-slate-400 text-xs mb-4">The Bridge Music platform officially goes live, offering rising regional talent direct song hosting, fast download feeds, and artist promotion kits.</p>
+                        <div class="flex justify-between text-xs text-slate-400 border-t border-white/10 pt-3">
+                            <span><i class="fa-regular fa-clock mr-1"></i> 2 hours ago</span>
+                            <span><i class="fa-regular fa-comment mr-1"></i> 14 comments</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel overflow-hidden gossip-item" data-category="gossip">
+                    <img src="https://placehold.co/600x300/0f1420/ff007f?text=Emerging+Artists+Wave" alt="Gossip 2" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="bg-cyan-500/20 text-cyan-400 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">Vibes</span>
+                        <h3 class="font-bold text-lg mt-3 mb-2">Top Emerging Artists Making Massive Waves In The Regional Music Scene</h3>
+                        <p class="text-slate-400 text-xs mb-4">Discover the latest Afro-Zouk and Hip-hop wave catching fire this month across streaming portals and radio stations.</p>
+                        <div class="flex justify-between text-xs text-slate-400 border-t border-white/10 pt-3">
+                            <span><i class="fa-regular fa-clock mr-1"></i> 6 hours ago</span>
+                            <span><i class="fa-regular fa-comment mr-1"></i> 28 comments</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LEGENDS VISUALS & VIDEO PRODUCTION SECTION -->
+        <section id="visuals-hub" class="pt-8 mb-16">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-2 h-7 bg-gradient-to-b from-cyan-400 to-blue-600 rounded-sm"></div>
+                <h2 class="text-2xl font-black tracking-wide">
+                    LEGENDS VISUALS <span class="text-cyan-400">MEDIA & VIDEOGRAPHY</span>
+                </h2>
+            </div>
+
+            <!-- Video Player Showcase -->
+            <div class="mb-10">
+                <h3 class="text-sm font-extrabold uppercase tracking-widest text-slate-400 mb-3">
+                    <i class="fa-solid fa-film text-cyan-400 mr-2"></i> Featured Video Release
+                </h3>
+                <div class="video-container">
+                    <iframe src="https://www.youtube-nocookie.com/embed/g2JUkB00p0A" title="Fatkiss Official Showcase Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <!-- Visuals Service Packages Grid -->
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Package 1 -->
+                <div class="glass-panel p-6 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-extrabold text-cyan-400 mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-video"></i> Music Video Directing
+                        </h3>
+                        <p class="text-slate-400 text-xs mb-4 leading-relaxed">
+                            Cinematic videography, 4K resolution camera work, script development, and indoor/outdoor lighting setups.
+                        </p>
+                        <ul class="space-y-2 text-xs text-slate-300 mb-6">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400 font-bold"></i> 4K Ultra-HD Resolution</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400 font-bold"></i> Professional Lighting Setups</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400 font-bold"></i> Directing & Scripting</li>
+                        </ul>
+                    </div>
+                    <a href="#booking-form" class="w-full py-2.5 text-center bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-extrabold text-xs rounded-full shadow-lg shadow-cyan-500/20 hover:brightness-110 transition">
+                        Book Video Shoot
+                    </a>
+                </div>
+
+                <!-- Package 2 -->
+                <div class="glass-panel p-6 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-extrabold text-pink-400 mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Video Editing & Motion FX
+                        </h3>
+                        <p class="text-slate-400 text-xs mb-4 leading-relaxed">
+                            High-end color grading, visual sound design, custom graphic animations, and social media promo cuts.
+                        </p>
+                        <ul class="space-y-2 text-xs text-slate-300 mb-6">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-pink-400 font-bold"></i> Color Grading & Effects</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-pink-400 font-bold"></i> Custom Text & Graphic Animations</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-pink-400 font-bold"></i> TikTok & Reel Edits</li>
+                        </ul>
+                    </div>
+                    <a href="#booking-form" class="w-full py-2.5 text-center bg-gradient-to-r from-pink-500 to-purple-600 text-white font-extrabold text-xs rounded-full shadow-lg shadow-pink-500/20 hover:brightness-110 transition">
+                        Inquire for Video Editing
+                    </a>
+                </div>
+
+                <!-- Package 3 -->
+                <div class="glass-panel p-6 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-extrabold text-yellow-400 mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-cube"></i> 3D Logo Intros & Graphics
+                        </h3>
+                        <p class="text-slate-400 text-xs mb-4 leading-relaxed">
+                            Custom 3D logo animations, brand identity intros, cover art design, and promotional banner assets.
+                        </p>
+                        <ul class="space-y-2 text-xs text-slate-300 mb-6">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-yellow-400 font-bold"></i> 3D Animated Motion Intro</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-yellow-400 font-bold"></i> Music Cover Art Design</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-yellow-400 font-bold"></i> Brand Identity Assets</li>
+                        </ul>
+                    </div>
+                    <a href="#booking-form" class="w-full py-2.5 text-center bg-gradient-to-r from-yellow-400 to-amber-600 text-black font-extrabold text-xs rounded-full shadow-lg shadow-yellow-500/20 hover:brightness-110 transition">
+                        Order 3D Logo Intro
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ARTIST PROMOTION & BOOKING SECTION -->
+        <section id="promo-hub" class="pt-8 mb-16">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-2 h-7 bg-gradient-to-b from-pink-500 to-yellow-500 rounded-sm"></div>
+                <h2 class="text-2xl font-black tracking-wide">
+                    ARTIST PROMOTION & <span class="text-pink-500">BOOKINGS</span>
+                </h2>
+            </div>
+
+            <!-- Promotion Tiers -->
+            <div class="grid md:grid-cols-2 gap-6 mb-12">
+                <!-- Tier 1 -->
+                <div class="glass-panel p-6 border-cyan-400/30 text-center relative">
+                    <h3 class="text-lg font-bold mb-1">Standard Track Upload</h3>
+                    <div class="text-2xl font-black text-cyan-400 mb-3">Basic Package</div>
+                    <ul class="text-xs text-slate-300 text-left space-y-2 mb-6">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> MP3 Track Upload & Fast Download Link</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Social Media Announcement Post</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-cyan-400"></i> Basic Platform Indexing</li>
+                    </ul>
+                    <a href="https://wa.me/256768444578?text=Hello%20Fatkiss,%20I%20want%20to%20book%20the%20Standard%20Track%20Upload%20package." target="_blank" class="inline-block w-full py-2.5 bg-cyan-400 text-black font-bold text-xs rounded-full shadow-md shadow-cyan-400/30 hover:brightness-110">
+                        Book Basic Track Upload
+                    </a>
+                </div>
+
+                <!-- Tier 2 -->
+                <div class="glass-panel p-6 border-pink-500/60 text-center relative">
+                    <span class="absolute -top-3 right-6 bg-gradient-to-r from-pink-500 to-yellow-400 text-black font-black text-[10px] px-3 py-1 rounded-full uppercase tracking-wider">Featured</span>
+                    <h3 class="text-lg font-bold mb-1">VIP Banner & Gossip Promo</h3>
+                    <div class="text-2xl font-black text-pink-500 mb-3">VIP Package</div>
+                    <ul class="text-xs text-slate-300 text-left space-y-2 mb-6">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-pink-500"></i> Top Home Page Featured Placement</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-pink-500"></i> Gossip Article Feature & Artist Interview</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-pink-500"></i> TikTok & Instagram Reels Boost</li>
+                    </ul>
+                    <a href="https://wa.me/256768444578?text=Hello%20Fatkiss,%20I%20want%20to%20book%20the%20VIP%20Banner%20%26%20Gossip%20Promo%20package." target="_blank" class="inline-block w-full py-2.5 bg-gradient-to-r from-pink-500 to-yellow-400 text-black font-bold text-xs rounded-full shadow-md shadow-pink-500/30 hover:brightness-110">
+                        Book VIP Banner Promo
+                    </a>
+                </div>
+            </div>
+
+            <!-- Booking Form -->
+            <div id="booking-form" class="glass-panel p-8 max-w-2xl mx-auto">
+                <h3 class="text-xl font-black mb-2 text-center">Direct Booking & Inquiries</h3>
+                <p class="text-slate-400 text-xs text-center mb-6">Fill out your details to send a structured inquiry directly to Fatkiss via WhatsApp.</p>
+                
+                <form onsubmit="sendWhatsAppBooking(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 mb-1">Your Name / Organization</label>
+                        <input type="text" id="booking-name" required placeholder="e.g. John Musician / Event Promoter" class="w-full px-4 py-3 bg-black/60 border border-white/10 rounded-xl text-sm focus:outline-none focus:border-cyan-400">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 mb-1">Inquiry Type</label>
+                        <select id="booking-type" class="w-full px-4 py-3 bg-black/60 border border-white/10 rounded-xl text-sm text-white focus:outline-none focus:border-cyan-400">
+                            <option value="Artist Show Booking">Artist Performance / Show Booking</option>
+                            <option value="Legends Visuals Video Shooting">Video Shoot Directing (Legends Visuals)</option>
+                            <option value="Video Editing & FX">Video Editing & Motion Graphics</option>
+                            <option value="3D Logo Intro Creation">3D Logo Intro Creation</option>
+                            <option value="Song Promotion on The Bridge">Music Promotion (The Bridge Music)</option>
+                            <option value="General Inquiry">General Collaboration Inquiry</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 mb-1">Project / Event Details</label>
+                        <textarea id="booking-msg" required placeholder="Describe your budget, dates, location, or project scope..." class="w-full px-4 py-3 bg-black/60 border border-white/10 rounded-xl text-sm focus:outline-none focus:border-cyan-400 h-28"></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-3 bg-green-500 text-black font-black text-sm rounded-xl shadow-lg shadow-green-500/30 hover:bg-green-400 transition flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i> Send Message via WhatsApp (+256 768 444 578)
+                    </button>
+                </form>
+            </div>
+
+            <!-- EPK Box -->
+            <div class="glass-panel p-6 mt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div>
+                    <h4 class="font-bold text-base">Media & Press Kit (EPK)</h4>
+                    <p class="text-xs text-slate-400">Download official artist biography, logos, and high-res press photos for event promotion.</p>
+                </div>
+                <button onclick="showToast('EPK request submitted! Connecting to management...');" class="px-6 py-2.5 border border-cyan-400 text-cyan-400 font-bold text-xs rounded-full hover:bg-cyan-400 hover:text-black transition">
+                    Request EPK
+                </button>
+            </div>
+        </section>
+
+    </main>
 
     <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/256768444578?text=Hello%20Fatkiss%2C%20I%20am%20reaching%20out%20from%20your%20website%21" target="_blank" class="floating-whatsapp" title="Chat on WhatsApp">
+    <a href="https://wa.me/256768444578" target="_blank" class="floating-wa" title="Chat on WhatsApp">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
-    <!-- Official Professional Footer -->
-    <footer>
-        <p>&copy; 2026 Fatkiss Official & Legends Visuals. All Rights Reserved.</p>
+    <!-- Sticky Bottom Audio Player Bar -->
+    <div class="audio-player-bar">
+        <div class="player-info">
+            <img id="playerThumb" src="https://placehold.co/100x100/0f1420/00f2fe?text=Music" alt="Player Thumbnail" class="player-thumb">
+            <div class="player-details">
+                <h4 id="playerSongTitle">Select a Track</h4>
+                <p id="playerArtistName">The Bridge Music Player</p>
+            </div>
+        </div>
+
+        <div class="player-controls">
+            <button class="player-btn" onclick="showToast('Playing previous track');"><i class="fa-solid fa-backward-step"></i></button>
+            <button class="main-play-btn" onclick="togglePlayState()">
+                <i id="playIcon" class="fa-solid fa-play"></i>
+            </button>
+            <button class="player-btn" onclick="showToast('Playing next track');"><i class="fa-solid fa-forward-step"></i></button>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Action completed successfully!</div>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 text-xs text-slate-500 border-t border-white/10">
+        © 2026 FATKISS OFFICIAL x THE BRIDGE MUSIC x LEGENDS VISUALS. All Rights Reserved.
     </footer>
 
-    <!-- Interactive Scripts -->
+    <!-- JavaScript Engine -->
     <script>
-        function copyHubLink() {
-            navigator.clipboard.writeText(window.location.href).then(() => {
-                showToast("Website link copied!");
-            }).catch(() => {
-                showToast("Link: " + window.location.href);
-            });
+        let isPlaying = false;
+        let activeSongTitle = "";
+
+        function playTrack(title, artist, thumb) {
+            // Reset active state across all song cards
+            document.querySelectorAll('.song-card').forEach(card => card.classList.remove('playing'));
+
+            activeSongTitle = title;
+            document.getElementById('playerSongTitle').innerText = title;
+            document.getElementById('playerArtistName').innerText = artist;
+            document.getElementById('playerThumb').src = thumb;
+            isPlaying = true;
+
+            const card = document.getElementById('card-' + title);
+            if(card) {
+                card.classList.add('playing');
+            }
+
+            document.getElementById('playIcon').className = "fa-solid fa-pause";
+            showToast('Now Playing: ' + title);
         }
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            toast.innerText = msg;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2500);
-        }
-        function sendWhatsAppBooking(e) {
-            e.preventDefault();
-            const name = document.getElementById('booking-name').value;
-            const type = document.getElementById('booking-type').value;
-            const msg = document.getElementById('booking-msg').value;
-            const text = `Hello Fatkiss, my name is ${name}. Inquiry: ${type}. Details: ${msg}`;
-            window.open(`https://wa.me/256768444578?text=${encodeURIComponent(text)}`, '_blank');
-        }
-        function toggleVisualizer(id, isPlaying) {
-            const vizBox = document.getElementById('viz-' + id);
-            if (vizBox) {
-                const card = vizBox.closest('.card');
-                if (isPlaying) {
+
+        function togglePlayState() {
+            if(!activeSongTitle) {
+                playTrack('Cwinya', 'Fatkiss Official', 'https://placehold.co/100x100/0f1420/00f2fe?text=Cwinya');
+                return;
+            }
+
+            isPlaying = !isPlaying;
+            const icon = document.getElementById('playIcon');
+            icon.className = isPlaying ? "fa-solid fa-pause" : "fa-solid fa-play";
+
+            const card = document.getElementById('card-' + activeSongTitle);
+            if(card) {
+                if(isPlaying) {
                     card.classList.add('playing');
                 } else {
                     card.classList.remove('playing');
                 }
             }
+
+            showToast(isPlaying ? 'Resumed playback' : 'Paused playback');
+        }
+
+        function triggerDownload(songTitle) {
+            showToast('Starting MP3 download for ' + songTitle + '...');
+        }
+
+        function filterSongs() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const songItems = document.querySelectorAll('.song-item');
+            songItems.forEach(item => {
+                const title = item.getAttribute('data-title').toLowerCase();
+                if (title.includes(query)) {
+                    item.style.display = "flex";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        }
+
+        function filterCategory(cat, btn) {
+            const buttons = document.querySelectorAll('.cat-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const songItems = document.querySelectorAll('.song-item');
+            songItems.forEach(item => {
+                if (cat === 'all' || item.getAttribute('data-category') === cat) {
+                    item.style.display = "flex";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+            showToast('Filter: ' + btn.innerText);
+        }
+
+        function copyHubLink() {
+            const dummy = document.createElement('input');
+            document.body.appendChild(dummy);
+            dummy.value = window.location.href;
+            dummy.select();
+            document.execCommand('copy');
+            document.body.removeChild(dummy);
+            showToast("Unified Website link copied to clipboard!");
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2800);
+        }
+
+        function sendWhatsAppBooking(e) {
+            e.preventDefault();
+            const name = document.getElementById('booking-name').value;
+            const type = document.getElementById('booking-type').value;
+            const msg = document.getElementById('booking-msg').value;
+            const text = `Hello Fatkiss, my name is ${name}.\nInquiry: ${type}.\nProject Details: ${msg}`;
+            window.open(`https://wa.me/256768444578?text=${encodeURIComponent(text)}`, '_blank');
         }
     </script>
 </body>
-    </html>
+ </html>

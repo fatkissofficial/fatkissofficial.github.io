@@ -75,14 +75,14 @@
     }
 
     .glass-panel {
-      background: rgba(15, 19, 29, 0.80);
+      background: rgba(15, 19, 29, 0.82);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .glass-card {
-      background: rgba(17, 22, 34, 0.86);
+      background: rgba(17, 22, 34, 0.88);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -93,6 +93,20 @@
       border-color: rgba(0, 242, 254, 0.35);
       box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
       transform: translateY(-2px);
+    }
+
+    /* High-Priority Modal Stacking Layer Above Player & WhatsApp */
+    .hub-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(3, 5, 10, 0.86);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 1rem;
+      overflow-y: auto;
+      align-items: center;
+      justify-content: center;
     }
 
     .no-scrollbar::-webkit-scrollbar {
@@ -123,14 +137,14 @@
     }
   </style>
 </head>
-<body class="pb-32 selection:bg-cyan-400 selection:text-slate-950">
+<body class="pb-36 selection:bg-cyan-400 selection:text-slate-950">
 
   <!-- Fixed Full-Page Background Layers -->
   <div id="site-bg-layer"></div>
   <div id="site-bg-overlay"></div>
 
   <!-- ======================================================================= -->
-  <!-- TOP CEO COMMAND BAR (HIDDEN BY DEFAULT UNTIL CEO LOGS IN)               -->
+  <!-- TOP CEO COMMAND BAR (HIDDEN UNTIL STEALTH CEO LOGIN SUCCEEDS)           -->
   <!-- ======================================================================= -->
   <div id="ceo-command-bar" class="hidden sticky top-0 z-50 bg-gradient-to-r from-amber-500 via-yellow-400 to-cyan-400 text-slate-950 border-b border-amber-300 shadow-xl">
     <div class="max-w-6xl mx-auto px-3 sm:px-6 py-2 flex flex-wrap items-center justify-between gap-2">
@@ -164,7 +178,7 @@
   <!-- ======================================================================= -->
   <header class="sticky top-0 z-40 bg-[#08090d]/85 backdrop-blur-xl border-b border-white/10">
     <div class="max-w-6xl mx-auto px-3 sm:px-6 py-2.5 flex items-center justify-between gap-2">
-      <!-- Brand Identity (5-Tap Secret CEO Login Trigger) -->
+      <!-- Brand Identity (5-Tap Stealth CEO Trigger) -->
       <div id="brand-logo-trigger" onclick="handleSecretLogoTap()" class="flex items-center gap-2.5 shrink-0 cursor-pointer select-none">
         <div class="w-9 h-9 rounded-full p-[2px] bg-gradient-to-tr from-cyan-400 to-pink-500 flex items-center justify-center shadow-lg shadow-cyan-500/20">
           <div class="w-full h-full rounded-full bg-[#0b0e16] flex items-center justify-center">
@@ -573,16 +587,11 @@
     </section>
 
     <!-- ===================================================================== -->
-    <!-- FOOTER WITH EASY-TO-TAP CEO LOGIN BUTTON                              -->
+    <!-- STEALTH FOOTER (ZERO VISIBLE LOGIN BUTTONS FOR REGULAR VISITORS)      -->
     <!-- ===================================================================== -->
-    <section class="pt-4 pb-12 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-gray-400 border-t border-white/10">
-      <div class="text-center sm:text-left">
-        © 2026 Fatkiss Official • Managed by The Bridge Music • Legends Visuals
-      </div>
-      <button type="button" id="footer-ceo-login-btn" onclick="openCeoLoginModal()" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-amber-400/15 hover:bg-amber-400/25 text-amber-300 border border-amber-400/35 font-bold transition cursor-pointer">
-        <span>🔐 CEO Login</span>
-      </button>
-    </section>
+    <footer class="pt-4 pb-12 text-center sm:text-left text-[11px] text-gray-400 border-t border-white/10">
+      <span>© <span onclick="openCeoLoginModal()" class="cursor-default select-none">2026</span> Fatkiss Official • Managed by The Bridge Music • Legends Visuals</span>
+    </footer>
   </main>
 
   <!-- Floating WhatsApp Quick-Chat Button -->
@@ -601,7 +610,7 @@
   <!-- ======================================================================= -->
   <!-- FIXED BOTTOM AUDIO PLAYER ("THE BRIDGE MUSIC PLAYER")                   -->
   <!-- ======================================================================= -->
-  <footer class="fixed bottom-0 inset-x-0 z-40 bg-[#090c14]/95 backdrop-blur-xl border-t border-white/10">
+  <div id="bottom-music-player" class="fixed bottom-0 inset-x-0 z-40 bg-[#090c14]/95 backdrop-blur-xl border-t border-white/10">
     <div onclick="seekAudio(event)" class="w-full h-1.5 bg-white/10 cursor-pointer relative group">
       <div id="player-progress-bar" class="h-full w-0 bg-gradient-to-r from-cyan-400 to-pink-500 transition-all duration-150"></div>
     </div>
@@ -655,12 +664,12 @@
         </button>
       </div>
     </div>
-  </footer>
+  </div>
 
   <!-- ======================================================================= -->
-  <!-- MODAL 0: CEO LOGIN GATE                                                 -->
+  <!-- MODAL 0: STEALTH CEO LOGIN GATE (Z-INDEX 9999)                          -->
   <!-- ======================================================================= -->
-  <div id="ceo-login-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
+  <div id="modal-ceo-login" class="hidden hub-modal-backdrop">
     <div class="w-full max-w-sm rounded-3xl bg-[#111623] border border-amber-400/45 p-6 shadow-2xl my-auto">
       <div class="flex items-center justify-between mb-3">
         <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-amber-400/20 text-amber-300 border border-amber-400/35">
@@ -700,7 +709,7 @@
   <!-- ======================================================================= -->
   <!-- MODAL 1: PAID TRACK CHECKOUT (MTN MOMO, AIRTEL MONEY & CARD UNLOCK)     -->
   <!-- ======================================================================= -->
-  <div id="checkout-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
+  <div id="modal-unlock-track" class="hidden hub-modal-backdrop">
     <div class="w-full max-w-md rounded-3xl bg-[#111623] border border-amber-400/40 p-5 sm:p-6 shadow-2xl my-auto">
       <div class="flex items-center justify-between mb-3">
         <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-amber-400/20 text-amber-300 border border-amber-400/35">
@@ -782,7 +791,7 @@
   <!-- ======================================================================= -->
   <!-- MODAL 2: TIP / SUPPORT FATKISS OFFICIAL (MTN MOMO & AIRTEL MONEY)       -->
   <!-- ======================================================================= -->
-  <div id="tip-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
+  <div id="modal-tip" class="hidden hub-modal-backdrop">
     <div class="w-full max-w-md rounded-3xl bg-[#111623] border border-amber-400/35 p-5 sm:p-6 shadow-2xl my-auto">
       <div class="flex items-center justify-between mb-2.5">
         <h3 class="font-display text-lg font-extrabold text-white">💛 Support / Tip Fatkiss Official</h3>
@@ -845,7 +854,7 @@
   <!-- ======================================================================= -->
   <!-- MODAL 3: CEO-ONLY PHOTO STUDIO (BACKGROUND + HERO AVATAR)               -->
   <!-- ======================================================================= -->
-  <div id="photo-studio-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
+  <div id="modal-photo-studio" class="hidden hub-modal-backdrop">
     <div class="w-full max-w-lg rounded-3xl bg-[#111623] border border-cyan-400/35 p-5 sm:p-6 shadow-2xl my-auto">
       <div class="flex items-center justify-between mb-4">
         <div>
@@ -913,7 +922,7 @@
   <!-- ======================================================================= -->
   <!-- MODAL 4: CEO-ONLY MUSIC UPLOAD STUDIO                                   -->
   <!-- ======================================================================= -->
-  <div id="upload-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
+  <div id="modal-upload-track" class="hidden hub-modal-backdrop">
     <div class="w-full max-w-lg rounded-3xl bg-[#111623] border border-cyan-400/35 p-5 sm:p-6 shadow-2xl my-auto">
       <div class="flex items-center justify-between mb-4">
         <div>
@@ -990,7 +999,7 @@
   <!-- ======================================================================= -->
   <!-- MODAL 5: CEO CLOUD & SECURITY SETUP                                     -->
   <!-- ======================================================================= -->
-  <div id="setup-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
+  <div id="modal-cloud-security" class="hidden hub-modal-backdrop">
     <div class="w-full max-w-xl rounded-3xl bg-[#111623] border border-amber-400/40 p-5 sm:p-6 shadow-2xl my-auto">
       <div class="flex items-center justify-between mb-3">
         <div>
@@ -1073,7 +1082,7 @@
   <!-- ======================================================================= -->
   <!-- MODAL 6: BOOKING & MANAGEMENT REQUEST                                   -->
   <!-- ======================================================================= -->
-  <div id="booking-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
+  <div id="modal-booking" class="hidden hub-modal-backdrop">
     <div class="w-full max-w-md rounded-3xl bg-[#111623] border border-pink-500/35 p-5 sm:p-6 shadow-2xl my-auto">
       <div class="flex items-center justify-between mb-3">
         <div>
@@ -1124,7 +1133,7 @@
   <!-- ======================================================================= -->
   <!-- MODAL 7: STREET GOSSIP & VIBES READER                                   -->
   <!-- ======================================================================= -->
-  <div id="gossip-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
+  <div id="modal-read-gossip" class="hidden hub-modal-backdrop">
     <div class="w-full max-w-lg rounded-3xl bg-[#111623] border border-white/15 overflow-hidden shadow-2xl my-auto">
       <div id="gossip-modal-hero" class="relative h-44 bg-gradient-to-br from-[#0e1726] via-[#1b1124] to-[#0a101b] flex items-center justify-center p-6 border-b border-white/10">
         <img id="gossip-modal-img" src="" alt="" class="hidden absolute inset-0 w-full h-full object-cover" />
@@ -1163,7 +1172,7 @@
   <!-- ======================================================================= -->
   <!-- MODAL 8: CEO-ONLY STREET GOSSIP & VIBES PUBLISHER STUDIO                -->
   <!-- ======================================================================= -->
-  <div id="gossip-composer-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
+  <div id="modal-post-gossip" class="hidden hub-modal-backdrop">
     <div class="w-full max-w-lg rounded-3xl bg-[#111623] border border-pink-500/35 p-5 sm:p-6 shadow-2xl my-auto">
       <div class="flex items-center justify-between mb-4">
         <div>
@@ -1221,7 +1230,7 @@
   </div>
 
   <!-- Toast Notification -->
-  <div id="toast-banner" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full bg-cyan-400 text-slate-950 text-xs font-extrabold shadow-lg opacity-0 pointer-events-none transition-opacity duration-200">
+  <div id="toast-banner" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-[10000] px-4 py-2 rounded-full bg-cyan-400 text-slate-950 text-xs font-extrabold shadow-lg opacity-0 pointer-events-none transition-opacity duration-200">
     Action completed!
   </div>
 
@@ -1243,18 +1252,18 @@
     };
 
     const STORAGE_KEYS = {
-      config: 'fatkiss_hub_config_v8',
-      vaultHash: 'fatkiss_ceo_sha256_vault_v8',
-      vaultSalt: 'fatkiss_ceo_salt_v8',
-      lockoutState: 'fatkiss_ceo_lockout_v8',
-      ceoSession: 'fatkiss_ceo_session_v8',
-      tracks: 'fatkiss_hub_tracks_v8',
-      scoops: 'fatkiss_hub_scoops_v8',
-      unlocked: 'fatkiss_unlocked_tracks_v8',
-      bg: 'fatkiss_bg_data_v8',
-      avatar: 'fatkiss_avatar_data_v8',
-      avatarMode: 'fatkiss_avatar_mode_v8',
-      bgSettings: 'fatkiss_bg_settings_v8'
+      config: 'fatkiss_hub_config_v9',
+      vaultHash: 'fatkiss_ceo_sha256_vault_v9',
+      vaultSalt: 'fatkiss_ceo_salt_v9',
+      lockoutState: 'fatkiss_ceo_lockout_v9',
+      ceoSession: 'fatkiss_ceo_session_v9',
+      tracks: 'fatkiss_hub_tracks_v9',
+      scoops: 'fatkiss_hub_scoops_v9',
+      unlocked: 'fatkiss_unlocked_tracks_v9',
+      bg: 'fatkiss_bg_data_v9',
+      avatar: 'fatkiss_avatar_data_v9',
+      avatarMode: 'fatkiss_avatar_mode_v9',
+      bgSettings: 'fatkiss_bg_settings_v9'
     };
 
     let hubConfig = { ...BAKED_CONFIG };
@@ -1266,6 +1275,20 @@
     let logoTapTimer = null;
     let inactivityTimer = null;
     let lockoutCountdownTimer = null;
+
+    function openModalById(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.remove('hidden');
+      el.style.display = 'flex';
+    }
+
+    function closeModalById(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.add('hidden');
+      el.style.display = 'none';
+    }
 
     function escapeHTML(value) {
       if (value === null || value === undefined) return '';
@@ -1295,7 +1318,6 @@
           .map((b) => b.toString(16).padStart(2, '0'))
           .join('');
       }
-      // Fallback hash if crypto.subtle is unavailable on non-HTTPS local preview
       let h = 2166136261;
       const str = `${saltHex}::${password}`;
       for (let i = 0; i < str.length; i++) {
@@ -1401,14 +1423,14 @@
     });
 
     // =========================================================================
-    // 3. CEO LOGIN & ACCESS CONTROL
+    // 3. STEALTH CEO TRIGGERS (HASH #ceo, CTRL+SHIFT+L, 5-TAP LOGO, YEAR 2026)
     // =========================================================================
     function handleSecretLogoTap() {
       logoTapCount++;
       clearTimeout(logoTapTimer);
       logoTapTimer = setTimeout(() => {
         logoTapCount = 0;
-      }, 1600);
+      }, 3000);
 
       if (logoTapCount >= 5) {
         logoTapCount = 0;
@@ -1419,6 +1441,35 @@
         }
       }
     }
+
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key && e.key.toLowerCase() === 'l') {
+        e.preventDefault();
+        if (isCeoAuthenticated) {
+          showToast('CEO Command Mode is already active');
+        } else {
+          openCeoLoginModal();
+        }
+      } else if (e.key === 'Escape') {
+        [
+          'modal-ceo-login',
+          'modal-photo-studio',
+          'modal-upload-track',
+          'modal-post-gossip',
+          'modal-read-gossip',
+          'modal-cloud-security',
+          'modal-tip',
+          'modal-unlock-track',
+          'modal-booking'
+        ].forEach(closeModalById);
+      }
+    });
+
+    window.addEventListener('hashchange', () => {
+      if (window.location.hash.toLowerCase() === '#ceo') {
+        openCeoLoginModal();
+      }
+    });
 
     function openCeoLoginModal() {
       if (isCeoAuthenticated) {
@@ -1459,16 +1510,18 @@
       }
 
       checkAndRenderLockout();
-      const m = document.getElementById('ceo-login-modal');
-      m.classList.remove('hidden');
-      m.classList.add('flex');
-      setTimeout(() => document.getElementById('ceo-login-pass-input').focus(), 80);
+      openModalById('modal-ceo-login');
+      setTimeout(() => {
+        const inp = document.getElementById('ceo-login-pass-input');
+        if (inp) inp.focus();
+      }, 90);
     }
 
     function closeCeoLoginModal() {
-      const m = document.getElementById('ceo-login-modal');
-      m.classList.add('hidden');
-      m.classList.remove('flex');
+      closeModalById('modal-ceo-login');
+      if (window.location.hash.toLowerCase() === '#ceo' && history.replaceState) {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
     }
 
     async function submitCeoLogin(event) {
@@ -1483,7 +1536,6 @@
         return;
       }
 
-      // 1. Supabase Server Authentication (when configured)
       if (supabaseClient) {
         const submitBtn = document.getElementById('ceo-login-submit-btn');
         submitBtn.disabled = true;
@@ -1519,7 +1571,6 @@
         return;
       }
 
-      // 2. Local SHA-256 Vault (or initial setup code 2026)
       const existingHash = localStorage.getItem(STORAGE_KEYS.vaultHash);
       const existingSalt = localStorage.getItem(STORAGE_KEYS.vaultSalt);
 
@@ -1597,7 +1648,6 @@
       const modeBadge = document.getElementById('ceo-auth-mode-badge');
       const tracksActions = document.getElementById('ceo-tracks-actions');
       const postGossipBtn = document.getElementById('ceo-post-gossip-btn');
-      const footerLoginBtn = document.getElementById('footer-ceo-login-btn');
 
       if (isCeoAuthenticated) {
         if (cmdBar) cmdBar.classList.remove('hidden');
@@ -1612,10 +1662,6 @@
           tracksActions.classList.add('flex');
         }
         if (postGossipBtn) postGossipBtn.classList.remove('hidden');
-        if (footerLoginBtn) {
-          footerLoginBtn.innerHTML = '<span>👑 CEO Active (Lock Site)</span>';
-          footerLoginBtn.onclick = () => lockCeoMode(false);
-        }
       } else {
         if (cmdBar) cmdBar.classList.add('hidden');
         if (tracksActions) {
@@ -1623,10 +1669,6 @@
           tracksActions.classList.remove('flex');
         }
         if (postGossipBtn) postGossipBtn.classList.add('hidden');
-        if (footerLoginBtn) {
-          footerLoginBtn.innerHTML = '<span>🔐 CEO Login</span>';
-          footerLoginBtn.onclick = openCeoLoginModal;
-        }
       }
 
       renderTracks();
@@ -1964,15 +2006,11 @@
       const payLinkEl = document.getElementById('checkout-pay-link');
       payLinkEl.href = sanitizeURL(track.payment_url) || sanitizeURL(hubConfig.tipUrl) || waConfirmUrl;
 
-      const m = document.getElementById('checkout-modal');
-      m.classList.remove('hidden');
-      m.classList.add('flex');
+      openModalById('modal-unlock-track');
     }
 
     function closeCheckoutModal() {
-      const m = document.getElementById('checkout-modal');
-      m.classList.add('hidden');
-      m.classList.remove('flex');
+      closeModalById('modal-unlock-track');
     }
 
     function confirmPaymentUnlock(event) {
@@ -2031,15 +2069,11 @@
       document.getElementById('tip-mtn-display').textContent = hubConfig.mtnNumber || '0768 444 578';
       document.getElementById('tip-airtel-display').textContent = hubConfig.airtelNumber || '0702 105 197';
       updateTipWhatsAppLink();
-      const m = document.getElementById('tip-modal');
-      m.classList.remove('hidden');
-      m.classList.add('flex');
+      openModalById('modal-tip');
     }
 
     function closeTipModal() {
-      const m = document.getElementById('tip-modal');
-      m.classList.add('hidden');
-      m.classList.remove('flex');
+      closeModalById('modal-tip');
     }
 
     function selectTipAmount(amount, btn) {
@@ -2112,15 +2146,11 @@
 
     function openPhotoStudio() {
       if (!requireCeoAccess()) return;
-      const modal = document.getElementById('photo-studio-modal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
+      openModalById('modal-photo-studio');
     }
 
     function closePhotoStudio() {
-      const modal = document.getElementById('photo-studio-modal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
+      closeModalById('modal-photo-studio');
     }
 
     async function handleBgPhotoUpload(event) {
@@ -2254,15 +2284,11 @@
     // =========================================================================
     function openUploadModal() {
       if (!requireCeoAccess()) return;
-      const m = document.getElementById('upload-modal');
-      m.classList.remove('hidden');
-      m.classList.add('flex');
+      openModalById('modal-upload-track');
     }
 
     function closeUploadModal() {
-      const m = document.getElementById('upload-modal');
-      m.classList.add('hidden');
-      m.classList.remove('flex');
+      closeModalById('modal-upload-track');
     }
 
     function toggleUploadPriceFields() {
@@ -2420,15 +2446,11 @@
       document.getElementById('cfg-tip-url').value = hubConfig.tipUrl || '';
       document.getElementById('cfg-spotify-url').value = hubConfig.spotifyUrl || 'https://open.spotify.com';
 
-      const m = document.getElementById('setup-modal');
-      m.classList.remove('hidden');
-      m.classList.add('flex');
+      openModalById('modal-cloud-security');
     }
 
     function closeSetupModal() {
-      const m = document.getElementById('setup-modal');
-      m.classList.add('hidden');
-      m.classList.remove('flex');
+      closeModalById('modal-cloud-security');
     }
 
     function copyHardenedSql() {
@@ -2444,4 +2466,25 @@ create table if not exists tracks (
   price_ugx integer default 0,
   payment_url text,
   stream_url text,
-  created_at time
+  created_at timestamp with time zone default now()
+);
+
+create table if not exists scoops (
+  id bigint generated by default as identity primary key,
+  badge text default 'HOT SCOOP',
+  banner_title text not null,
+  headline text not null,
+  body text not null,
+  image_url text,
+  action_url text,
+  created_at timestamp with time zone default now()
+);
+
+alter table tracks enable row level security;
+alter table scoops enable row level security;
+
+create policy "Public read tracks" on tracks for select using (true);
+create policy "Public read scoops" on scoops for select using (true);
+
+create policy "CEO full write tracks" on tracks for all to authenticated using (true) with check (true);
+create policy "CEO full write scoops" on scoops for all to authenticated using (tru

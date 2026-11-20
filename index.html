@@ -4,8 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FATKISS OFFICIAL — The Bridge Music Hub</title>
+  <!-- Tailwind CSS & Supabase JS v2 -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet" />
@@ -35,7 +37,7 @@
       font-family: 'Space Grotesk', sans-serif;
     }
 
-    /* Full-Page Fixed Background Layer */
+    /* Full-Page Fixed Custom Background Layer */
     #site-bg-layer {
       position: fixed;
       inset: 0;
@@ -75,14 +77,14 @@
     }
 
     .glass-panel {
-      background: rgba(15, 19, 29, 0.82);
+      background: rgba(15, 19, 29, 0.84);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .glass-card {
-      background: rgba(17, 22, 34, 0.88);
+      background: rgba(17, 22, 34, 0.9);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -95,12 +97,12 @@
       transform: translateY(-2px);
     }
 
-    /* High-Priority Modal Stacking Layer Above Player & WhatsApp */
+    /* High-Priority Modal Stacking Above Player & WhatsApp */
     .hub-modal-backdrop {
       position: fixed;
       inset: 0;
       z-index: 9999;
-      background: rgba(3, 5, 10, 0.86);
+      background: rgba(3, 5, 10, 0.88);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       padding: 1rem;
@@ -158,10 +160,10 @@
           🖼️ Photo Studio
         </button>
         <button type="button" onclick="openUploadModal()" class="shrink-0 px-3 py-1.5 rounded-full bg-slate-950 text-cyan-300 hover:bg-slate-900 transition cursor-pointer">
-          + Upload Music
+          + Upload Track
         </button>
         <button type="button" onclick="openGossipComposer()" class="shrink-0 px-3 py-1.5 rounded-full bg-slate-950 text-pink-300 hover:bg-slate-900 transition cursor-pointer">
-          + Post Gossip
+          + Post Gossip/Vibe
         </button>
         <button type="button" onclick="openSetupModal()" class="shrink-0 px-3 py-1.5 rounded-full bg-slate-950 text-amber-300 hover:bg-slate-900 transition cursor-pointer">
           🛡️ Cloud &amp; Security
@@ -178,7 +180,7 @@
   <!-- ======================================================================= -->
   <header class="sticky top-0 z-40 bg-[#08090d]/85 backdrop-blur-xl border-b border-white/10">
     <div class="max-w-6xl mx-auto px-3 sm:px-6 py-2.5 flex items-center justify-between gap-2">
-      <!-- Brand Identity (5-Tap Stealth CEO Trigger) -->
+      <!-- Brand Identity (3-Tap Stealth CEO Trigger) -->
       <div id="brand-logo-trigger" onclick="handleSecretLogoTap()" class="flex items-center gap-2.5 shrink-0 cursor-pointer select-none">
         <div class="w-9 h-9 rounded-full p-[2px] bg-gradient-to-tr from-cyan-400 to-pink-500 flex items-center justify-center shadow-lg shadow-cyan-500/20">
           <div class="w-full h-full rounded-full bg-[#0b0e16] flex items-center justify-center">
@@ -384,7 +386,7 @@
         <!-- CEO-Only Track Upload Button -->
         <div id="ceo-tracks-actions" class="hidden items-center gap-2">
           <button type="button" onclick="openUploadModal()" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-extrabold bg-gradient-to-r from-cyan-400 to-pink-500 text-slate-950 shadow-lg shadow-cyan-500/20 hover:opacity-95 cursor-pointer transition">
-            <span>+ Upload Music</span>
+            <span>+ Upload Track</span>
           </button>
         </div>
       </div>
@@ -587,7 +589,7 @@
     </section>
 
     <!-- ===================================================================== -->
-    <!-- STEALTH FOOTER (ZERO VISIBLE LOGIN BUTTONS FOR REGULAR VISITORS)      -->
+    <!-- STEALTH FOOTER (ZERO VISIBLE LOGIN BUTTONS FOR PUBLIC VISITORS)       -->
     <!-- ===================================================================== -->
     <footer class="pt-4 pb-12 text-center sm:text-left text-[11px] text-gray-400 border-t border-white/10">
       <span>© <span onclick="openCeoLoginModal()" class="cursor-default select-none">2026</span> Fatkiss Official • Managed by The Bridge Music • Legends Visuals</span>
@@ -1252,18 +1254,18 @@
     };
 
     const STORAGE_KEYS = {
-      config: 'fatkiss_hub_config_v9',
-      vaultHash: 'fatkiss_ceo_sha256_vault_v9',
-      vaultSalt: 'fatkiss_ceo_salt_v9',
-      lockoutState: 'fatkiss_ceo_lockout_v9',
-      ceoSession: 'fatkiss_ceo_session_v9',
-      tracks: 'fatkiss_hub_tracks_v9',
-      scoops: 'fatkiss_hub_scoops_v9',
-      unlocked: 'fatkiss_unlocked_tracks_v9',
-      bg: 'fatkiss_bg_data_v9',
-      avatar: 'fatkiss_avatar_data_v9',
-      avatarMode: 'fatkiss_avatar_mode_v9',
-      bgSettings: 'fatkiss_bg_settings_v9'
+      config: 'fatkiss_hub_config_v10',
+      vaultHash: 'fatkiss_ceo_sha256_vault_v10',
+      vaultSalt: 'fatkiss_ceo_salt_v10',
+      lockoutState: 'fatkiss_ceo_lockout_v10',
+      ceoSession: 'fatkiss_ceo_session_v10',
+      tracks: 'fatkiss_hub_tracks_v10',
+      scoops: 'fatkiss_hub_scoops_v10',
+      unlocked: 'fatkiss_unlocked_tracks_v10',
+      bg: 'fatkiss_bg_data_v10',
+      avatar: 'fatkiss_avatar_data_v10',
+      avatarMode: 'fatkiss_avatar_mode_v10',
+      bgSettings: 'fatkiss_bg_settings_v10'
     };
 
     let hubConfig = { ...BAKED_CONFIG };
@@ -1272,7 +1274,6 @@
     let authProviderMode = 'none';
     let unlockedTrackIds = new Set();
     let logoTapCount = 0;
-    let logoTapTimer = null;
     let inactivityTimer = null;
     let lockoutCountdownTimer = null;
 
@@ -1423,16 +1424,11 @@
     });
 
     // =========================================================================
-    // 3. STEALTH CEO TRIGGERS (HASH #ceo, CTRL+SHIFT+L, 5-TAP LOGO, YEAR 2026)
+    // 3. STEALTH CEO TRIGGERS (HASH #ceo, CTRL+SHIFT+L, 3-TAP LOGO, YEAR 2026)
     // =========================================================================
     function handleSecretLogoTap() {
       logoTapCount++;
-      clearTimeout(logoTapTimer);
-      logoTapTimer = setTimeout(() => {
-        logoTapCount = 0;
-      }, 3000);
-
-      if (logoTapCount >= 5) {
+      if (logoTapCount >= 3) {
         logoTapCount = 0;
         if (isCeoAuthenticated) {
           showToast('CEO Command Mode is already active');
@@ -2487,4 +2483,6 @@ create policy "Public read tracks" on tracks for select using (true);
 create policy "Public read scoops" on scoops for select using (true);
 
 create policy "CEO full write tracks" on tracks for all to authenticated using (true) with check (true);
-create policy "CEO full write scoops" on scoops for all to authenticated using (tru
+create policy "CEO full write scoops" on scoops for all to authenticated using (true) with check (true);
+
+insert into storage.buckets (id, name, pu

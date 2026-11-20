@@ -2485,4 +2485,752 @@ create policy "Public read scoops" on scoops for select using (true);
 create policy "CEO full write tracks" on tracks for all to authenticated using (true) with check (true);
 create policy "CEO full write scoops" on scoops for all to authenticated using (true) with check (true);
 
-insert into storage.buckets (id, name, pu
+insert into storage.buckets (id, name, public) values ('music', 'music', true) on conflict do nothing;
+create policy "Public view music" on storage.objects for select using (bucket_id = 'music');
+create policy "CEO upload music" on storage.objects for insert to authenticated with check (bucket_id = 'music');
+create policy "CEO delete music" on storage.objects for delete to authenticated using (bucket_id = 'music');`;
+
+      const temp = document.createElement('textarea');
+      temp.value = sqlScript;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+      showToast('Copied RLS SQL Script! Paste into Supabase SQL Editor.');
+    }
+
+    async function saveCloudAndPaySettings() {
+      if (!requireCeoAccess()) return;
+
+      const newPass = document.getElementById('cfg-new-vault-pass').value.trim();
+      const confirmPass = document.getElementById('cfg-confirm-vault-pass').value.trim();
+
+      if (newPass || confirmPass) {
+        if (newPass.length < 4) {
+          showToast('New password/PIN must be at least 4 characters');
+          return;
+        }
+        if (newPass !== confirmPass) {
+          showToast('Passwords do not match');
+          return;
+        }
+        const newSalt = generateRandomSaltHex();
+        const newHash = await computeSaltedSha256(newPass, newSalt);
+        localStorage.setItem(STORAGE_KEYS.vaultSalt, newSalt);
+        localStorage.setItem(STORAGE_KEYS.vaultHash, newHash);
+      }
+
+      hubConfig = {
+        ...hubConfig,
+        supabaseUrl: sanitizeURL(document.getElementById('cfg-sb-url').value.trim()),
+        supabaseKey: document.getElementById('cfg-sb-key').value.trim(),
+        mtnNumber: document.getElementById('cfg-mtn-num').value.trim() || '0768 444 578',
+        airtelNumber: document.getElementById('cfg-airtel-num').value.trim() || '0702 105 197',
+        tipUrl: sanitizeURL(document.getElementById('cfg-tip-url').value.trim()),
+        spotifyUrl: sanitizeURL(document.getElementById('cfg-spotify-url').value.trim()) || 'https://open.spotify.com'
+      };
+
+      try {
+        localStorage.setItem(STORAGE_KEYS.config, JSON.stringify(hubConfig));
+      } catch (e) {}
+
+      document.getElementById('booking-mtn-display').textContent = hubConfig.mtnNumber;
+      document.getElementById('booking-airtel-display').textContent = hubConfig.airtelNumber;
+
+      if (hubConfig.spotifyUrl) {
+        document.getElementById('link-spotify').href = hubConfig.spotifyUrl;
+      }
+
+      await initSupabase();
+      renderTracks();
+      renderScoops();
+      closeSetupModal();
+      showToast('CEO Security & Cloud settings saved!');
+    }
+
+    function exportSiteHtml() {
+      if (!requireCeoAccess()) return;
+      const clone = document.documentElement.cloneNode(true);
+
+      const cmdBar = clone.querySelector('#ceo-command-bar');
+      if (cmdBar) cmdBar.classList.add('hidden');
+      const tracksAct = clone.querySelector('#ceo-tracks-actions');
+      if (tracksAct) {
+        tracksAct.classList.add('hidden');
+        tracksAct.classList.remove('flex');
+      }
+      const postBtn = clone.querySelector('#ceo-post-gossip-btn');
+      if (postBtn) postBtn.classList.add('hidden');
+
+      [
+        'modal-ceo-login',
+        'modal-photo-studio',
+        'modal-cloud-security',
+        'modal-upload-track',
+        'modal-unlock-track',
+        'modal-tip',
+        'modal-booking',
+        'modal-read-gossip',
+        'modal-post-gossip'
+      ].forEach((id) => {
+        const el = clone.querySelector('#' + id);
+        if (el) {
+          el.classList.add('hidden');
+          el.style.display = 'none';
+        }
+      });
+
+      const publicOnlyConfig = {
+        supabaseUrl: hubConfig.supabaseUrl || '',
+        supabaseKey: hubConfig.supabaseKey || '',
+        ceoEmail: hubConfig.ceoEmail || 'thebridgemusic@gmail.com',
+        tipUrl: hubConfig.tipUrl || '',
+        mtnNumber: hubConfig.mtnNumber || '0768 444 578',
+        airtelNumber: hubConfig.airtelNumber || '0702 105 197',
+        managementEmail: hubConfig.managementEmail || 'thebridgemusic@gmail.com',
+        spotifyUrl: hubConfig.spotifyUrl || 'https://open.spotify.com'
+      };
+
+      let htmlContent = '<!DOCTYPE html>\n' + clone.outerHTML;
+      const bakedReplacement = `const BAKED_CONFIG = ${JSON.stringify(publicOnlyConfig, null, 6)};`;
+      htmlContent = htmlContent.replace(/const BAKED_CONFIG = \{[\s\S]*?\};/, bakedReplacement);
+
+      const bakedScoopsReplacement = `const defaultScoops = ${JSON.stringify(scoops, null, 6)};`;
+      htmlContent = htmlContent.replace(/const defaultScoops = \[[\s\S]*?\];/, bakedScoopsReplacement);
+
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'index.html';
+      a.click();
+      showToast('Exported updated index.html with your photos & settings!');
+    }
+
+    // =========================================================================
+    // 10. WEB AUDIO & HTML5 MP3 BOTTOM PLAYER
+    // =========================================================================
+    function formatSeconds(sec) {
+      if (!sec || isNaN(sec)) return '0:00';
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${m}:${s < 10 ? '0' : ''}${s}`;
+    }
+
+    function stopAllAudio() {
+      const realAudio = document.getElementById('real-audio-player');
+      if (realAudio) realAudio.pause();
+      if (synthInterval) clearInterval(synthInterval);
+      if (progressInterval) clearInterval(progressInterval);
+      synthInterval = null;
+      progressInterval = null;
+    }
+
+    function playTrack(index) {
+      if (currentTrackIndex === index && isPlaying) {
+        pauseTrack();
+        return;
+      }
+
+      stopAllAudio();
+      currentTrackIndex = index;
+      isPlaying = true;
+      simulatedProgress = 0;
+
+      const track = tracks[index];
+      if (!track) return;
+      document.getElementById('player-track-title').textContent = track.title;
+      document.getElementById('player-track-artist').textContent = track.artist;
+
+      const coverBox = document.getElementById('player-cover-box');
+      const safeCover = sanitizeURL(track.cover_url, true);
+      coverBox.innerHTML = safeCover
+        ? `<img src="${escapeHTML(safeCover)}" alt="${escapeHTML(track.title)}" class="w-full h-full object-cover" />`
+        : `<span class="text-[10px] font-extrabold text-cyan-400">Music</span>`;
+
+      updatePlayIcons();
+      renderTracks();
+
+      const realAudio = document.getElementById('real-audio-player');
+      realAudio.volume = 0.85;
+
+      const safeAudio = sanitizeURL(track.audio_url, true);
+      if (safeAudio) {
+        realAudio.src = safeAudio;
+        realAudio.play().catch(() => {});
+        realAudio.ontimeupdate = () => {
+          if (realAudio.duration) {
+            const pct = (realAudio.currentTime / realAudio.duration) * 100;
+            document.getElementById('player-progress-bar').style.width = `${pct}%`;
+            document.getElementById('player-time-display').textContent = `${formatSeconds(realAudio.currentTime)} / ${formatSeconds(realAudio.duration)}`;
+          }
+        };
+        realAudio.onended = () => nextTrack();
+      } else {
+        try {
+          if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          if (audioCtx.state === 'suspended') audioCtx.resume();
+
+          let step = 0;
+          const stepMs = (60 / (track.bpm || 108) / 2) * 1000;
+          synthInterval = setInterval(() => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = step % 4 === 0 ? 'triangle' : 'sine';
+            osc.frequency.setValueAtTime(track.notes[step % track.notes.length], audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.26);
+            step++;
+          }, stepMs);
+        } catch (e) {}
+
+        progressInterval = setInterval(() => {
+          simulatedProgress += 1;
+          if (simulatedProgress >= 100) simulatedProgress = 0;
+          document.getElementById('player-progress-bar').style.width = `${simulatedProgress}%`;
+          const curSec = Math.floor((simulatedProgress / 100) * 30);
+          document.getElementById('player-time-display').textContent = `0:${curSec < 10 ? '0' : ''}${curSec} / 0:30`;
+        }, 300);
+      }
+    }
+
+    function pauseTrack() {
+      stopAllAudio();
+      isPlaying = false;
+      updatePlayIcons();
+      renderTracks();
+    }
+
+    function togglePlayPause() {
+      if (currentTrackIndex === -1) {
+        playTrack(0);
+      } else if (isPlaying) {
+        pauseTrack();
+      } else {
+        playTrack(currentTrackIndex);
+      }
+    }
+
+    function prevTrack() {
+      const nextIdx = currentTrackIndex <= 0 ? tracks.length - 1 : currentTrackIndex - 1;
+      playTrack(nextIdx);
+    }
+
+    function nextTrack() {
+      const nextIdx = currentTrackIndex >= tracks.length - 1 ? 0 : currentTrackIndex + 1;
+      playTrack(nextIdx);
+    }
+
+    function seekAudio(event) {
+      const rect = event.currentTarget.getBoundingClientRect();
+      const ratio = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
+      document.getElementById('player-progress-bar').style.width = `${ratio * 100}%`;
+      simulatedProgress = ratio * 100;
+      const realAudio = document.getElementById('real-audio-player');
+      if (realAudio.src && realAudio.duration) {
+        realAudio.currentTime = ratio * realAudio.duration;
+      }
+    }
+
+    function updatePlayIcons() {
+      document.getElementById('main-play-icon').classList.toggle('hidden', isPlaying);
+      document.getElementById('main-pause-icon').classList.toggle('hidden', !isPlaying);
+    }
+
+    // =========================================================================
+    // 11. BOOKING, STREET GOSSIP PUBLISHER & NAVIGATION UTILITIES
+    // =========================================================================
+    function setActiveNav(clickedEl) {
+      document.querySelectorAll('.nav-pill').forEach((pill) => {
+        pill.classList.remove('bg-cyan-400', 'text-slate-950', 'font-bold', 'shadow-md', 'shadow-cyan-400/25', 'shadow-sm', 'shadow-cyan-400/30');
+        pill.classList.add('text-gray-300');
+      });
+      clickedEl.classList.remove('text-gray-300');
+      clickedEl.classList.add('bg-cyan-400', 'text-slate-950', 'font-bold', 'shadow-md', 'shadow-cyan-400/25');
+    }
+
+    function openBookingModal() {
+      openModalById('modal-booking');
+    }
+
+    function closeBookingModal() {
+      closeModalById('modal-booking');
+    }
+
+    function submitBooking(e) {
+      e.preventDefault();
+      const name = document.getElementById('book-name').value.trim();
+      const service = document.getElementById('book-service').value;
+      const details = document.getElementById('book-details').value.trim();
+      const msg = encodeURIComponent(
+        `Hello The Bridge Music Management / Manager Kisa Pius (Fatkiss Official & Legends Visuals),\nName: ${name}\nService: ${service}\nDetails: ${details}\nEmail: thebridgemusic@gmail.com`
+      );
+      window.open(`https://wa.me/256702105197?text=${msg}`, '_blank', 'noopener,noreferrer');
+      closeBookingModal();
+      showToast('Opening WhatsApp to The Bridge Music Management...');
+    }
+
+    function sendEmailBooking() {
+      const name = document.getElementById('book-name').value.trim() || 'Booking Inquiry';
+      const service = document.getElementById('book-service').value;
+      const details = document.getElementById('book-details').value.trim() || 'Please share booking availability and rates.';
+      const subject = encodeURIComponent(`[The Bridge Music] ${service} — ${name}`);
+      const body = encodeURIComponent(
+        `Hello The Bridge Music Management (Manager Kisa Pius),\n\nName / Organization: ${name}\nService Requested: ${service}\nDetails:\n${details}\n\nSent via fatkissofficial.com`
+      );
+      window.location.href = `mailto:thebridgemusic@gmail.com?subject=${subject}&body=${body}`;
+      showToast('Opening email to thebridgemusic@gmail.com...');
+    }
+
+    function copyManagementEmail() {
+      const temp = document.createElement('input');
+      temp.value = 'thebridgemusic@gmail.com';
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+      showToast('Copied email: thebridgemusic@gmail.com');
+    }
+
+    function getBadgeStyle(badge) {
+      switch (badge) {
+        case 'VIBES':
+          return {
+            pill: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30',
+            gradient: 'from-[#0c1d26] via-[#102633] to-[#0a101b]',
+            bannerText: 'text-cyan-300'
+          };
+        case 'STUDIO NEWS':
+          return {
+            pill: 'bg-amber-400/20 text-amber-300 border-amber-400/35',
+            gradient: 'from-[#22190b] via-[#2b1f0e] to-[#110e09]',
+            bannerText: 'text-amber-300'
+          };
+        case 'ARTIST ALERT':
+          return {
+            pill: 'bg-purple-500/20 text-purple-300 border-purple-500/35',
+            gradient: 'from-[#1c102b] via-[#251538] to-[#0e0a16]',
+            bannerText: 'text-purple-300'
+          };
+        default:
+          return {
+            pill: 'bg-pink-500/20 text-pink-400 border-pink-500/30',
+            gradient: 'from-[#1e1022] via-[#28132d] to-[#0d0a14]',
+            bannerText: 'text-pink-400'
+          };
+      }
+    }
+
+    function setGossipFilter(filter, btn) {
+      activeGossipFilter = filter;
+      document.querySelectorAll('.gossip-filter-pill').forEach((el) => {
+        el.className = 'gossip-filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-gray-300 border border-white/10 hover:border-pink-400/40 cursor-pointer';
+      });
+      btn.className = 'gossip-filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-pink-500 text-white shadow-md shadow-pink-500/25 cursor-pointer';
+      renderScoops();
+    }
+
+    function renderScoops() {
+      const grid = document.getElementById('gossip-grid');
+      if (!grid) return;
+
+      const filtered = scoops.filter((s) => activeGossipFilter === 'all' || s.badge === activeGossipFilter);
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="col-span-full text-center py-8 text-xs text-gray-400 glass-panel rounded-2xl">No scoops in this category yet.</div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered
+        .map((scoop) => {
+          const originalIndex = scoops.findIndex((item) => item.id === scoop.id);
+          const style = getBadgeStyle(scoop.badge);
+          const safeBanner = escapeHTML(scoop.banner_title);
+          const safeHeadline = escapeHTML(scoop.headline);
+          const safeBody = escapeHTML(scoop.body);
+          const safeBadge = escapeHTML(scoop.badge);
+          const safeImageUrl = sanitizeURL(scoop.image_url, true);
+          const safeActionUrl = sanitizeURL(scoop.action_url);
+          const dateLabel = scoop.created_at
+            ? new Date(scoop.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+            : 'Latest';
+
+          const bannerMedia = safeImageUrl
+            ? `<img src="${escapeHTML(safeImageUrl)}" alt="${safeHeadline}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-300" />
+               <div class="absolute inset-0 bg-gradient-to-t from-[#0d111a] via-black/45 to-black/20"></div>
+               <h3 class="relative z-10 font-display text-lg sm:text-xl font-extrabold text-white drop-shadow-md text-center px-3">${safeBanner}</h3>`
+            : `<h3 class="font-display text-lg sm:text-xl font-bold ${style.bannerText} group-hover:scale-105 transition text-center">${safeBanner}</h3>`;
+
+          return `
+            <article onclick="openGossipModal(${originalIndex})" class="glass-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col">
+              <div class="relative h-36 bg-gradient-to-br ${style.gradient} flex items-center justify-center p-6 border-b border-white/5 overflow-hidden">
+                ${bannerMedia}
+              </div>
+              <div class="p-4 flex-1 flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between gap-2 mb-2">
+                    <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider border ${style.pill}">
+                      ${safeBadge}
+                    </span>
+                    <span class="text-[10px] text-gray-400">${escapeHTML(dateLabel)}</span>
+                  </div>
+                  <h4 class="font-bold text-sm text-white mb-1 group-hover:text-cyan-300 transition">${safeHeadline}</h4>
+                  <p class="text-xs text-gray-400 line-clamp-2">${safeBody}</p>
+                </div>
+                <div class="mt-3 pt-2 border-t border-white/5 flex items-center justify-between text-[11px] font-bold text-cyan-400">
+                  <span>Read Full Scoop →</span>
+                  ${safeActionUrl ? `<span class="text-pink-400">🎬 Media Link</span>` : ''}
+                </div>
+              </div>
+            </article>
+          `;
+        })
+        .join('');
+    }
+
+    function openGossipModal(index) {
+      const article = scoops[index];
+      if (!article) return;
+      activeReaderScoopIndex = index;
+
+      const style = getBadgeStyle(article.badge);
+      const badgeEl = document.getElementById('gossip-modal-badge');
+      badgeEl.textContent = article.badge;
+      badgeEl.className = `px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase border ${style.pill}`;
+
+      document.getElementById('gossip-modal-banner').textContent = article.banner_title;
+      document.getElementById('gossip-modal-title').textContent = article.headline;
+      document.getElementById('gossip-modal-body').textContent = article.body;
+      document.getElementById('gossip-modal-date').textContent = article.created_at
+        ? new Date(article.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+        : '';
+
+      const imgEl = document.getElementById('gossip-modal-img');
+      const shadeEl = document.getElementById('gossip-modal-img-shade');
+      const safeImg = sanitizeURL(article.image_url, true);
+      if (safeImg) {
+        imgEl.src = safeImg;
+        imgEl.classList.remove('hidden');
+        shadeEl.classList.remove('hidden');
+      } else {
+        imgEl.classList.add('hidden');
+        shadeEl.classList.add('hidden');
+      }
+
+      const actionLink = document.getElementById('gossip-modal-action-link');
+      const safeAction = sanitizeURL(article.action_url);
+      if (safeAction) {
+        actionLink.href = safeAction;
+        actionLink.classList.remove('hidden');
+      } else {
+        actionLink.classList.add('hidden');
+      }
+
+      const waShareText = encodeURIComponent(
+        `🔥 ${article.badge}: ${article.headline}\n\n${article.body.slice(0, 160)}...\n\nRead more on Fatkiss Official — The Bridge Music Hub: https://fatkissofficial.com`
+      );
+      document.getElementById('gossip-modal-share-wa').href = `https://wa.me/?text=${waShareText}`;
+
+      document.getElementById('gossip-modal-edit-btn').classList.toggle('hidden', !isCeoAuthenticated);
+      document.getElementById('gossip-modal-delete-btn').classList.toggle('hidden', !isCeoAuthenticated);
+
+      openModalById('modal-read-gossip');
+    }
+
+    function closeGossipModal() {
+      closeModalById('modal-read-gossip');
+    }
+
+    function openGossipComposer(editIndex = -1) {
+      if (!requireCeoAccess()) return;
+      const isEditing = editIndex >= 0 && scoops[editIndex];
+      document.getElementById('gossip-composer-heading').textContent = isEditing
+        ? '✏️ Edit Street Gossip / Vibe'
+        : '🔥 CEO Street Gossip & Vibes Studio';
+      document.getElementById('gc-submit-btn').textContent = isEditing
+        ? '💾 Save Updated Scoop'
+        : '🚀 Publish Scoop Live';
+
+      if (isEditing) {
+        const s = scoops[editIndex];
+        document.getElementById('gc-edit-id').value = s.id;
+        document.getElementById('gc-badge').value = s.badge;
+        document.getElementById('gc-banner-title').value = s.banner_title;
+        document.getElementById('gc-headline').value = s.headline;
+        document.getElementById('gc-body').value = s.body;
+        document.getElementById('gc-action-url').value = s.action_url || '';
+      } else {
+        document.getElementById('gc-edit-id').value = '';
+        document.getElementById('gc-badge').value = 'HOT SCOOP';
+        document.getElementById('gc-banner-title').value = '';
+        document.getElementById('gc-headline').value = '';
+        document.getElementById('gc-body').value = '';
+        document.getElementById('gc-action-url').value = '';
+        document.getElementById('gc-photo-file').value = '';
+      }
+
+      openModalById('modal-post-gossip');
+    }
+
+    function closeGossipComposer() {
+      closeModalById('modal-post-gossip');
+    }
+
+    function editCurrentScoop() {
+      if (!requireCeoAccess()) return;
+      if (activeReaderScoopIndex < 0) return;
+      const idx = activeReaderScoopIndex;
+      closeGossipModal();
+      openGossipComposer(idx);
+    }
+
+    async function deleteCurrentScoop() {
+      if (!requireCeoAccess()) return;
+      if (activeReaderScoopIndex < 0) return;
+      const target = scoops[activeReaderScoopIndex];
+      if (!target) return;
+
+      if (supabaseClient && target.dbId) {
+        const { error } = await supabaseClient.from('scoops').delete().eq('id', target.dbId);
+        if (error) {
+          showToast(`Server blocked delete: ${error.message}`);
+          return;
+        }
+      }
+      scoops.splice(activeReaderScoopIndex, 1);
+      try {
+        localStorage.setItem(STORAGE_KEYS.scoops, JSON.stringify(scoops));
+      } catch (e) {}
+
+      closeGossipModal();
+      renderScoops();
+      showToast('CEO Deleted Scoop');
+    }
+
+    async function submitGossipPost(event) {
+      event.preventDefault();
+      if (!requireCeoAccess()) return;
+
+      const submitBtn = document.getElementById('gc-submit-btn');
+      const editId = document.getElementById('gc-edit-id').value;
+      const badge = document.getElementById('gc-badge').value;
+      const bannerTitle = document.getElementById('gc-banner-title').value.trim();
+      const headline = document.getElementById('gc-headline').value.trim();
+      const body = document.getElementById('gc-body').value.trim();
+      const actionUrl = sanitizeURL(document.getElementById('gc-action-url').value.trim());
+      const photoFile = document.getElementById('gc-photo-file').files[0];
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = '⏳ Publishing Scoop...';
+
+      try {
+        const existingIndex = editId ? scoops.findIndex((s) => String(s.id) === String(editId)) : -1;
+        let finalImageUrl = existingIndex >= 0 ? scoops[existingIndex].image_url : null;
+
+        if (photoFile) {
+          finalImageUrl = await compressPhotoForHub(photoFile, 850, 0.80);
+
+          if (supabaseClient) {
+            const safeImgName = `${Date.now()}-scoop.jpg`;
+            const { error: upErr } = await supabaseClient.storage
+              .from('music')
+              .upload(`gossip/${safeImgName}`, photoFile, { upsert: true });
+
+            if (!upErr) {
+              const { data: pubImg } = supabaseClient.storage.from('music').getPublicUrl(`gossip/${safeImgName}`);
+              finalImageUrl = pubImg.publicUrl;
+            }
+          }
+        }
+
+        if (existingIndex >= 0) {
+          const existing = scoops[existingIndex];
+          scoops[existingIndex] = {
+            ...existing,
+            badge,
+            banner_title: bannerTitle,
+            headline,
+            body,
+            image_url: finalImageUrl,
+            action_url: actionUrl
+          };
+
+          if (supabaseClient && existing.dbId) {
+            await supabaseClient
+              .from('scoops')
+              .update({
+                badge,
+                banner_title: bannerTitle,
+                headline,
+                body,
+                image_url: finalImageUrl,
+                action_url: actionUrl
+              })
+              .eq('id', existing.dbId);
+          }
+        } else {
+          let dbId = null;
+          const createdAt = new Date().toISOString();
+
+          if (supabaseClient) {
+            const { data: insertedRows } = await supabaseClient
+              .from('scoops')
+              .insert([
+                {
+                  badge,
+                  banner_title: bannerTitle,
+                  headline,
+                  body,
+                  image_url: finalImageUrl,
+                  action_url: actionUrl,
+                  created_at: createdAt
+                }
+              ])
+              .select();
+
+            if (insertedRows && insertedRows[0]) {
+              dbId = insertedRows[0].id;
+            }
+          }
+
+          scoops.unshift({
+            id: dbId ? String(dbId) : 'scoop-' + Date.now(),
+            dbId,
+            badge,
+            banner_title: bannerTitle,
+            headline,
+            body,
+            image_url: finalImageUrl,
+            action_url: actionUrl,
+            created_at: createdAt
+          });
+        }
+
+        try {
+          localStorage.setItem(STORAGE_KEYS.scoops, JSON.stringify(scoops));
+        } catch (e) {}
+
+        closeGossipComposer();
+        renderScoops();
+        showToast(
+          supabaseClient
+            ? `"${headline}" published live!`
+            : `"${headline}" published! Export HTML or connect Supabase for global sync.`
+        );
+      } catch (err) {
+        showToast('Could not publish scoop—please try again.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = '🚀 Publish Scoop Live';
+      }
+    }
+
+    function shareHub() {
+      const shareData = {
+        title: 'FATKISS OFFICIAL — The Bridge Music Hub',
+        text: 'Stream & download official music from Fatkiss Official and explore Legends Visuals!',
+        url: window.location.href
+      };
+      if (navigator.share) {
+        navigator.share(shareData).catch(() => {});
+      } else {
+        const tempInput = document.createElement('input');
+        tempInput.value = 'https://fatkissofficial.com';
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+        showToast('Hub link copied to clipboard!');
+      }
+    }
+
+    function showToast(text) {
+      const toast = document.getElementById('toast-banner');
+      if (!toast) return;
+      toast.textContent = text;
+      toast.classList.remove('opacity-0');
+      toast.classList.add('opacity-100');
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0');
+      }, 3000);
+    }
+
+    // =========================================================================
+    // 12. SAFE INITIALIZATION ON DOMContentLoaded
+    // =========================================================================
+    window.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const savedCfg = localStorage.getItem(STORAGE_KEYS.config);
+        if (savedCfg) {
+          hubConfig = { ...hubConfig, ...JSON.parse(savedCfg) };
+        }
+        const mtnEl = document.getElementById('booking-mtn-display');
+        const airtelEl = document.getElementById('booking-airtel-display');
+        if (mtnEl) mtnEl.textContent = hubConfig.mtnNumber || '0768 444 578';
+        if (airtelEl) airtelEl.textContent = hubConfig.airtelNumber || '0702 105 197';
+
+        if (hubConfig.spotifyUrl) {
+          const spEl = document.getElementById('link-spotify');
+          if (spEl) spEl.href = sanitizeURL(hubConfig.spotifyUrl) || 'https://open.spotify.com';
+        }
+
+        if (sessionStorage.getItem(STORAGE_KEYS.ceoSession) === '1' && !hubConfig.supabaseUrl) {
+          isCeoAuthenticated = true;
+          authProviderMode = 'sha256-vault';
+          resetInactivityAutoLock();
+        }
+
+        const savedUnlocked = localStorage.getItem(STORAGE_KEYS.unlocked);
+        if (savedUnlocked) {
+          unlockedTrackIds = new Set(JSON.parse(savedUnlocked));
+        }
+
+        const savedScoops = localStorage.getItem(STORAGE_KEYS.scoops);
+        if (savedScoops) {
+          const parsedScoops = JSON.parse(savedScoops);
+          if (Array.isArray(parsedScoops) && parsedScoops.length > 0) {
+            scoops = parsedScoops;
+          }
+        }
+
+        const savedBg = localStorage.getItem(STORAGE_KEYS.bg);
+        const savedAvatar = localStorage.getItem(STORAGE_KEYS.avatar);
+        const savedMode = localStorage.getItem(STORAGE_KEYS.avatarMode);
+        const savedSettings = localStorage.getItem(STORAGE_KEYS.bgSettings);
+
+        if (savedSettings) {
+          const parsed = JSON.parse(savedSettings);
+          if (parsed.visibility !== undefined) document.getElementById('bg-opacity-slider').value = parsed.visibility;
+          if (parsed.posY !== undefined) document.getElementById('bg-pos-slider').value = parsed.posY;
+          if (parsed.blurPx !== undefined) document.getElementById('bg-blur-slider').value = parsed.blurPx;
+        }
+
+        if (savedBg) {
+          currentBgDataUrl = savedBg;
+          applyBackgroundImage(savedBg);
+        } else {
+          updateBgStyling();
+        }
+
+        if (savedAvatar && savedMode !== 'text') {
+          currentAvatarDataUrl = savedAvatar;
+          applyAvatarImage(savedAvatar);
+        }
+      } catch (e) {}
+
+      syncCeoUiState();
+      await initSupabase();
+
+      // Auto-open stealth CEO login modal if #ceo is in URL
+      if (window.location.hash.toLowerCase() === '#ceo' && !isCeoAuthenticated) {
+        openCeoLoginModal();
+      }
+    });
+  </script>
+</body>
+</html>

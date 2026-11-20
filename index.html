@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FATKISS OFFICIAL — The Bridge Music Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
@@ -12,6 +13,7 @@
     :root {
       --neon-cyan: #00f2fe;
       --neon-pink: #ff007f;
+      --neon-gold: #fbbf24;
       --dark-base: #08090d;
     }
 
@@ -57,7 +59,7 @@
       background:
         radial-gradient(circle at 50% 12%, rgba(0, 242, 254, 0.14), transparent 48%),
         radial-gradient(circle at 82% 28%, rgba(255, 0, 127, 0.12), transparent 45%),
-        linear-gradient(180deg, rgba(8, 9, 13, 0.45) 0%, rgba(8, 9, 13, 0.72) 60%, #08090d 100%);
+        linear-gradient(180deg, rgba(8, 9, 13, 0.48) 0%, rgba(8, 9, 13, 0.74) 60%, #08090d 100%);
       pointer-events: none;
     }
 
@@ -73,14 +75,14 @@
     }
 
     .glass-panel {
-      background: rgba(15, 19, 29, 0.74);
+      background: rgba(15, 19, 29, 0.78);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .glass-card {
-      background: rgba(17, 22, 34, 0.82);
+      background: rgba(17, 22, 34, 0.85);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -101,20 +103,19 @@
       scrollbar-width: none;
     }
 
-    /* Custom Range Sliders */
     input[type="range"] {
       -webkit-appearance: none;
       appearance: none;
-      height: 6px;
+      height: 5px;
       border-radius: 9999px;
-      background: rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.16);
       outline: none;
     }
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
       border-radius: 9999px;
       background: #00f2fe;
       cursor: pointer;
@@ -122,17 +123,45 @@
     }
   </style>
 </head>
-<body class="pb-28 selection:bg-cyan-400 selection:text-slate-950">
+<body class="pb-32 selection:bg-cyan-400 selection:text-slate-950">
 
   <!-- Fixed Full-Page Background Layers -->
   <div id="site-bg-layer"></div>
   <div id="site-bg-overlay"></div>
 
+  <!-- CEO COMMAND BAR (STRICTLY HIDDEN FROM PUBLIC VISITORS) -->
+  <div id="ceo-command-bar" class="hidden sticky top-0 z-50 bg-gradient-to-r from-amber-500/95 via-yellow-400/95 to-cyan-400/95 text-slate-950 border-b border-amber-300 shadow-xl">
+    <div class="max-w-6xl mx-auto px-3 sm:px-6 py-2 flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2 text-xs font-black tracking-wide uppercase">
+        <span class="px-2 py-0.5 rounded-full bg-slate-950 text-amber-300 text-[10px]">👑 CEO COMMAND MODE</span>
+        <span id="ceo-cloud-badge" class="hidden sm:inline text-[11px] font-extrabold text-slate-900">• Full Control Active</span>
+      </div>
+
+      <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar text-[11px] font-extrabold">
+        <button type="button" onclick="openUploadModal()" class="shrink-0 px-3 py-1.5 rounded-full bg-slate-950 text-cyan-300 hover:bg-slate-900 transition cursor-pointer">
+          + Upload Track
+        </button>
+        <button type="button" onclick="openGossipComposer()" class="shrink-0 px-3 py-1.5 rounded-full bg-slate-950 text-pink-300 hover:bg-slate-900 transition cursor-pointer">
+          + Post Gossip / Vibe
+        </button>
+        <button type="button" onclick="openPhotoStudio()" class="shrink-0 px-3 py-1.5 rounded-full bg-slate-950 text-white hover:bg-slate-900 transition cursor-pointer">
+          📸 Edit Photos
+        </button>
+        <button type="button" onclick="openSetupModal()" class="shrink-0 px-3 py-1.5 rounded-full bg-slate-950 text-amber-300 hover:bg-slate-900 transition cursor-pointer">
+          ⚙️ CEO Settings &amp; Cloud
+        </button>
+        <button type="button" onclick="lockCeoMode()" class="shrink-0 px-3 py-1.5 rounded-full bg-red-600 text-white hover:bg-red-700 transition cursor-pointer">
+          🔒 Lock Site
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Top Sticky Navigation Header -->
   <header class="sticky top-0 z-40 bg-[#08090d]/85 backdrop-blur-xl border-b border-white/10">
     <div class="max-w-6xl mx-auto px-3 sm:px-6 py-2.5 flex items-center justify-between gap-2">
-      <!-- Brand Identity -->
-      <a href="#home" class="flex items-center gap-2.5 shrink-0">
+      <!-- Brand Identity (Secret 5-tap CEO login trigger on logo) -->
+      <div id="brand-logo-trigger" onclick="handleSecretLogoTap()" class="flex items-center gap-2.5 shrink-0 cursor-pointer select-none">
         <div class="w-9 h-9 rounded-full p-[2px] bg-gradient-to-tr from-cyan-400 to-pink-500 flex items-center justify-center shadow-lg shadow-cyan-500/20">
           <div class="w-full h-full rounded-full bg-[#0b0e16] flex items-center justify-center">
             <svg class="w-4 h-4 text-cyan-400 translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24">
@@ -148,7 +177,7 @@
             THE BRIDGE MUSIC HUB
           </div>
         </div>
-      </a>
+      </div>
 
       <!-- Desktop Inline Nav Links -->
       <nav class="hidden lg:flex items-center gap-1.5 text-xs font-semibold">
@@ -159,17 +188,13 @@
         <a href="#promo-booking" onclick="setActiveNav(this)" class="nav-pill px-3.5 py-1.5 rounded-full text-gray-300 hover:text-white hover:bg-white/10 transition">Promo &amp; Booking</a>
       </nav>
 
-      <!-- Action Buttons -->
-      <div class="flex items-center gap-2 shrink-0">
-        <button onclick="openPhotoStudio()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-400/35 transition cursor-pointer">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <rect x="3" y="3" width="18" height="18" rx="3" />
-            <circle cx="8.5" cy="8.5" r="1.5" />
-            <path d="M21 15l-5-5L5 21" />
-          </svg>
-          <span>Add My Pic</span>
+      <!-- Public Fan Action Buttons -->
+      <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <button type="button" onclick="openTipModal()" class="inline-flex items-center gap-1 px-2.5 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold bg-amber-400/15 hover:bg-amber-400/25 text-amber-300 border border-amber-400/40 transition cursor-pointer">
+          <span>💛 Tip / Support</span>
         </button>
-        <button onclick="openBookingModal()" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-pink-500/20 hover:bg-pink-500/30 text-pink-300 border border-pink-500/45 transition cursor-pointer">
+
+        <button type="button" onclick="openBookingModal()" class="inline-flex items-center gap-1 px-3 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold bg-pink-500/20 hover:bg-pink-500/30 text-pink-300 border border-pink-500/45 transition cursor-pointer">
           <span>Book Now</span>
         </button>
       </div>
@@ -202,21 +227,17 @@
             </div>
           </div>
         </div>
-
-        <button onclick="openPhotoStudio()" class="mt-3 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[11px] font-semibold bg-white/10 hover:bg-cyan-400/20 text-cyan-200 border border-white/15 backdrop-blur-md transition cursor-pointer">
-          <span>📸 Customize Background &amp; Avatar Photo</span>
-        </button>
       </div>
 
-      <!-- Artist Headings -->
+      <!-- Artist & Label Headings -->
       <h1 class="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-cyan-300 drop-shadow-[0_2px_18px_rgba(0,242,254,0.3)] uppercase">
         FATKISS OFFICIAL
       </h1>
       <p class="mt-1.5 text-[11px] sm:text-xs font-extrabold tracking-widest text-cyan-400 uppercase">
-        AFRO ZOUK &amp; HIP-HOP ARTIST • FOUNDER OF LEGENDS VISUALS
+        AFRO ZOUK &amp; HIP-HOP ARTIST • MANAGED BY THE BRIDGE MUSIC • FOUNDER OF LEGENDS VISUALS
       </p>
       <p class="mt-3 max-w-xl text-xs sm:text-sm text-gray-300 leading-relaxed">
-        Official Digital Hub for Afro-pop, Afrobeats &amp; Hip-hop Releases, Cinematic Video Shoots, Motion Graphics &amp; Music Downloads.
+        Official Digital Hub of <strong class="text-white">The Bridge Music</strong> Record Label &amp; Management — Afro-pop, Afrobeats &amp; Hip-hop Releases, Cinematic Video Shoots, Motion Graphics &amp; Music Downloads.
       </p>
 
       <!-- Crisp Authentic Vector Social Media Pills -->
@@ -270,7 +291,7 @@
         </a>
 
         <!-- Share Hub -->
-        <button onclick="shareHub()" class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-400/35 transition cursor-pointer">
+        <button type="button" onclick="shareHub()" class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-400/35 transition cursor-pointer">
           <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <circle cx="18" cy="5" r="3" />
             <circle cx="6" cy="12" r="3" />
@@ -283,46 +304,46 @@
 
       <!-- Stream Fatkiss Music Across Platforms Card -->
       <div class="mt-7 w-full glass-panel rounded-2xl p-4 sm:p-5 text-left">
-        <div class="flex items-center gap-2 text-[11px] font-extrabold tracking-wider text-gray-300 uppercase mb-3.5">
-          <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f2fe]"></span>
-          <span>STREAM FATKISS MUSIC ACROSS PLATFORMS</span>
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-3.5">
+          <div class="flex items-center gap-2 text-[11px] font-extrabold tracking-wider text-gray-300 uppercase">
+            <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#00f2fe]"></span>
+            <span>STREAM FATKISS MUSIC ACROSS PLATFORMS</span>
+          </div>
+          <span class="text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 border border-emerald-500/25 px-2.5 py-0.5 rounded-full">
+            Official Royalty Streams
+          </span>
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
-          <!-- Mdundo -->
-          <a href="https://mdundo.com" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#0e131e]/90 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 transition">
+          <a id="link-mdundo" href="https://mdundo.com" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#0e131e]/90 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 transition">
             <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
             </svg>
             <span>Mdundo</span>
           </a>
 
-          <!-- YouTube -->
-          <a href="https://www.youtube.com/@fatkissofficial" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#0e131e]/90 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 transition">
+          <a id="link-youtube" href="https://www.youtube.com/@fatkissofficial" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#0e131e]/90 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 transition">
             <svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 24 24">
               <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
             </svg>
             <span>YouTube</span>
           </a>
 
-          <!-- Spotify -->
-          <a href="https://open.spotify.com" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#0e131e]/90 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 transition">
+          <a id="link-spotify" href="https://open.spotify.com" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#0e131e]/90 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 transition">
             <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
             </svg>
             <span>Spotify</span>
           </a>
 
-          <!-- Apple Music -->
-          <a href="https://music.apple.com" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#0e131e]/90 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 transition">
+          <a id="link-apple" href="https://music.apple.com" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#0e131e]/90 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 transition">
             <svg class="w-4 h-4 text-rose-400" fill="currentColor" viewBox="0 0 24 24">
               <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.96 6.35c.64-.78 1.08-1.86.96-2.94-.93.04-2.06.62-2.72 1.4-.58.68-1.1 1.78-.96 2.84 1.04.08 2.08-.52 2.72-1.3z" />
             </svg>
             <span>Apple Music</span>
           </a>
 
-          <!-- Audiomack -->
-          <a href="https://audiomack.com" target="_blank" rel="noopener" class="col-span-2 sm:col-span-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#0e131e]/90 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 transition">
+          <a id="link-audiomack" href="https://audiomack.com" target="_blank" rel="noopener" class="col-span-2 sm:col-span-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#0e131e]/90 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 transition">
             <svg class="w-4 h-4 text-orange-400" fill="currentColor" viewBox="0 0 24 24">
               <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
             </svg>
@@ -337,15 +358,20 @@
       <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
         <div class="flex items-center gap-2.5">
           <span class="w-1 h-5 rounded-full bg-gradient-to-b from-cyan-400 to-pink-500"></span>
-          <h2 class="font-display text-base sm:text-lg font-extrabold tracking-wide uppercase text-white">
-            THE BRIDGE MUSIC <span class="text-cyan-400">TRACK DOWNLOADS</span>
-          </h2>
+          <div>
+            <h2 class="font-display text-base sm:text-lg font-extrabold tracking-wide uppercase text-white">
+              THE BRIDGE MUSIC <span class="text-cyan-400">TRACK DOWNLOADS</span>
+            </h2>
+            <p class="text-[11px] text-gray-400">Official catalog • Free preview streams &amp; high-quality MP3 downloads</p>
+          </div>
         </div>
 
-        <label class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-white/10 hover:bg-cyan-400/20 text-cyan-300 border border-cyan-400/30 cursor-pointer transition">
-          <span>+ Upload MP3 Track</span>
-          <input type="file" accept="audio/*" onchange="handleTrackUpload(event)" class="hidden" />
-        </label>
+        <!-- CEO-Only Track Upload Button (Hidden from Public Visitors) -->
+        <div id="ceo-tracks-actions" class="hidden items-center gap-2">
+          <button type="button" onclick="openUploadModal()" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-extrabold bg-gradient-to-r from-cyan-400 to-pink-500 text-slate-950 shadow-lg shadow-cyan-500/20 hover:opacity-95 cursor-pointer transition">
+            <span>⬆️ Upload New Track</span>
+          </button>
+        </div>
       </div>
 
       <!-- Live Search Bar -->
@@ -358,26 +384,26 @@
           id="track-search-input"
           type="text"
           oninput="renderTracks()"
-          placeholder="Search tracks by title or artist..."
+          placeholder="Search tracks by title, artist, free or paid..."
           class="w-full pl-11 pr-4 py-3 rounded-2xl bg-[#101420]/90 border border-white/10 text-xs sm:text-sm text-white placeholder-gray-400 focus:outline-none focus:border-cyan-400/50 transition"
         />
       </div>
 
       <!-- Filter Pills -->
       <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-3 text-xs font-bold">
-        <button onclick="setCategoryFilter('all', this)" class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-cyan-400 text-slate-950 shadow-md shadow-cyan-400/25 cursor-pointer">
+        <button type="button" onclick="setCategoryFilter('all', this)" class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-cyan-400 text-slate-950 shadow-md shadow-cyan-400/25 cursor-pointer">
           🔥 All Updates
         </button>
-        <button onclick="setCategoryFilter('trending', this)" class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-gray-300 border border-white/10 hover:border-cyan-400/40 cursor-pointer">
+        <button type="button" onclick="setCategoryFilter('trending', this)" class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-gray-300 border border-white/10 hover:border-cyan-400/40 cursor-pointer">
           🎵 Trending MP3s
         </button>
-        <button onclick="setCategoryFilter('gossip', this)" class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-gray-300 border border-white/10 hover:border-cyan-400/40 cursor-pointer">
-          📰 Street Gossip
+        <button type="button" onclick="setCategoryFilter('paid', this)" class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-amber-300 border border-amber-400/25 hover:border-amber-400/50 cursor-pointer">
+          💎 Exclusive / Paid MP3s
         </button>
-        <button onclick="setCategoryFilter('visuals', this)" class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-gray-300 border border-white/10 hover:border-cyan-400/40 cursor-pointer">
+        <button type="button" onclick="setCategoryFilter('visuals', this)" class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-gray-300 border border-white/10 hover:border-cyan-400/40 cursor-pointer">
           🎬 Video Shoots
         </button>
-        <button onclick="setCategoryFilter('promo', this)" class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-gray-300 border border-white/10 hover:border-cyan-400/40 cursor-pointer">
+        <button type="button" onclick="setCategoryFilter('promo', this)" class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-gray-300 border border-white/10 hover:border-cyan-400/40 cursor-pointer">
           ⭐ Artist Promo
         </button>
       </div>
@@ -388,50 +414,44 @@
 
     <!-- STREET GOSSIP & ENTERTAINMENT SCOOPS -->
     <section id="street-gossip" class="py-6">
-      <div class="flex items-center gap-2.5 mb-4">
-        <span class="w-1 h-5 rounded-full bg-gradient-to-b from-pink-500 to-cyan-400"></span>
-        <h2 class="font-display text-base sm:text-lg font-extrabold tracking-wide uppercase text-white">
-          STREET GOSSIP &amp; <span class="text-pink-500">ENTERTAINMENT SCOOPS</span>
-        </h2>
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+        <div class="flex items-center gap-2.5">
+          <span class="w-1 h-5 rounded-full bg-gradient-to-b from-pink-500 to-cyan-400"></span>
+          <div>
+            <h2 class="font-display text-base sm:text-lg font-extrabold tracking-wide uppercase text-white">
+              STREET GOSSIP &amp; <span class="text-pink-500">ENTERTAINMENT SCOOPS</span>
+            </h2>
+            <p class="text-[11px] text-gray-400">Official news, studio vibes &amp; exclusive announcements from The Bridge Music</p>
+          </div>
+        </div>
+
+        <!-- CEO-Only Post Gossip Button (Hidden from Public Visitors) -->
+        <button id="ceo-post-gossip-btn" type="button" onclick="openGossipComposer()" class="hidden inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-extrabold bg-gradient-to-r from-pink-500 to-cyan-400 text-slate-950 shadow-lg shadow-pink-500/20 hover:opacity-95 cursor-pointer transition">
+          <span>+ Post Gossip / Vibe</span>
+        </button>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- Scoop 1 -->
-        <article onclick="openGossipModal('launch')" class="glass-card rounded-2xl overflow-hidden cursor-pointer group">
-          <div class="h-36 bg-gradient-to-br from-[#0e1726] via-[#131d31] to-[#0a101b] flex items-center justify-center p-6 border-b border-white/5">
-            <h3 class="font-display text-lg sm:text-xl font-bold text-cyan-400 group-hover:scale-105 transition text-center">
-              The Bridge Digital Launch
-            </h3>
-          </div>
-          <div class="p-4">
-            <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-pink-500/20 text-pink-400 border border-pink-500/30 mb-2">
-              HOT SCOOP
-            </span>
-            <h4 class="font-bold text-sm text-white mb-1">Fatkiss Official Unveils Direct Fan Hub &amp; HQ Downloads</h4>
-            <p class="text-xs text-gray-400 line-clamp-2">
-              Fans across Uganda and East Africa can now stream, download studio-mastered MP3s, and book Legends Visuals directly without middlemen.
-            </p>
-          </div>
-        </article>
-
-        <!-- Scoop 2 -->
-        <article onclick="openGossipModal('wave')" class="glass-card rounded-2xl overflow-hidden cursor-pointer group">
-          <div class="h-36 bg-gradient-to-br from-[#1b1124] via-[#21152c] to-[#0f0c18] flex items-center justify-center p-6 border-b border-white/5">
-            <h3 class="font-display text-lg sm:text-xl font-bold text-pink-500 group-hover:scale-105 transition text-center">
-              Emerging Artists Wave
-            </h3>
-          </div>
-          <div class="p-4">
-            <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 mb-2">
-              VIBES
-            </span>
-            <h4 class="font-bold text-sm text-white mb-1">Afro-Zouk Meets Street Hip-Hop in New Studio Sessions</h4>
-            <p class="text-xs text-gray-400 line-clamp-2">
-              Behind the scenes at Legends Visuals as fresh collaborations, 4K music video treatments, and viral TikTok soundtracks take over the streets.
-            </p>
-          </div>
-        </article>
+      <!-- Gossip & Vibes Filter Pills -->
+      <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-3 text-xs font-bold">
+        <button type="button" onclick="setGossipFilter('all', this)" class="gossip-filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-pink-500 text-white shadow-md shadow-pink-500/25 cursor-pointer">
+          📰 All Scoops
+        </button>
+        <button type="button" onclick="setGossipFilter('HOT SCOOP', this)" class="gossip-filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-pink-300 border border-pink-500/25 hover:border-pink-400/50 cursor-pointer">
+          🔥 Hot Scoop
+        </button>
+        <button type="button" onclick="setGossipFilter('VIBES', this)" class="gossip-filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-cyan-300 border border-cyan-500/25 hover:border-cyan-400/50 cursor-pointer">
+          ✨ Vibes
+        </button>
+        <button type="button" onclick="setGossipFilter('STUDIO NEWS', this)" class="gossip-filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-amber-300 border border-amber-500/25 hover:border-amber-400/50 cursor-pointer">
+          🎬 Studio News
+        </button>
+        <button type="button" onclick="setGossipFilter('ARTIST ALERT', this)" class="gossip-filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-purple-300 border border-purple-500/25 hover:border-purple-400/50 cursor-pointer">
+          🎤 Artist Alert
+        </button>
       </div>
+
+      <!-- Dynamic Street Gossip Cards Grid -->
+      <div id="gossip-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
     </section>
 
     <!-- LEGENDS VISUALS & ARTIST PROMO -->
@@ -467,22 +487,89 @@
 
     <!-- PROMO & BOOKING SECTION -->
     <section id="promo-booking" class="py-6">
-      <div class="glass-panel rounded-3xl p-5 sm:p-7 border border-cyan-400/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div>
-          <span class="inline-block px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-cyan-400/15 text-cyan-300 border border-cyan-400/30 mb-2">
-            OFFICIAL MANAGEMENT &amp; BOOKINGS
-          </span>
-          <h3 class="font-display text-xl sm:text-2xl font-extrabold text-white">
-            Book Fatkiss Official or Legends Visuals
-          </h3>
-          <p class="text-xs sm:text-sm text-gray-300 mt-1">
-            Manager: <strong class="text-white">Kisa Pius</strong> • Phone / WhatsApp: <strong class="text-cyan-300">+256 702 105 197</strong> • Email: <span class="text-pink-300">booking@fatkissofficial.com</span>
-          </p>
+      <div class="glass-panel rounded-3xl p-5 sm:p-7 border border-cyan-400/20 space-y-5">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <span class="inline-block px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-cyan-400/15 text-cyan-300 border border-cyan-400/30 mb-2">
+              THE BRIDGE MUSIC MANAGEMENT • BOOKINGS &amp; MOBILE MONEY
+            </span>
+            <h3 class="font-display text-xl sm:text-2xl font-extrabold text-white">
+              Book Fatkiss Official or Legends Visuals
+            </h3>
+            <p class="text-xs sm:text-sm text-gray-300 mt-1">
+              Managed by <strong class="text-cyan-300">The Bridge Music</strong> • Manager: <strong class="text-white">Kisa Pius</strong> • Email:
+              <a href="mailto:thebridgemusic@gmail.com" class="text-pink-300 hover:text-pink-200 underline decoration-pink-400/40 font-semibold">thebridgemusic@gmail.com</a>
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-2 shrink-0">
+            <button type="button" onclick="openTipModal()" class="px-4 py-3 rounded-2xl text-xs sm:text-sm font-extrabold bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 border border-amber-400/40 transition cursor-pointer">
+              💛 Support / Tip
+            </button>
+            <button type="button" onclick="openBookingModal()" class="px-5 py-3 rounded-2xl text-xs sm:text-sm font-extrabold bg-gradient-to-r from-cyan-400 to-pink-500 text-slate-950 shadow-lg shadow-cyan-500/20 hover:opacity-95 transition cursor-pointer">
+              📅 Request Booking
+            </button>
+          </div>
         </div>
-        <button onclick="openBookingModal()" class="shrink-0 px-5 py-3 rounded-2xl text-xs sm:text-sm font-extrabold bg-gradient-to-r from-cyan-400 to-pink-500 text-slate-950 shadow-lg shadow-cyan-500/20 hover:opacity-95 transition cursor-pointer">
-          📅 Request Booking Now
-        </button>
+
+        <!-- Official MTN MoMo & Airtel Money Direct Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+          <!-- MTN Mobile Money Card -->
+          <div class="rounded-2xl p-3.5 bg-[#1b180b]/90 border border-yellow-400/40 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-10 h-10 rounded-xl bg-yellow-400 text-slate-950 font-display font-black text-xs flex items-center justify-center shrink-0 shadow-md shadow-yellow-400/20">
+                MTN
+              </div>
+              <div class="min-w-0">
+                <div class="text-[10px] font-extrabold uppercase tracking-wider text-yellow-300">MTN Mobile Money</div>
+                <a href="tel:+256768444578" id="booking-mtn-display" class="font-mono text-sm sm:text-base font-extrabold text-white hover:text-yellow-300 transition block truncate">
+                  0768 444 578
+                </a>
+                <div class="text-[10px] text-gray-400 truncate">+256 768 444 578 • Fatkiss Official</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <a href="tel:+256768444578" aria-label="Call or Dial MTN MoMo" class="px-2.5 py-1.5 rounded-lg bg-yellow-400/15 hover:bg-yellow-400/25 text-yellow-300 border border-yellow-400/30 text-[11px] font-bold transition">
+                Dial
+              </a>
+              <button type="button" onclick="copySpecificNumber('mtn')" class="px-3 py-1.5 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-slate-950 text-[11px] font-extrabold cursor-pointer transition">
+                Copy
+              </button>
+            </div>
+          </div>
+
+          <!-- Airtel Money Card -->
+          <div class="rounded-2xl p-3.5 bg-[#1d0d11]/90 border border-red-500/40 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-10 h-10 rounded-xl bg-red-600 text-white font-display font-black text-[10px] flex items-center justify-center shrink-0 shadow-md shadow-red-600/25">
+                airtel
+              </div>
+              <div class="min-w-0">
+                <div class="text-[10px] font-extrabold uppercase tracking-wider text-red-400">Airtel Money</div>
+                <a href="tel:+256702105197" id="booking-airtel-display" class="font-mono text-sm sm:text-base font-extrabold text-white hover:text-red-300 transition block truncate">
+                  0702 105 197
+                </a>
+                <div class="text-[10px] text-gray-400 truncate">+256 702 105 197 • Kisa Pius</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <a href="tel:+256702105197" aria-label="Call or Dial Airtel Money" class="px-2.5 py-1.5 rounded-lg bg-red-500/15 hover:bg-red-500/25 text-red-300 border border-red-500/30 text-[11px] font-bold transition">
+                Dial
+              </a>
+              <button type="button" onclick="copySpecificNumber('airtel')" class="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white text-[11px] font-extrabold cursor-pointer transition">
+                Copy
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
+    </section>
+
+    <!-- Discreet Footer with CEO Login Trigger -->
+    <section class="pt-2 pb-10 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-gray-500 border-t border-white/5">
+      <div>© 2026 FATKISS OFFICIAL • THE BRIDGE MUSIC &amp; LEGENDS VISUALS</div>
+      <button type="button" id="footer-ceo-login-btn" onclick="openCeoLoginModal()" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 hover:bg-white/10 text-gray-400 hover:text-amber-300 border border-white/10 transition cursor-pointer">
+        <span>🔐 CEO Login</span>
+      </button>
     </section>
   </main>
 
@@ -501,32 +588,35 @@
 
   <!-- Sticky Bottom "The Bridge Music Player" Bar -->
   <footer class="fixed bottom-0 inset-x-0 z-40 bg-[#090c14]/95 backdrop-blur-xl border-t border-white/10">
-    <!-- Interactive Progress Bar -->
+    <!-- Interactive Seek Scrubber -->
     <div onclick="seekAudio(event)" class="w-full h-1.5 bg-white/10 cursor-pointer relative group">
       <div id="player-progress-bar" class="h-full w-0 bg-gradient-to-r from-cyan-400 to-pink-500 transition-all duration-150"></div>
     </div>
 
-    <div class="max-w-6xl mx-auto px-4 py-2.5 flex items-center justify-between gap-3">
+    <div class="max-w-6xl mx-auto px-3 sm:px-4 py-2.5 flex items-center justify-between gap-2 sm:gap-4">
       <!-- Current Track Info -->
-      <div class="flex items-center gap-3 min-w-0">
-        <div class="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-400/30 flex items-center justify-center shrink-0">
+      <div class="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
+        <div id="player-cover-box" class="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-400/30 flex items-center justify-center shrink-0 overflow-hidden">
           <span class="text-[10px] font-extrabold text-cyan-400">Music</span>
         </div>
         <div class="min-w-0">
           <div id="player-track-title" class="text-xs sm:text-sm font-bold text-white truncate">Select a Track</div>
-          <div id="player-track-artist" class="text-[11px] font-medium text-cyan-400 truncate">The Bridge Music Player</div>
+          <div class="flex items-center gap-2 text-[10px] sm:text-[11px] font-medium text-cyan-400 truncate">
+            <span id="player-track-artist" class="truncate">The Bridge Music Player</span>
+            <span id="player-time-display" class="text-gray-400 shrink-0">0:00 / 0:00</span>
+          </div>
         </div>
       </div>
 
       <!-- Transport Controls -->
-      <div class="flex items-center gap-3 sm:gap-4 shrink-0">
-        <button onclick="prevTrack()" aria-label="Previous Track" class="p-2 text-gray-300 hover:text-white transition cursor-pointer">
+      <div class="flex items-center gap-2 sm:gap-3.5 shrink-0">
+        <button type="button" onclick="prevTrack()" aria-label="Previous Track" class="p-1.5 text-gray-300 hover:text-white transition cursor-pointer">
           <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
             <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" />
           </svg>
         </button>
 
-        <button onclick="togglePlayPause()" aria-label="Play or Pause" class="w-11 h-11 rounded-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 flex items-center justify-center shadow-lg shadow-cyan-400/35 transition cursor-pointer">
+        <button type="button" onclick="togglePlayPause()" aria-label="Play or Pause" class="w-11 h-11 rounded-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 flex items-center justify-center shadow-lg shadow-cyan-400/35 transition cursor-pointer">
           <svg id="main-play-icon" class="w-5 h-5 translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24">
             <path d="M8 5v14l11-7z" />
           </svg>
@@ -535,719 +625,372 @@
           </svg>
         </button>
 
-        <button onclick="nextTrack()" aria-label="Next Track" class="p-2 text-gray-300 hover:text-white transition cursor-pointer">
+        <button type="button" onclick="nextTrack()" aria-label="Next Track" class="p-1.5 text-gray-300 hover:text-white transition cursor-pointer">
           <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
             <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
           </svg>
         </button>
       </div>
+
+      <!-- Volume & Tip Artist Button -->
+      <div class="hidden sm:flex items-center gap-3 shrink-0">
+        <div class="flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
+          </svg>
+          <input id="player-volume-slider" type="range" min="0" max="100" value="85" oninput="setVolume(this.value)" class="w-16" />
+        </div>
+
+        <button type="button" onclick="openTipModal()" class="px-3 py-1.5 rounded-full text-xs font-extrabold bg-amber-400 hover:bg-amber-300 text-slate-950 shadow-md shadow-amber-400/25 transition cursor-pointer">
+          💛 Tip Artist
+        </button>
+      </div>
     </div>
   </footer>
 
-  <!-- MODAL 1: PHOTO STUDIO (BACKGROUND & AVATAR CUSTOMIZER) -->
-  <div id="photo-studio-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
-    <div class="w-full max-w-lg rounded-3xl bg-[#111623] border border-cyan-400/30 p-5 sm:p-6 shadow-2xl my-auto">
-      <div class="flex items-center justify-between mb-4">
-        <div>
-          <h3 class="font-display text-lg font-extrabold text-white">📸 Background &amp; Avatar Photo Studio</h3>
-          <p class="text-xs text-gray-400">Upload your picture into the entire website background &amp; hero badge</p>
-        </div>
-        <button onclick="closePhotoStudio()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 flex items-center justify-center cursor-pointer">✕</button>
+  <!-- ======================================================================= -->
+  <!-- MODAL 0: CEO-ONLY PRIVATE LOGIN GATE                                    -->
+  <!-- ======================================================================= -->
+  <div id="ceo-login-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
+    <div class="w-full max-w-sm rounded-3xl bg-[#111623] border border-amber-400/45 p-6 shadow-2xl my-auto">
+      <div class="flex items-center justify-between mb-3">
+        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-amber-400/20 text-amber-300 border border-amber-400/35">
+          👑 CEO Restricted Access
+        </span>
+        <button type="button" onclick="closeCeoLoginModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 flex items-center justify-center cursor-pointer">✕</button>
       </div>
 
-      <div class="space-y-3.5">
-        <!-- 1. Full Website Background Upload -->
-        <div class="p-3.5 rounded-2xl bg-[#0c0f17] border border-white/10">
-          <label class="block text-xs font-bold text-cyan-400 mb-1.5">1. Full-Page Website Background Photo</label>
-          <input type="file" accept="image/*" onchange="handleBgPhotoUpload(event)" class="block w-full text-xs text-gray-300 file:mr-3 file:py-2 file:px-3.5 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-cyan-400 file:text-slate-950 hover:file:bg-cyan-300 cursor-pointer" />
-        </div>
+      <h3 class="font-display text-xl font-extrabold text-white mb-1">Fatkiss Official CEO Login</h3>
+      <p class="text-xs text-gray-400 mb-4">
+        Enter your private CEO PIN / Password to unlock full website editing, music uploads, Street Gossip publishing, and background controls.
+      </p>
 
-        <!-- 2. Hero Center Circle Upload -->
-        <div class="p-3.5 rounded-2xl bg-[#0c0f17] border border-white/10">
-          <div class="flex items-center justify-between gap-2 mb-1.5">
-            <label class="block text-xs font-bold text-pink-400">2. Hero Center Circle Photo</label>
-            <button type="button" onclick="toggleAvatarMode()" id="avatar-mode-btn" class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-white/10 hover:bg-pink-500/20 text-pink-300 border border-pink-400/30 transition cursor-pointer">
-              Switch to Text Badge
-            </button>
-          </div>
-          <input type="file" accept="image/*" onchange="handleAvatarPhotoUpload(event)" class="block w-full text-xs text-gray-300 file:mr-3 file:py-2 file:px-3.5 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-pink-500 file:text-white hover:file:bg-pink-400 cursor-pointer" />
-        </div>
-
-        <!-- 3. Live Sliders -->
-        <div class="p-3.5 rounded-2xl bg-[#0c0f17] border border-white/10 space-y-3">
-          <div>
-            <div class="flex justify-between text-xs mb-1">
-              <span class="text-gray-300 font-medium">Background Brightness / Visibility</span>
-              <span id="bg-opacity-val" class="text-cyan-400 font-bold">55%</span>
-            </div>
-            <input id="bg-opacity-slider" type="range" min="10" max="95" value="55" oninput="updateBgStyling()" class="w-full" />
-          </div>
-
-          <div>
-            <div class="flex justify-between text-xs mb-1">
-              <span class="text-gray-300 font-medium">Vertical Photo Position (Face Framing)</span>
-              <span id="bg-pos-val" class="text-cyan-400 font-bold">20%</span>
-            </div>
-            <input id="bg-pos-slider" type="range" min="0" max="100" value="20" oninput="updateBgStyling()" class="w-full" />
-          </div>
-
-          <div>
-            <div class="flex justify-between text-xs mb-1">
-              <span class="text-gray-300 font-medium">Background Soft Blur</span>
-              <span id="bg-blur-val" class="text-cyan-400 font-bold">0px</span>
-            </div>
-            <input id="bg-blur-slider" type="range" min="0" max="16" value="0" oninput="updateBgStyling()" class="w-full" />
-          </div>
-        </div>
-
-        <!-- 4. Save & Export for GitHub Pages -->
-        <div class="p-3.5 rounded-2xl bg-gradient-to-r from-cyan-500/10 to-pink-500/10 border border-cyan-400/25">
-          <div class="text-xs font-bold text-white mb-1">🚀 Ready for fatkissofficial.com?</div>
-          <p class="text-[11px] text-gray-300 mb-2.5">
-            After uploading your photo above, download the updated <code class="text-cyan-300">index.html</code> with your image baked right inside it for GitHub Pages.
-          </p>
-          <div class="flex flex-wrap gap-2">
-            <button onclick="exportSiteHtml()" class="flex-1 py-2.5 px-3 rounded-xl text-xs font-extrabold bg-cyan-400 text-slate-950 hover:bg-cyan-300 transition cursor-pointer">
-              ⬇️ Save &amp; Download Updated index.html
-            </button>
-            <button onclick="resetPhotos()" class="py-2.5 px-3 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/15 text-gray-300 transition cursor-pointer">
-              Reset
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL 2: BOOKING & MANAGEMENT -->
-  <div id="booking-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4">
-    <div class="w-full max-w-md rounded-3xl bg-[#111623] border border-pink-500/35 p-6 shadow-2xl">
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="font-display text-lg font-extrabold text-white">📅 Book Fatkiss Official</h3>
-        <button onclick="closeBookingModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 flex items-center justify-center cursor-pointer">✕</button>
-      </div>
-
-      <form onsubmit="submitBooking(event)" class="space-y-3 text-xs">
+      <form onsubmit="submitCeoLogin(event)" class="space-y-3 text-xs">
         <div>
-          <label class="block text-gray-300 font-semibold mb-1">Your Name / Organization</label>
-          <input id="book-name" type="text" required placeholder="e.g. DJ Alex / Club Silk" class="w-full px-3.5 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400" />
+          <label class="block text-amber-300 font-bold mb-1">Private CEO PIN / Password *</label>
+          <input id="ceo-login-pin-input" type="password" required placeholder="Enter CEO PIN" class="w-full px-3.5 py-3 rounded-xl bg-[#0c0f17] border border-amber-400/35 text-white text-sm tracking-widest focus:outline-none focus:border-amber-400" />
         </div>
-        <div>
-          <label class="block text-gray-300 font-semibold mb-1">Service Type</label>
-          <select id="book-service" class="w-full px-3.5 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400">
-            <option value="Live Performance / Show Booking">Live Performance / Show Booking</option>
-            <option value="Legends Visuals 4K Music Video Shoot">Legends Visuals — 4K Music Video Shoot</option>
-            <option value="Motion Graphics / Visualizer">Legends Visuals — Motion Graphics / Visualizer</option>
-            <option value="Feature / Studio Collaboration">Feature / Studio Collaboration</option>
-          </select>
-        </div>
-        <div>
-          <label class="block text-gray-300 font-semibold mb-1">Event Date &amp; Details</label>
-          <textarea id="book-details" rows="3" required placeholder="Share location, date, or project details..." class="w-full px-3.5 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400"></textarea>
-        </div>
-        <button type="submit" class="w-full py-3 rounded-xl font-extrabold bg-[#25D366] hover:opacity-95 text-slate-950 transition cursor-pointer">
-          Send Direct WhatsApp to Manager (Kisa Pius)
+
+        <button type="submit" class="w-full py-3 rounded-xl font-extrabold bg-gradient-to-r from-amber-400 to-cyan-400 text-slate-950 shadow-lg hover:opacity-95 transition cursor-pointer">
+          🔓 Unlock CEO Command Mode
         </button>
       </form>
     </div>
   </div>
 
-  <!-- MODAL 3: STREET GOSSIP ARTICLE READER -->
-  <div id="gossip-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4">
-    <div class="w-full max-w-lg rounded-3xl bg-[#111623] border border-white/15 p-6 shadow-2xl">
+  <!-- ======================================================================= -->
+  <!-- MODAL 1: PAID TRACK CHECKOUT (MTN MOMO, AIRTEL MONEY & CARD UNLOCK)     -->
+  <!-- ======================================================================= -->
+  <div id="checkout-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
+    <div class="w-full max-w-md rounded-3xl bg-[#111623] border border-amber-400/40 p-5 sm:p-6 shadow-2xl my-auto">
       <div class="flex items-center justify-between mb-3">
-        <span id="gossip-modal-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-pink-500/20 text-pink-400 border border-pink-500/30">SCOOP</span>
-        <button onclick="closeGossipModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 flex items-center justify-center cursor-pointer">✕</button>
+        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-amber-400/20 text-amber-300 border border-amber-400/35">
+          💎 Master MP3 Download
+        </span>
+        <button type="button" onclick="closeCheckoutModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 flex items-center justify-center cursor-pointer">✕</button>
       </div>
-      <h3 id="gossip-modal-title" class="font-display text-xl font-extrabold text-white mb-2"></h3>
-      <p id="gossip-modal-body" class="text-xs sm:text-sm text-gray-300 leading-relaxed"></p>
+
+      <h3 id="checkout-track-title" class="font-display text-xl font-extrabold text-white">Track Title</h3>
+      <p id="checkout-track-artist" class="text-xs text-cyan-400 font-semibold mb-3.5">Fatkiss Official</p>
+
+      <div class="p-3 rounded-2xl bg-[#0b0e16] border border-white/10 mb-3.5 flex items-center justify-between">
+        <div>
+          <div class="text-[10px] text-gray-400">Official Fan Price</div>
+          <div id="checkout-price-ugx" class="font-display text-lg sm:text-xl font-extrabold text-amber-300">UGX 1,500</div>
+        </div>
+        <div class="text-right">
+          <div class="text-[10px] text-gray-400">International</div>
+          <div id="checkout-price-usd" class="text-xs font-bold text-gray-200">~$0.50 USD</div>
+        </div>
+      </div>
+
+      <div class="space-y-2.5 text-xs">
+        <div class="text-[11px] font-bold text-gray-300">
+          Step 1: Send <strong id="checkout-momo-amount" class="text-amber-300">UGX 1,500</strong> via MTN MoMo or Airtel Money:
+        </div>
+
+        <!-- MTN Mobile Money Accent Card -->
+        <div class="p-3 rounded-2xl bg-[#1d190b] border border-yellow-400/45 flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2.5 min-w-0">
+            <span class="px-2 py-1 rounded-lg bg-yellow-400 text-slate-950 font-display font-black text-[10px] shrink-0">MTN</span>
+            <div class="min-w-0">
+              <div class="text-[10px] font-bold text-yellow-300">MTN Mobile Money</div>
+              <div id="checkout-mtn-number" class="font-mono font-extrabold text-white text-sm truncate">0768 444 578</div>
+              <div class="text-[10px] text-gray-400 truncate">+256 768 444 578 • Fatkiss Official</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <a href="tel:+256768444578" class="px-2.5 py-1.5 rounded-lg bg-yellow-400/15 hover:bg-yellow-400/25 text-yellow-300 font-bold text-[11px]">Dial</a>
+            <button type="button" onclick="copySpecificNumber('mtn')" class="px-2.5 py-1.5 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-extrabold text-[11px] cursor-pointer">Copy</button>
+          </div>
+        </div>
+
+        <!-- Airtel Money Accent Card -->
+        <div class="p-3 rounded-2xl bg-[#1f0d12] border border-red-500/45 flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2.5 min-w-0">
+            <span class="px-2 py-1 rounded-lg bg-red-600 text-white font-display font-black text-[10px] shrink-0">airtel</span>
+            <div class="min-w-0">
+              <div class="text-[10px] font-bold text-red-400">Airtel Money</div>
+              <div id="checkout-airtel-number" class="font-mono font-extrabold text-white text-sm truncate">0702 105 197</div>
+              <div class="text-[10px] text-gray-400 truncate">+256 702 105 197 • Kisa Pius</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <a href="tel:+256702105197" class="px-2.5 py-1.5 rounded-lg bg-red-500/15 hover:bg-red-500/25 text-red-300 font-bold text-[11px]">Dial</a>
+            <button type="button" onclick="copySpecificNumber('airtel')" class="px-2.5 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-extrabold text-[11px] cursor-pointer">Copy</button>
+          </div>
+        </div>
+
+        <!-- Optional Card / Selar / Flutterwave Link -->
+        <a id="checkout-pay-link" href="#" target="_blank" rel="noopener" class="block w-full py-2.5 px-4 rounded-xl text-center font-extrabold bg-white/10 hover:bg-white/15 text-amber-300 border border-amber-400/30 transition">
+          💳 Or Pay Online with Visa / Mastercard / Checkout Link
+        </a>
+
+        <!-- Transaction ID Unlock + Instant WhatsApp Confirmation -->
+        <form onsubmit="confirmPaymentUnlock(event)" class="pt-1 space-y-2">
+          <label class="block text-[11px] font-semibold text-gray-300">Step 2: Enter MoMo / Airtel Transaction ID to Unlock MP3:</label>
+          <div class="flex gap-2">
+            <input id="checkout-tx-ref" type="text" required placeholder="e.g. MP261120.1405.A9281" class="flex-1 px-3 py-2.5 rounded-xl bg-[#0c0f17] border border-white/15 text-white text-xs focus:outline-none focus:border-cyan-400" />
+            <button type="submit" class="px-4 py-2.5 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-extrabold text-xs cursor-pointer">
+              Unlock MP3
+            </button>
+          </div>
+        </form>
+
+        <a id="checkout-whatsapp-confirm" href="#" target="_blank" rel="noopener" class="block w-full py-2.5 px-4 rounded-xl text-center font-extrabold bg-[#25D366]/20 hover:bg-[#25D366]/30 text-emerald-300 border border-emerald-500/35 transition">
+          ✅ Confirm Payment via WhatsApp
+        </a>
+      </div>
     </div>
   </div>
 
-  <!-- Toast Notification -->
-  <div id="toast-banner" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full bg-cyan-400 text-slate-950 text-xs font-extrabold shadow-lg opacity-0 pointer-events-none transition-opacity duration-200">
-    Action completed!
+  <!-- ======================================================================= -->
+  <!-- MODAL 2: TIP / SUPPORT FATKISS OFFICIAL (MTN MOMO & AIRTEL MONEY)       -->
+  <!-- ======================================================================= -->
+  <div id="tip-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
+    <div class="w-full max-w-md rounded-3xl bg-[#111623] border border-amber-400/35 p-5 sm:p-6 shadow-2xl my-auto">
+      <div class="flex items-center justify-between mb-2.5">
+        <h3 class="font-display text-lg font-extrabold text-white">💛 Support / Tip Fatkiss Official</h3>
+        <button type="button" onclick="closeTipModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 flex items-center justify-center cursor-pointer">✕</button>
+      </div>
+      <p class="text-xs text-gray-300 mb-3.5">
+        Fuel upcoming studio sessions and 4K Legends Visuals video shoots directly via MTN Mobile Money or Airtel Money.
+      </p>
+
+      <!-- Quick Tip Amount Buttons -->
+      <div class="grid grid-cols-4 gap-2 mb-3">
+        <button type="button" onclick="selectTipAmount(2000, this)" class="tip-amt-btn py-2 rounded-xl text-xs font-extrabold bg-amber-400 text-slate-950 cursor-pointer">2,000</button>
+        <button type="button" onclick="selectTipAmount(5000, this)" class="tip-amt-btn py-2 rounded-xl text-xs font-bold bg-white/10 text-gray-200 hover:bg-white/15 cursor-pointer">5,000</button>
+        <button type="button" onclick="selectTipAmount(10000, this)" class="tip-amt-btn py-2 rounded-xl text-xs font-bold bg-white/10 text-gray-200 hover:bg-white/15 cursor-pointer">10,000</button>
+        <button type="button" onclick="selectTipAmount(25000, this)" class="tip-amt-btn py-2 rounded-xl text-xs font-bold bg-white/10 text-gray-200 hover:bg-white/15 cursor-pointer">25,000</button>
+      </div>
+
+      <div class="mb-3.5">
+        <label class="block text-[11px] text-gray-400 mb-1">Custom Support Amount (UGX)</label>
+        <input id="tip-custom-amount" type="number" min="500" value="2000" oninput="updateTipWhatsAppLink()" class="w-full px-3.5 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-sm font-bold text-amber-300 focus:outline-none focus:border-amber-400" />
+      </div>
+
+      <div class="space-y-2.5 text-xs">
+        <!-- MTN Mobile Money Accent Card -->
+        <div class="p-3 rounded-2xl bg-[#1d190b] border border-yellow-400/45 flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2.5 min-w-0">
+            <span class="px-2 py-1 rounded-lg bg-yellow-400 text-slate-950 font-display font-black text-[10px] shrink-0">MTN</span>
+            <div class="min-w-0">
+              <div class="text-[10px] font-bold text-yellow-300">MTN Mobile Money</div>
+              <div id="tip-mtn-display" class="font-mono font-extrabold text-white text-sm truncate">0768 444 578</div>
+              <div class="text-[10px] text-gray-400 truncate">+256 768 444 578 • Fatkiss Official</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <a href="tel:+256768444578" class="px-2.5 py-1.5 rounded-lg bg-yellow-400/15 hover:bg-yellow-400/25 text-yellow-300 font-bold text-[11px]">Dial</a>
+            <button type="button" onclick="copySpecificNumber('mtn')" class="px-2.5 py-1.5 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-extrabold text-[11px] cursor-pointer">Copy</button>
+          </div>
+        </div>
+
+        <!-- Airtel Money Accent Card -->
+        <div class="p-3 rounded-2xl bg-[#1f0d12] border border-red-500/45 flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2.5 min-w-0">
+            <span class="px-2 py-1 rounded-lg bg-red-600 text-white font-display font-black text-[10px] shrink-0">airtel</span>
+            <div class="min-w-0">
+              <div class="text-[10px] font-bold text-red-400">Airtel Money</div>
+              <div id="tip-airtel-display" class="font-mono font-extrabold text-white text-sm truncate">0702 105 197</div>
+              <div class="text-[10px] text-gray-400 truncate">+256 702 105 197 • Kisa Pius</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <a href="tel:+256702105197" class="px-2.5 py-1.5 rounded-lg bg-red-500/15 hover:bg-red-500/25 text-red-300 font-bold text-[11px]">Dial</a>
+            <button type="button" onclick="copySpecificNumber('airtel')" class="px-2.5 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-extrabold text-[11px] cursor-pointer">Copy</button>
+          </div>
+        </div>
+
+        <!-- Confirm Tip via WhatsApp -->
+        <a id="tip-whatsapp-confirm" href="https://wa.me/256702105197?text=Hello%20Fatkiss%20Official!%20I%20just%20sent%20a%20fan%20support%20tip%20of%20UGX%202%2C000%20via%20Mobile%20Money!" target="_blank" rel="noopener" class="block w-full py-3 rounded-xl text-center font-extrabold bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 shadow-lg hover:opacity-95 transition">
+          ✅ Confirm Payment via WhatsApp
+        </a>
+      </div>
+    </div>
   </div>
 
-  <audio id="real-audio-player" class="hidden"></audio>
+  <!-- ======================================================================= -->
+  <!-- MODAL 3: CEO-ONLY MUSIC UPLOAD STUDIO                                   -->
+  <!-- ======================================================================= -->
+  <div id="upload-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
+    <div class="w-full max-w-lg rounded-3xl bg-[#111623] border border-cyan-400/35 p-5 sm:p-6 shadow-2xl my-auto">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h3 class="font-display text-lg font-extrabold text-white">⬆️ CEO Track Publisher</h3>
+          <p class="text-xs text-gray-400">Upload official MP3s, cover art, pricing &amp; royalty stream links</p>
+        </div>
+        <button type="button" onclick="closeUploadModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 flex items-center justify-center cursor-pointer">✕</button>
+      </div>
 
-  <script>
-    // =========================================================================
-    // 1. TRACK CATALOG & WEB AUDIO SYNTHESIZER ENGINE
-    // =========================================================================
-    const tracks = [
-      {
-        id: 'cwinya',
-        title: 'Cwinya',
-        artist: 'Fatkiss Official',
-        downloads: 3420,
-        category: 'trending',
-        badgeColor: 'text-cyan-400',
-        bpm: 104,
-        notes: [261.63, 329.63, 392.0, 493.88],
-        audioUrl: null
-      },
-      {
-        id: 'matum-ungo',
-        title: 'Matum-Ungo',
-        artist: 'Fatkiss Official',
-        downloads: 5180,
-        category: 'trending',
-        badgeColor: 'text-pink-400',
-        bpm: 112,
-        notes: [293.66, 349.23, 440.0, 523.25],
-        audioUrl: null
-      },
-      {
-        id: 'jakwo',
-        title: 'Jakwo',
-        artist: 'Fatkiss Official',
-        downloads: 2890,
-        category: 'visuals',
-        badgeColor: 'text-sky-400',
-        bpm: 98,
-        notes: [220.0, 261.63, 329.63, 392.0],
-        audioUrl: null
-      },
-      {
-        id: 'jamusuma',
-        title: 'Jamusuma',
-        artist: 'Fatkiss Official',
-        downloads: 4110,
-        category: 'promo',
-        badgeColor: 'text-amber-400',
-        bpm: 118,
-        notes: [246.94, 311.13, 369.99, 493.88],
-        audioUrl: null
-      }
-    ];
+      <form onsubmit="submitNewTrack(event)" class="space-y-3 text-xs">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-gray-300 font-semibold mb-1">Track Title *</label>
+            <input id="up-title" type="text" required placeholder="e.g. Kampala Nights" class="w-full px-3 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400" />
+          </div>
+          <div>
+            <label class="block text-gray-300 font-semibold mb-1">Artist Name *</label>
+            <input id="up-artist" type="text" required value="Fatkiss Official" class="w-full px-3 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400" />
+          </div>
+        </div>
 
-    let activeCategory = 'all';
-    let currentTrackIndex = -1;
-    let isPlaying = false;
-    let audioCtx = null;
-    let synthInterval = null;
-    let progressInterval = null;
-    let simulatedProgress = 0;
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-gray-300 font-semibold mb-1">Category</label>
+            <select id="up-category" class="w-full px-3 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400">
+              <option value="trending">🎵 Trending MP3s</option>
+              <option value="visuals">🎬 Video Shoots</option>
+              <option value="promo">⭐ Artist Promo</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-gray-300 font-semibold mb-1">Download Pricing</label>
+            <select id="up-pricing-mode" onchange="toggleUploadPriceFields()" class="w-full px-3 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400">
+              <option value="free">🆓 Free MP3 Download</option>
+              <option value="paid">💎 Paid Master MP3 (UGX)</option>
+            </select>
+          </div>
+        </div>
 
-    function renderTracks() {
-      const grid = document.getElementById('tracks-grid');
-      const query = document.getElementById('track-search-input').value.trim().toLowerCase();
+        <div id="up-paid-fields" class="hidden grid-cols-1 sm:grid-cols-2 gap-3 p-3 rounded-2xl bg-amber-400/10 border border-amber-400/25">
+          <div>
+            <label class="block text-amber-300 font-semibold mb-1">Download Price (UGX)</label>
+            <input id="up-price-ugx" type="number" min="500" value="1500" class="w-full px-3 py-2 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-amber-400" />
+          </div>
+          <div>
+            <label class="block text-amber-300 font-semibold mb-1">Payment Link (Selar/Flutterwave)</label>
+            <input id="up-payment-url" type="url" placeholder="https://selar.co/your-song" class="w-full px-3 py-2 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-amber-400" />
+          </div>
+        </div>
 
-      const filtered = tracks.filter((t) => {
-        const matchesCat = activeCategory === 'all' || t.category === activeCategory;
-        const matchesQuery = t.title.toLowerCase().includes(query) || t.artist.toLowerCase().includes(query);
-        return matchesCat && matchesQuery;
-      });
+        <div>
+          <label class="block text-gray-300 font-semibold mb-1">Official Spotify / YouTube Stream Link (Earns Royalties)</label>
+          <input id="up-stream-url" type="url" placeholder="https://open.spotify.com/track/... or YouTube link" class="w-full px-3 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400" />
+        </div>
 
-      if (filtered.length === 0) {
-        grid.innerHTML = `<div class="col-span-full text-center py-8 text-xs text-gray-400 glass-panel rounded-2xl">No matching tracks found. Try another keyword or filter!</div>`;
-        return;
-      }
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="p-3 rounded-2xl bg-[#0c0f17] border border-white/10">
+            <label class="block text-cyan-400 font-bold mb-1">Audio File (.MP3 / .WAV) *</label>
+            <input id="up-audio-file" type="file" accept="audio/*" required class="block w-full text-[11px] text-gray-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:font-bold file:bg-cyan-400 file:text-slate-950 cursor-pointer" />
+          </div>
+          <div class="p-3 rounded-2xl bg-[#0c0f17] border border-white/10">
+            <label class="block text-pink-400 font-bold mb-1">Cover Art Image (Optional)</label>
+            <input id="up-cover-file" type="file" accept="image/*" class="block w-full text-[11px] text-gray-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:font-bold file:bg-pink-500 file:text-white cursor-pointer" />
+          </div>
+        </div>
 
-      grid.innerHTML = filtered
-        .map((track) => {
-          const originalIndex = tracks.findIndex((item) => item.id === track.id);
-          const isCurrentPlaying = originalIndex === currentTrackIndex && isPlaying;
-          return `
-            <div class="glass-card rounded-2xl p-3.5 flex items-center justify-between gap-3">
-              <div class="flex items-center gap-3 min-w-0">
-                <div class="w-12 h-12 rounded-xl bg-[#0b0f19] border border-white/10 flex items-center justify-center shrink-0 px-1 text-center">
-                  <span class="text-[10px] font-extrabold ${track.badgeColor} truncate">${track.title}</span>
-                </div>
-                <div class="min-w-0">
-                  <div class="flex items-center gap-1.5">
-                    <h3 class="text-sm font-bold text-white truncate">${track.title}</h3>
-                    <span class="text-cyan-400 text-xs">•••</span>
-                  </div>
-                  <div class="text-xs text-gray-400 truncate">${track.artist}</div>
-                  <div class="text-[11px] text-pink-400 font-semibold mt-0.5">
-                    ↓ ${track.downloads.toLocaleString()} High Quality MP3
-                  </div>
-                </div>
-              </div>
+        <button id="up-submit-btn" type="submit" class="w-full py-3 rounded-xl font-extrabold bg-gradient-to-r from-cyan-400 to-pink-500 text-slate-950 shadow-lg hover:opacity-95 transition cursor-pointer">
+          🚀 Publish Track to Hub
+        </button>
+      </form>
+    </div>
+  </div>
 
-              <div class="flex items-center gap-2 shrink-0">
-                <button onclick="playTrack(${originalIndex})" aria-label="Play ${track.title}" class="w-10 h-10 rounded-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 flex items-center justify-center shadow-md shadow-cyan-400/25 transition cursor-pointer">
-                  ${
-                    isCurrentPlaying
-                      ? `<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`
-                      : `<svg class="w-4 h-4 translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`
-                  }
-                </button>
-                <button onclick="downloadTrack(${originalIndex})" aria-label="Download ${track.title}" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-gray-200 flex items-center justify-center border border-white/10 transition cursor-pointer">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                    <path d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" />
-                  </svg>
-                </button>
-              </div>
+  <!-- ======================================================================= -->
+  <!-- MODAL 4: CEO SETTINGS, SECURITY PIN, SUPABASE RLS & HTML EXPORTER       -->
+  <!-- ======================================================================= -->
+  <div id="setup-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
+    <div class="w-full max-w-xl rounded-3xl bg-[#111623] border border-amber-400/40 p-5 sm:p-6 shadow-2xl my-auto">
+      <div class="flex items-center justify-between mb-3">
+        <div>
+          <h3 class="font-display text-lg font-extrabold text-white">👑 CEO Control Center &amp; Security Settings</h3>
+          <p class="text-xs text-gray-400">Manage your private CEO PIN, Supabase RLS protection, Mobile Money &amp; GitHub HTML export</p>
+        </div>
+        <button type="button" onclick="closeSetupModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 flex items-center justify-center cursor-pointer">✕</button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <!-- Private CEO PIN & Supabase Server Auth -->
+        <div class="p-3.5 rounded-2xl bg-[#0c0f17] border border-amber-400/30 space-y-2.5">
+          <div class="font-bold text-amber-300">1. CEO Private Security PIN &amp; Server Authentication</div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <div>
+              <label class="block text-[11px] text-gray-300 mb-1">Your Private CEO PIN</label>
+              <input id="cfg-admin-pin" type="text" value="2026" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-amber-400/35 text-amber-300 font-bold" />
             </div>
-          `;
-        })
-        .join('');
-    }
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">CEO Supabase Email (Optional)</label>
+              <input id="cfg-ceo-email" type="email" placeholder="thebridgemusic@gmail.com" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white" />
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">CEO Supabase Password</label>
+              <input id="cfg-ceo-pass" type="password" placeholder="••••••••" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white" />
+            </div>
+          </div>
+          <p class="text-[10px] text-gray-400">
+            Change your default PIN (`2026`) above and export `index.html` so only your PIN unlocks CEO Command Mode.
+          </p>
+        </div>
 
-    function setCategoryFilter(cat, btn) {
-      activeCategory = cat;
-      document.querySelectorAll('.filter-pill').forEach((el) => {
-        el.className = 'filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-gray-300 border border-white/10 hover:border-cyan-400/40 cursor-pointer';
-      });
-      btn.className = 'filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-cyan-400 text-slate-950 shadow-md shadow-cyan-400/25 cursor-pointer';
-      renderTracks();
-    }
+        <!-- Supabase Keys & CEO-Only RLS SQL -->
+        <div class="p-3.5 rounded-2xl bg-[#0c0f17] border border-white/10 space-y-2.5">
+          <div class="font-bold text-cyan-400">2. Supabase Cloud Backend (CEO-Only Write Protection)</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">Supabase Project URL</label>
+              <input id="cfg-sb-url" type="url" placeholder="https://xyz.supabase.co" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white" />
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">Supabase Anon Public Key</label>
+              <input id="cfg-sb-key" type="text" placeholder="eyJhbGciOiJIUzI1NiIs..." class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white" />
+            </div>
+          </div>
 
-    function stopAllAudio() {
-      const realAudio = document.getElementById('real-audio-player');
-      realAudio.pause();
-      if (synthInterval) clearInterval(synthInterval);
-      if (progressInterval) clearInterval(progressInterval);
-      synthInterval = null;
-      progressInterval = null;
-    }
-
-    function playTrack(index) {
-      if (currentTrackIndex === index && isPlaying) {
-        pauseTrack();
-        return;
-      }
-
-      stopAllAudio();
-      currentTrackIndex = index;
-      isPlaying = true;
-      simulatedProgress = 0;
-
-      const track = tracks[index];
-      document.getElementById('player-track-title').textContent = track.title;
-      document.getElementById('player-track-artist').textContent = `${track.artist} • High Quality Audio`;
-      updatePlayIcons();
-      renderTracks();
-
-      const realAudio = document.getElementById('real-audio-player');
-      if (track.audioUrl) {
-        realAudio.src = track.audioUrl;
-        realAudio.play();
-        realAudio.ontimeupdate = () => {
-          if (realAudio.duration) {
-            const pct = (realAudio.currentTime / realAudio.duration) * 100;
-            document.getElementById('player-progress-bar').style.width = `${pct}%`;
-          }
-        };
-        realAudio.onended = () => nextTrack();
-      } else {
-        // Play Afro-Zouk / Hip-Hop preview groove via Web Audio API
-        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        if (audioCtx.state === 'suspended') audioCtx.resume();
-
-        let step = 0;
-        const stepMs = (60 / track.bpm / 2) * 1000;
-        synthInterval = setInterval(() => {
-          const osc = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
-          osc.type = step % 4 === 0 ? 'triangle' : 'sine';
-          osc.frequency.setValueAtTime(track.notes[step % track.notes.length], audioCtx.currentTime);
-          gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.25);
-          osc.connect(gain);
-          gain.connect(audioCtx.destination);
-          osc.start();
-          osc.stop(audioCtx.currentTime + 0.26);
-          step++;
-        }, stepMs);
-
-        progressInterval = setInterval(() => {
-          simulatedProgress += 1;
-          if (simulatedProgress >= 100) simulatedProgress = 0;
-          document.getElementById('player-progress-bar').style.width = `${simulatedProgress}%`;
-        }, 300);
-      }
-    }
-
-    function pauseTrack() {
-      stopAllAudio();
-      isPlaying = false;
-      updatePlayIcons();
-      renderTracks();
-    }
-
-    function togglePlayPause() {
-      if (currentTrackIndex === -1) {
-        playTrack(0);
-      } else if (isPlaying) {
-        pauseTrack();
-      } else {
-        playTrack(currentTrackIndex);
-      }
-    }
-
-    function prevTrack() {
-      const nextIdx = currentTrackIndex <= 0 ? tracks.length - 1 : currentTrackIndex - 1;
-      playTrack(nextIdx);
-    }
-
-    function nextTrack() {
-      const nextIdx = currentTrackIndex >= tracks.length - 1 ? 0 : currentTrackIndex + 1;
-      playTrack(nextIdx);
-    }
-
-    function seekAudio(event) {
-      const rect = event.currentTarget.getBoundingClientRect();
-      const ratio = Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width));
-      document.getElementById('player-progress-bar').style.width = `${ratio * 100}%`;
-      simulatedProgress = ratio * 100;
-      const realAudio = document.getElementById('real-audio-player');
-      if (realAudio.src && realAudio.duration) {
-        realAudio.currentTime = ratio * realAudio.duration;
-      }
-    }
-
-    function updatePlayIcons() {
-      document.getElementById('main-play-icon').classList.toggle('hidden', isPlaying);
-      document.getElementById('main-pause-icon').classList.toggle('hidden', !isPlaying);
-    }
-
-    function downloadTrack(index) {
-      const track = tracks[index];
-      track.downloads += 1;
-      renderTracks();
-
-      const a = document.createElement('a');
-      if (track.audioUrl) {
-        a.href = track.audioUrl;
-        a.download = `${track.title} - ${track.artist}.mp3`;
-      } else {
-        const infoBlob = new Blob(
-          [`FATKISS OFFICIAL — THE BRIDGE MUSIC HUB\nTrack: ${track.title}\nArtist: ${track.artist}\nOfficial Stream & Download: https://fatkissofficial.com`],
-          { type: 'text/plain' }
-        );
-        a.href = URL.createObjectURL(infoBlob);
-        a.download = `${track.title} - Fatkiss Official.txt`;
-      }
-      a.click();
-      showToast(`Downloading "${track.title}"...`);
-    }
-
-    function handleTrackUpload(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const url = URL.createObjectURL(file);
-      const cleanTitle = file.name.replace(/\.[^/.]+$/, '');
-      tracks.unshift({
-        id: 'custom-' + Date.now(),
-        title: cleanTitle,
-        artist: 'Fatkiss Official',
-        downloads: 1,
-        category: 'trending',
-        badgeColor: 'text-cyan-400',
-        bpm: 110,
-        notes: [261.63, 329.63, 392.0, 523.25],
-        audioUrl: url
-      });
-      renderTracks();
-      playTrack(0);
-      showToast(`Added "${cleanTitle}" to The Bridge Music Hub!`);
-    }
-
-    // =========================================================================
-    // 2. PHOTO STUDIO (FULL-PAGE BACKGROUND + HERO AVATAR CUSTOMIZER)
-    // =========================================================================
-    const STORAGE_BG_KEY = 'fatkiss_bg_data_v3';
-    const STORAGE_AVATAR_KEY = 'fatkiss_avatar_data_v3';
-    const STORAGE_AVATAR_MODE_KEY = 'fatkiss_avatar_mode_v3';
-    const STORAGE_SETTINGS_KEY = 'fatkiss_bg_settings_v3';
-
-    let currentBgDataUrl = '';
-    let currentAvatarDataUrl = '';
-
-    function openPhotoStudio() {
-      const modal = document.getElementById('photo-studio-modal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-    }
-
-    function closePhotoStudio() {
-      const modal = document.getElementById('photo-studio-modal');
-      modal.classList.add('hidden');
-      modal.classList.remove('flex');
-    }
-
-    function handleBgPhotoUpload(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        currentBgDataUrl = e.target.result;
-        applyBackgroundImage(currentBgDataUrl);
-        try {
-          localStorage.setItem(STORAGE_BG_KEY, currentBgDataUrl);
-        } catch (err) {}
-        showToast('Your photo is now live across the entire website background!');
-      };
-      reader.readAsDataURL(file);
-    }
-
-    function handleAvatarPhotoUpload(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        currentAvatarDataUrl = e.target.result;
-        applyAvatarImage(currentAvatarDataUrl);
-        try {
-          localStorage.setItem(STORAGE_AVATAR_KEY, currentAvatarDataUrl);
-          localStorage.setItem(STORAGE_AVATAR_MODE_KEY, 'photo');
-        } catch (err) {}
-        showToast('Hero circle avatar updated!');
-      };
-      reader.readAsDataURL(file);
-    }
-
-    function applyBackgroundImage(dataUrl) {
-      const bgLayer = document.getElementById('site-bg-layer');
-      if (dataUrl) {
-        bgLayer.style.backgroundImage = `url('${dataUrl}')`;
-      } else {
-        bgLayer.style.backgroundImage = '';
-      }
-      updateBgStyling();
-    }
-
-    function applyAvatarImage(dataUrl) {
-      const imgEl = document.getElementById('hero-avatar-img');
-      const textEl = document.getElementById('hero-avatar-text');
-      const modeBtn = document.getElementById('avatar-mode-btn');
-
-      if (dataUrl) {
-        imgEl.src = dataUrl;
-        imgEl.classList.remove('hidden');
-        textEl.classList.add('hidden');
-        if (modeBtn) modeBtn.textContent = 'Switch to Text Badge';
-      } else {
-        imgEl.classList.add('hidden');
-        textEl.classList.remove('hidden');
-        if (modeBtn) modeBtn.textContent = 'Switch to Photo Badge';
-      }
-    }
-
-    function toggleAvatarMode() {
-      const imgEl = document.getElementById('hero-avatar-img');
-      const textEl = document.getElementById('hero-avatar-text');
-      const modeBtn = document.getElementById('avatar-mode-btn');
-      const isShowingPhoto = !imgEl.classList.contains('hidden');
-
-      if (isShowingPhoto) {
-        imgEl.classList.add('hidden');
-        textEl.classList.remove('hidden');
-        if (modeBtn) modeBtn.textContent = 'Switch to Photo Badge';
-        try { localStorage.setItem(STORAGE_AVATAR_MODE_KEY, 'text'); } catch (e) {}
-        showToast('Switched to glowing text emblem');
-      } else {
-        if (!currentAvatarDataUrl && currentBgDataUrl) {
-          currentAvatarDataUrl = currentBgDataUrl;
-          imgEl.src = currentAvatarDataUrl;
-        }
-        if (currentAvatarDataUrl) {
-          imgEl.classList.remove('hidden');
-          textEl.classList.add('hidden');
-          if (modeBtn) modeBtn.textContent = 'Switch to Text Badge';
-          try { localStorage.setItem(STORAGE_AVATAR_MODE_KEY, 'photo'); } catch (e) {}
-          showToast('Switched to circular artist photo');
-        } else {
-          showToast('Upload a circle photo above first!');
-        }
-      }
-    }
-
-    function updateBgStyling() {
-      const visibility = document.getElementById('bg-opacity-slider').value;
-      const posY = document.getElementById('bg-pos-slider').value;
-      const blurPx = document.getElementById('bg-blur-slider').value;
-
-      document.getElementById('bg-opacity-val').textContent = `${visibility}%`;
-      document.getElementById('bg-pos-val').textContent = `${posY}%`;
-      document.getElementById('bg-blur-val').textContent = `${blurPx}px`;
-
-      const bgLayer = document.getElementById('site-bg-layer');
-      const overlay = document.getElementById('site-bg-overlay');
-
-      bgLayer.style.backgroundPosition = `center ${posY}%`;
-      bgLayer.style.filter = blurPx > 0 ? `blur(${blurPx}px)` : 'none';
-
-      const darknessTop = (100 - visibility) / 100;
-      const darknessMid = Math.min(0.95, darknessTop + 0.22);
-
-      overlay.style.background = `
-        radial-gradient(circle at 50% 12%, rgba(0, 242, 254, 0.14), transparent 48%),
-        radial-gradient(circle at 82% 28%, rgba(255, 0, 127, 0.12), transparent 45%),
-        linear-gradient(180deg, rgba(8, 9, 13, ${darknessTop.toFixed(2)}) 0%, rgba(8, 9, 13, ${darknessMid.toFixed(2)}) 60%, #08090d 100%)
-      `;
-
-      try {
-        localStorage.setItem(STORAGE_SETTINGS_KEY, JSON.stringify({ visibility, posY, blurPx }));
-      } catch (e) {}
-    }
-
-    function resetPhotos() {
-      currentBgDataUrl = '';
-      currentAvatarDataUrl = '';
-      localStorage.removeItem(STORAGE_BG_KEY);
-      localStorage.removeItem(STORAGE_AVATAR_KEY);
-      localStorage.removeItem(STORAGE_AVATAR_MODE_KEY);
-      localStorage.removeItem(STORAGE_SETTINGS_KEY);
-      document.getElementById('bg-opacity-slider').value = 55;
-      document.getElementById('bg-pos-slider').value = 20;
-      document.getElementById('bg-blur-slider').value = 0;
-      applyBackgroundImage('');
-      applyAvatarImage('');
-      showToast('Background & avatar reset to default neon theme');
-    }
-
-    function exportSiteHtml() {
-      // Clone current document and close modals before exporting clean standalone HTML
-      const clone = document.documentElement.cloneNode(true);
-      const photoModal = clone.querySelector('#photo-studio-modal');
-      if (photoModal) {
-        photoModal.classList.add('hidden');
-        photoModal.classList.remove('flex');
-      }
-      const htmlContent = '<!DOCTYPE html>\n' + clone.outerHTML;
-      const blob = new Blob([htmlContent], { type: 'text/html' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = 'index.html';
-      a.click();
-      showToast('Downloaded updated index.html for GitHub Pages!');
-    }
-
-    // =========================================================================
-    // 3. MODALS, NAVIGATION & UTILITIES
-    // =========================================================================
-    function setActiveNav(clickedEl) {
-      document.querySelectorAll('.nav-pill').forEach((pill) => {
-        pill.classList.remove('bg-cyan-400', 'text-slate-950', 'font-bold', 'shadow-md', 'shadow-cyan-400/25', 'shadow-sm', 'shadow-cyan-400/30');
-        pill.classList.add('text-gray-300');
-      });
-      clickedEl.classList.remove('text-gray-300');
-      clickedEl.classList.add('bg-cyan-400', 'text-slate-950', 'font-bold', 'shadow-md', 'shadow-cyan-400/25');
-    }
-
-    function openBookingModal() {
-      const m = document.getElementById('booking-modal');
-      m.classList.remove('hidden');
-      m.classList.add('flex');
-    }
-
-    function closeBookingModal() {
-      const m = document.getElementById('booking-modal');
-      m.classList.add('hidden');
-      m.classList.remove('flex');
-    }
-
-    function submitBooking(e) {
-      e.preventDefault();
-      const name = document.getElementById('book-name').value.trim();
-      const service = document.getElementById('book-service').value;
-      const details = document.getElementById('book-details').value.trim();
-      const msg = encodeURIComponent(
-        `Hello Manager Kisa Pius (Fatkiss Official / Legends Visuals),\nName: ${name}\nService: ${service}\nDetails: ${details}`
-      );
-      window.open(`https://wa.me/256702105197?text=${msg}`, '_blank');
-      closeBookingModal();
-      showToast('Opening WhatsApp booking request...');
-    }
-
-    const gossipArticles = {
-      launch: {
-        badge: 'HOT SCOOP',
-        title: 'The Bridge Digital Launch: Direct Access to Fatkiss Official',
-        body: 'Fatkiss Official and Legends Visuals have officially launched The Bridge Music Hub (fatkissofficial.com) to connect fans directly with new Afro-Zouk, Afrobeats, and Hip-Hop releases. Visitors can stream tracks instantly, grab high-quality MP3 downloads, and book cinematic 4K video shoots without third-party delays.'
-      },
-      wave: {
-        badge: 'VIBES',
-        title: 'Emerging Artists Wave & Legends Visuals Studio Sessions',
-        body: 'From late-night vocal sessions to vibrant 4K visualizers, Legends Visuals is spotlighting a new wave of East African sound and motion graphics. Stay locked on The Bridge Music Hub for exclusive street drops, behind-the-scenes clips, and upcoming live show announcements.'
-      }
-    };
-
-    function openGossipModal(key) {
-      const article = gossipArticles[key];
-      if (!article) return;
-      document.getElementById('gossip-modal-badge').textContent = article.badge;
-      document.getElementById('gossip-modal-title').textContent = article.title;
-      document.getElementById('gossip-modal-body').textContent = article.body;
-      const m = document.getElementById('gossip-modal');
-      m.classList.remove('hidden');
-      m.classList.add('flex');
-    }
-
-    function closeGossipModal() {
-      const m = document.getElementById('gossip-modal');
-      m.classList.add('hidden');
-      m.classList.remove('flex');
-    }
-
-    function shareHub() {
-      const shareData = {
-        title: 'FATKISS OFFICIAL — The Bridge Music Hub',
-        text: 'Stream & download official music from Fatkiss Official and explore Legends Visuals!',
-        url: window.location.href
-      };
-      if (navigator.share) {
-        navigator.share(shareData).catch(() => {});
-      } else {
-        const tempInput = document.createElement('input');
-        tempInput.value = 'https://fatkissofficial.com';
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        document.execCommand('copy');
-        document.body.removeChild(tempInput);
-        showToast('Hub link copied to clipboard!');
-      }
-    }
-
-    function showToast(text) {
-      const toast = document.getElementById('toast-banner');
-      toast.textContent = text;
-      toast.classList.remove('opacity-0');
-      toast.classList.add('opacity-100');
-      clearTimeout(window._toastTimer);
-      window._toastTimer = setTimeout(() => {
-        toast.classList.remove('opacity-100');
-        toast.classList.add('opacity-0');
-      }, 2600);
-    }
-
-    // =========================================================================
-    // 4. INITIALIZE ON LOAD
-    // =========================================================================
-    window.addEventListener('DOMContentLoaded', () => {
-      try {
-        const savedBg = localStorage.getItem(STORAGE_BG_KEY);
-        const savedAvatar = localStorage.getItem(STORAGE_AVATAR_KEY);
-        const savedMode = localStorage.getItem(STORAGE_AVATAR_MODE_KEY);
-        const savedSettings = localStorage.getItem(STORAGE_SETTINGS_KEY);
-
-        if (savedSettings) {
-          const parsed = JSON.parse(savedSettings);
-          if (parsed.visibility !== undefined) document.getElementById('bg-opacity-slider').value = parsed.visibility;
-          if (parsed.posY !== undefined) document.getElementById('bg-pos-slider').value = parsed.posY;
-          if (parsed.blurPx !== undefined) document.getElementById('bg-blur-slider').value = parsed.blurPx;
-        }
-
-        if (savedBg) {
-          currentBgDataUrl = savedBg;
-          applyBackgroundImage(savedBg);
-        } else {
-          updateBgStyling();
-        }
-
-        if (savedAvatar && savedMode !== 'text') {
-          currentAvatarDataUrl = savedAvatar;
-          applyAvatarImage(savedAvatar);
-        }
-      } catch (e) {}
-
-      renderTracks();
-    });
-  </script>
-</body>
-                </html>
+          <details class="text-[11px] text-gray-300">
+            <summary class="cursor-pointer text-cyan-300 font-semibold">Show CEO-Only Supabase SQL Security Script (Blocks Public Edits)</summary>
+            <pre class="mt-2 p-2.5 rounded-xl bg-black/70 text-[10px] text-emerald-300 overflow-x-auto select-all">-- Run in Supabase SQL Editor so ONLY authenticated CEO can insert/update/delete
+create table if not exists tracks (
+  id bigint generated by default as identity primary key,
+  title text not null,
+  artist text not null,
+  category text default 'trending',
+  audio_url text not null,
+  cover_url text,
+  downloads integer default 0,
+  price_ugx integer default 0,
+  payment_url text,
+  stream_url text,
+  created_at timestamp with time zone default now()
+);
+create table if not exists scoops (
+  id bigint generated by default as identity primary key,
+  badge text default 'HOT SCOOP',
+  banner_title text not null,
+  headline text not null,
+  body text not null,
+  image_url text,
+  action_url text,
+  created_at timestamp with time zone default now()
+);
+alter table tracks enable row level security;
+alter table scoops enable row level security;
+create policy "Public read tracks" on tracks for select using (true);
+create policy "CEO write tracks" on tracks for all to authenticated using (true) with check (true);
+create policy "Public read scoops" on scoops for select using (true);
+create policy "CEO write scoops" on scoops for all to authenticated using (true) with check (true);
+insert into storage.buckets (id, name, public) values ('music', 'music', true) on conflict do nothing;
+create policy "Public view music" on storage.objects for select using (bucket_id = 'music');
+create policy "CEO upload music" on storage.objects for insert to authenticated with check (bucket_id = 'music');
+create policy "CEO delete music" on storage.objects for delete to authenticated using (bucket_id = 'music');

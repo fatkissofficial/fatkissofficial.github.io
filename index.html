@@ -3,14 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Strict Content Security Policy: Blocks unauthorized external script injections (XSS defense) -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://*.supabase.co https://placehold.co; media-src 'self' data: blob: https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co;" />
   <title>FATKISS OFFICIAL — The Bridge Music Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
       --neon-cyan: #00f2fe;
@@ -37,7 +35,7 @@
       font-family: 'Space Grotesk', sans-serif;
     }
 
-    /* Fixed Full-Page Background System */
+    /* Full-Page Fixed Background Layer */
     #site-bg-layer {
       position: fixed;
       inset: 0;
@@ -61,11 +59,11 @@
       background:
         radial-gradient(circle at 50% 12%, rgba(0, 242, 254, 0.14), transparent 48%),
         radial-gradient(circle at 82% 28%, rgba(255, 0, 127, 0.12), transparent 45%),
-        linear-gradient(180deg, rgba(8, 9, 13, 0.48) 0%, rgba(8, 9, 13, 0.74) 60%, #08090d 100%);
+        linear-gradient(180deg, rgba(8, 9, 13, 0.45) 0%, rgba(8, 9, 13, 0.72) 60%, #08090d 100%);
       pointer-events: none;
     }
 
-    /* Neon Ring & Glass Surfaces */
+    /* Glowing Neon Hero Ring */
     .avatar-glow-ring {
       position: relative;
       border-radius: 9999px;
@@ -77,14 +75,14 @@
     }
 
     .glass-panel {
-      background: rgba(15, 19, 29, 0.78);
+      background: rgba(15, 19, 29, 0.80);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .glass-card {
-      background: rgba(17, 22, 34, 0.85);
+      background: rgba(17, 22, 34, 0.86);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -116,8 +114,8 @@
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 14px;
-      height: 14px;
+      width: 15px;
+      height: 15px;
       border-radius: 9999px;
       background: #00f2fe;
       cursor: pointer;
@@ -131,38 +129,42 @@
   <div id="site-bg-layer"></div>
   <div id="site-bg-overlay"></div>
 
-  <!-- CEO COMMAND BAR (STRICTLY HIDDEN UNTIL AUTHENTICATED) -->
-  <div id="ceo-command-bar" class="hidden sticky top-0 z-50 bg-gradient-to-r from-amber-500/95 via-yellow-400/95 to-cyan-400/95 text-slate-950 border-b border-amber-300 shadow-xl">
+  <!-- ======================================================================= -->
+  <!-- TOP CEO COMMAND BAR (HIDDEN BY DEFAULT UNTIL CEO LOGS IN)               -->
+  <!-- ======================================================================= -->
+  <div id="ceo-command-bar" class="hidden sticky top-0 z-50 bg-gradient-to-r from-amber-500 via-yellow-400 to-cyan-400 text-slate-950 border-b border-amber-300 shadow-xl">
     <div class="max-w-6xl mx-auto px-3 sm:px-6 py-2 flex flex-wrap items-center justify-between gap-2">
       <div class="flex items-center gap-2 text-xs font-black tracking-wide uppercase">
-        <span class="px-2 py-0.5 rounded-full bg-slate-950 text-amber-300 text-[10px]">🛡️ CEO VERIFIED SESSION</span>
-        <span id="ceo-auth-mode-badge" class="hidden sm:inline text-[11px] font-extrabold text-slate-900">• Hardened Protection Active</span>
+        <span class="px-2.5 py-0.5 rounded-full bg-slate-950 text-amber-300 text-[10px]">👑 CEO COMMAND MODE</span>
+        <span id="ceo-auth-mode-badge" class="hidden sm:inline text-[11px] font-extrabold text-slate-900">• Full Site Control Active</span>
       </div>
 
       <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar text-[11px] font-extrabold">
+        <button type="button" onclick="openPhotoStudio()" class="shrink-0 px-3 py-1.5 rounded-full bg-slate-950 text-white hover:bg-slate-900 transition cursor-pointer">
+          🖼️ Photo Studio
+        </button>
         <button type="button" onclick="openUploadModal()" class="shrink-0 px-3 py-1.5 rounded-full bg-slate-950 text-cyan-300 hover:bg-slate-900 transition cursor-pointer">
-          + Upload Track
+          + Upload Music
         </button>
         <button type="button" onclick="openGossipComposer()" class="shrink-0 px-3 py-1.5 rounded-full bg-slate-950 text-pink-300 hover:bg-slate-900 transition cursor-pointer">
-          + Post Gossip / Vibe
-        </button>
-        <button type="button" onclick="openPhotoStudio()" class="shrink-0 px-3 py-1.5 rounded-full bg-slate-950 text-white hover:bg-slate-900 transition cursor-pointer">
-          📸 Edit Photos
+          + Post Gossip
         </button>
         <button type="button" onclick="openSetupModal()" class="shrink-0 px-3 py-1.5 rounded-full bg-slate-950 text-amber-300 hover:bg-slate-900 transition cursor-pointer">
-          🛡️ Security &amp; Cloud Setup
+          🛡️ Cloud &amp; Security
         </button>
         <button type="button" onclick="lockCeoMode(false)" class="shrink-0 px-3 py-1.5 rounded-full bg-red-600 text-white hover:bg-red-700 transition cursor-pointer">
-          🔒 Lock &amp; Sign Out
+          🔒 Lock Site
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Top Sticky Navigation Header -->
+  <!-- ======================================================================= -->
+  <!-- TOP STICKY NAVIGATION HEADER                                            -->
+  <!-- ======================================================================= -->
   <header class="sticky top-0 z-40 bg-[#08090d]/85 backdrop-blur-xl border-b border-white/10">
     <div class="max-w-6xl mx-auto px-3 sm:px-6 py-2.5 flex items-center justify-between gap-2">
-      <!-- Brand Identity (Secret 5-tap CEO login trigger on logo) -->
+      <!-- Brand Identity (5-Tap Secret CEO Login Trigger) -->
       <div id="brand-logo-trigger" onclick="handleSecretLogoTap()" class="flex items-center gap-2.5 shrink-0 cursor-pointer select-none">
         <div class="w-9 h-9 rounded-full p-[2px] bg-gradient-to-tr from-cyan-400 to-pink-500 flex items-center justify-center shadow-lg shadow-cyan-500/20">
           <div class="w-full h-full rounded-full bg-[#0b0e16] flex items-center justify-center">
@@ -190,7 +192,7 @@
         <a href="#promo-booking" onclick="setActiveNav(this)" class="nav-pill px-3.5 py-1.5 rounded-full text-gray-300 hover:text-white hover:bg-white/10 transition">Promo &amp; Booking</a>
       </nav>
 
-      <!-- Public Fan Action Buttons -->
+      <!-- Public Action Buttons -->
       <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
         <button type="button" onclick="openTipModal()" class="inline-flex items-center gap-1 px-2.5 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold bg-amber-400/15 hover:bg-amber-400/25 text-amber-300 border border-amber-400/40 transition cursor-pointer">
           <span>💛 Tip / Support</span>
@@ -212,12 +214,14 @@
     </div>
   </header>
 
-  <!-- Main Content Container -->
+  <!-- ======================================================================= -->
+  <!-- MAIN CONTENT CONTAINER                                                  -->
+  <!-- ======================================================================= -->
   <main class="max-w-5xl mx-auto px-4 sm:px-6">
 
     <!-- HERO SECTION -->
     <section id="home" class="pt-8 sm:pt-12 pb-8 flex flex-col items-center text-center">
-      <!-- Center Circular Artist Badge / Photo -->
+      <!-- Glowing Circular Artist Badge / Photo -->
       <div class="relative flex flex-col items-center mb-5">
         <div class="avatar-glow-ring w-32 h-32 sm:w-36 sm:h-36">
           <div id="hero-avatar-box" class="w-full h-full rounded-full bg-[#0d1018] flex items-center justify-center overflow-hidden relative">
@@ -242,7 +246,7 @@
         Official Digital Hub of <strong class="text-white">The Bridge Music</strong> Record Label &amp; Management — Afro-pop, Afrobeats &amp; Hip-hop Releases, Cinematic Video Shoots, Motion Graphics &amp; Music Downloads.
       </p>
 
-      <!-- Crisp Authentic Vector Social Media Pills -->
+      <!-- Crisp Vector Social Media Pills -->
       <div class="mt-6 flex flex-wrap items-center justify-center gap-2.5 max-w-2xl">
         <a href="https://wa.me/256702105197?text=Hello%20Fatkiss%20Official!%20Visiting%20from%20The%20Bridge%20Music%20Hub." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold bg-[#123829]/90 hover:bg-[#174a36] text-emerald-300 border border-emerald-500/35 transition">
           <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 24 24">
@@ -297,7 +301,7 @@
         </button>
       </div>
 
-      <!-- Stream Fatkiss Music Across Platforms Card -->
+      <!-- STREAM FATKISS MUSIC ACROSS PLATFORMS -->
       <div class="mt-7 w-full glass-panel rounded-2xl p-4 sm:p-5 text-left">
         <div class="flex flex-wrap items-center justify-between gap-2 mb-3.5">
           <div class="flex items-center gap-2 text-[11px] font-extrabold tracking-wider text-gray-300 uppercase">
@@ -311,4 +315,2133 @@
 
         <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
           <a id="link-mdundo" href="https://mdundo.com" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#0e131e]/90 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 transition">
-            <svg class="w-4 h-4 text-amber-400" fill="currentColor" v
+            <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+            </svg>
+            <span>Mdundo</span>
+          </a>
+
+          <a id="link-youtube" href="https://www.youtube.com/@fatkissofficial" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#0e131e]/90 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 transition">
+            <svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+            </svg>
+            <span>YouTube</span>
+          </a>
+
+          <a id="link-spotify" href="https://open.spotify.com" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#0e131e]/90 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 transition">
+            <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
+            </svg>
+            <span>Spotify</span>
+          </a>
+
+          <a id="link-apple" href="https://music.apple.com" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#0e131e]/90 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 transition">
+            <svg class="w-4 h-4 text-rose-400" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.96 6.35c.64-.78 1.08-1.86.96-2.94-.93.04-2.06.62-2.72 1.4-.58.68-1.1 1.78-.96 2.84 1.04.08 2.08-.52 2.72-1.3z" />
+            </svg>
+            <span>Apple Music</span>
+          </a>
+
+          <a id="link-audiomack" href="https://audiomack.com" target="_blank" rel="noopener noreferrer" class="col-span-2 sm:col-span-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#0e131e]/90 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 transition">
+            <svg class="w-4 h-4 text-orange-400" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+            </svg>
+            <span>Audiomack</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- THE BRIDGE MUSIC TRACK DOWNLOADS                                      -->
+    <!-- ===================================================================== -->
+    <section id="music-downloads" class="py-6">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+        <div class="flex items-center gap-2.5">
+          <span class="w-1 h-5 rounded-full bg-gradient-to-b from-cyan-400 to-pink-500"></span>
+          <div>
+            <h2 class="font-display text-base sm:text-lg font-extrabold tracking-wide uppercase text-white">
+              THE BRIDGE MUSIC <span class="text-cyan-400">TRACK DOWNLOADS</span>
+            </h2>
+            <p class="text-[11px] text-gray-400">Official catalog • Free preview streams &amp; high-quality MP3 downloads</p>
+          </div>
+        </div>
+
+        <!-- CEO-Only Track Upload Button -->
+        <div id="ceo-tracks-actions" class="hidden items-center gap-2">
+          <button type="button" onclick="openUploadModal()" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-extrabold bg-gradient-to-r from-cyan-400 to-pink-500 text-slate-950 shadow-lg shadow-cyan-500/20 hover:opacity-95 cursor-pointer transition">
+            <span>+ Upload Music</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Search Bar -->
+      <div class="relative mb-4">
+        <svg class="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8" />
+          <path d="M21 21l-4.35-4.35" />
+        </svg>
+        <input
+          id="track-search-input"
+          type="text"
+          oninput="renderTracks()"
+          placeholder="Search tracks by title, artist, free or paid..."
+          class="w-full pl-11 pr-4 py-3 rounded-2xl bg-[#101420]/90 border border-white/10 text-xs sm:text-sm text-white placeholder-gray-400 focus:outline-none focus:border-cyan-400/50 transition"
+        />
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-3 text-xs font-bold">
+        <button type="button" onclick="setCategoryFilter('all', this)" class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-cyan-400 text-slate-950 shadow-md shadow-cyan-400/25 cursor-pointer">
+          🔥 All Updates
+        </button>
+        <button type="button" onclick="setCategoryFilter('trending', this)" class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-gray-300 border border-white/10 hover:border-cyan-400/40 cursor-pointer">
+          🎵 Trending MP3s
+        </button>
+        <button type="button" onclick="setCategoryFilter('paid', this)" class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-amber-300 border border-amber-400/25 hover:border-amber-400/50 cursor-pointer">
+          💎 Exclusive / Paid MP3s
+        </button>
+        <button type="button" onclick="setCategoryFilter('visuals', this)" class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-gray-300 border border-white/10 hover:border-cyan-400/40 cursor-pointer">
+          🎬 Video Shoots
+        </button>
+        <button type="button" onclick="setCategoryFilter('promo', this)" class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-gray-300 border border-white/10 hover:border-cyan-400/40 cursor-pointer">
+          ⭐ Artist Promo
+        </button>
+      </div>
+
+      <!-- Track Cards Grid -->
+      <div id="tracks-grid" class="grid grid-cols-1 md:grid-cols-2 gap-3.5"></div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- STREET GOSSIP & ENTERTAINMENT SCOOPS                                  -->
+    <!-- ===================================================================== -->
+    <section id="street-gossip" class="py-6">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+        <div class="flex items-center gap-2.5">
+          <span class="w-1 h-5 rounded-full bg-gradient-to-b from-pink-500 to-cyan-400"></span>
+          <div>
+            <h2 class="font-display text-base sm:text-lg font-extrabold tracking-wide uppercase text-white">
+              STREET GOSSIP &amp; <span class="text-pink-500">ENTERTAINMENT SCOOPS</span>
+            </h2>
+            <p class="text-[11px] text-gray-400">Official news, studio vibes &amp; exclusive announcements from The Bridge Music</p>
+          </div>
+        </div>
+
+        <!-- CEO-Only Post Gossip Button -->
+        <button id="ceo-post-gossip-btn" type="button" onclick="openGossipComposer()" class="hidden inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-extrabold bg-gradient-to-r from-pink-500 to-cyan-400 text-slate-950 shadow-lg shadow-pink-500/20 hover:opacity-95 cursor-pointer transition">
+          <span>+ Post Gossip / Vibe</span>
+        </button>
+      </div>
+
+      <!-- Gossip & Vibes Filter Tabs -->
+      <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-3 text-xs font-bold">
+        <button type="button" onclick="setGossipFilter('all', this)" class="gossip-filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-pink-500 text-white shadow-md shadow-pink-500/25 cursor-pointer">
+          📰 All Scoops
+        </button>
+        <button type="button" onclick="setGossipFilter('HOT SCOOP', this)" class="gossip-filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-pink-300 border border-pink-500/25 hover:border-pink-400/50 cursor-pointer">
+          🔥 Hot Scoop
+        </button>
+        <button type="button" onclick="setGossipFilter('VIBES', this)" class="gossip-filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-cyan-300 border border-cyan-500/25 hover:border-cyan-400/50 cursor-pointer">
+          ✨ Vibes
+        </button>
+        <button type="button" onclick="setGossipFilter('STUDIO NEWS', this)" class="gossip-filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-amber-300 border border-amber-500/25 hover:border-amber-400/50 cursor-pointer">
+          🎬 Studio News
+        </button>
+        <button type="button" onclick="setGossipFilter('ARTIST ALERT', this)" class="gossip-filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-purple-300 border border-purple-500/25 hover:border-purple-400/50 cursor-pointer">
+          🎤 Artist Alert
+        </button>
+      </div>
+
+      <!-- Street Gossip Cards Grid -->
+      <div id="gossip-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- LEGENDS VISUALS PRODUCTIONS                                           -->
+    <!-- ===================================================================== -->
+    <section id="legends-visuals" class="py-6">
+      <div class="flex items-center gap-2.5 mb-4">
+        <span class="w-1 h-5 rounded-full bg-gradient-to-b from-cyan-400 to-pink-500"></span>
+        <h2 class="font-display text-base sm:text-lg font-extrabold tracking-wide uppercase text-white">
+          LEGENDS VISUALS <span class="text-cyan-400">PRODUCTIONS</span>
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+        <div class="glass-card rounded-2xl p-4">
+          <div class="text-cyan-400 font-display font-bold text-sm mb-1">🎬 4K Music Video Shoots</div>
+          <p class="text-xs text-gray-300 leading-relaxed">
+            Cinematic storytelling, color grading, gimbal choreography, and high-impact visuals directed by Fatkiss Official.
+          </p>
+        </div>
+        <div class="glass-card rounded-2xl p-4">
+          <div class="text-pink-400 font-display font-bold text-sm mb-1">✨ Motion Graphics &amp; Visualizers</div>
+          <p class="text-xs text-gray-300 leading-relaxed">
+            Custom 3D cover art animations, Spotify Canvas loops, lyric videos, and promotional teasers built to trend.
+          </p>
+        </div>
+        <div class="glass-card rounded-2xl p-4">
+          <div class="text-emerald-400 font-display font-bold text-sm mb-1">🚀 Digital Artist Rollouts</div>
+          <p class="text-xs text-gray-300 leading-relaxed">
+            Distribution strategy, street promo campaigns, and spotlight placement right here on The Bridge Music Hub.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- PROMO & BOOKING SECTION (THE BRIDGE MUSIC MANAGEMENT)                 -->
+    <!-- ===================================================================== -->
+    <section id="promo-booking" class="py-6">
+      <div class="glass-panel rounded-3xl p-5 sm:p-7 border border-cyan-400/20 space-y-5">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <span class="inline-block px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-cyan-400/15 text-cyan-300 border border-cyan-400/30 mb-2">
+              THE BRIDGE MUSIC MANAGEMENT • BOOKINGS &amp; MOBILE MONEY
+            </span>
+            <h3 class="font-display text-xl sm:text-2xl font-extrabold text-white">
+              Book Fatkiss Official or Legends Visuals
+            </h3>
+            <p class="text-xs sm:text-sm text-gray-300 mt-1">
+              Managed by <strong class="text-cyan-300">The Bridge Music</strong> • Manager: <strong class="text-white">Kisa Pius</strong> • Email:
+              <a href="mailto:thebridgemusic@gmail.com" class="text-pink-300 hover:text-pink-200 underline decoration-pink-400/40 font-semibold">thebridgemusic@gmail.com</a>
+              <button type="button" onclick="copyManagementEmail()" class="ml-1.5 px-2 py-0.5 rounded bg-white/10 hover:bg-white/20 text-[10px] text-cyan-300 font-bold cursor-pointer">Copy</button>
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-2 shrink-0">
+            <button type="button" onclick="openTipModal()" class="px-4 py-3 rounded-2xl text-xs sm:text-sm font-extrabold bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 border border-amber-400/40 transition cursor-pointer">
+              💛 Support / Tip
+            </button>
+            <button type="button" onclick="openBookingModal()" class="px-5 py-3 rounded-2xl text-xs sm:text-sm font-extrabold bg-gradient-to-r from-cyan-400 to-pink-500 text-slate-950 shadow-lg shadow-cyan-500/20 hover:opacity-95 transition cursor-pointer">
+              📅 Request Booking
+            </button>
+          </div>
+        </div>
+
+        <!-- Official MTN Mobile Money & Airtel Money Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+          <!-- MTN Mobile Money Card -->
+          <div class="rounded-2xl p-3.5 bg-[#1b180b]/90 border border-yellow-400/40 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-10 h-10 rounded-xl bg-yellow-400 text-slate-950 font-display font-black text-xs flex items-center justify-center shrink-0 shadow-md shadow-yellow-400/20">
+                MTN
+              </div>
+              <div class="min-w-0">
+                <div class="text-[10px] font-extrabold uppercase tracking-wider text-yellow-300">MTN Mobile Money</div>
+                <a href="tel:+256768444578" id="booking-mtn-display" class="font-mono text-sm sm:text-base font-extrabold text-white hover:text-yellow-300 transition block truncate">
+                  0768 444 578
+                </a>
+                <div class="text-[10px] text-gray-400 truncate">+256 768 444 578 • Fatkiss Official</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <a href="tel:+256768444578" class="px-2.5 py-1.5 rounded-lg bg-yellow-400/15 hover:bg-yellow-400/25 text-yellow-300 border border-yellow-400/30 text-[11px] font-bold transition">
+                Dial
+              </a>
+              <button type="button" onclick="copySpecificNumber('mtn')" class="px-3 py-1.5 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-slate-950 text-[11px] font-extrabold cursor-pointer transition">
+                Copy
+              </button>
+            </div>
+          </div>
+
+          <!-- Airtel Money Card -->
+          <div class="rounded-2xl p-3.5 bg-[#1d0d11]/90 border border-red-500/40 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-10 h-10 rounded-xl bg-red-600 text-white font-display font-black text-[10px] flex items-center justify-center shrink-0 shadow-md shadow-red-600/25">
+                airtel
+              </div>
+              <div class="min-w-0">
+                <div class="text-[10px] font-extrabold uppercase tracking-wider text-red-400">Airtel Money</div>
+                <a href="tel:+256702105197" id="booking-airtel-display" class="font-mono text-sm sm:text-base font-extrabold text-white hover:text-red-300 transition block truncate">
+                  0702 105 197
+                </a>
+                <div class="text-[10px] text-gray-400 truncate">+256 702 105 197 • Kisa Pius</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <a href="tel:+256702105197" class="px-2.5 py-1.5 rounded-lg bg-red-500/15 hover:bg-red-500/25 text-red-300 border border-red-500/30 text-[11px] font-bold transition">
+                Dial
+              </a>
+              <button type="button" onclick="copySpecificNumber('airtel')" class="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white text-[11px] font-extrabold cursor-pointer transition">
+                Copy
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- FOOTER WITH EASY-TO-TAP CEO LOGIN BUTTON                              -->
+    <!-- ===================================================================== -->
+    <section class="pt-4 pb-12 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-gray-400 border-t border-white/10">
+      <div class="text-center sm:text-left">
+        © 2026 Fatkiss Official • Managed by The Bridge Music • Legends Visuals
+      </div>
+      <button type="button" id="footer-ceo-login-btn" onclick="openCeoLoginModal()" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-amber-400/15 hover:bg-amber-400/25 text-amber-300 border border-amber-400/35 font-bold transition cursor-pointer">
+        <span>🔐 CEO Login</span>
+      </button>
+    </section>
+  </main>
+
+  <!-- Floating WhatsApp Quick-Chat Button -->
+  <a
+    href="https://wa.me/256702105197?text=Hello%20Fatkiss%20Official!%20I%20would%20like%20to%20connect."
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Chat on WhatsApp"
+    class="fixed right-4 bottom-24 z-40 w-12 h-12 rounded-full bg-[#25D366] hover:scale-105 text-white flex items-center justify-center shadow-lg shadow-emerald-500/35 transition"
+  >
+    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M12.031 2c-5.516 0-9.969 4.453-9.969 9.969 0 1.758.459 3.473 1.332 4.986L2 22l5.188-1.359a9.927 9.927 0 004.843 1.258h.004c5.515 0 9.969-4.454 9.969-9.969A9.924 9.924 0 0019.08 4.92 9.918 9.918 0 0012.031 2zm5.82 14.254c-.246.691-1.432 1.322-1.979 1.404-.508.076-1.152.109-1.859-.115-.43-.137-.98-.32-1.686-.625-2.967-1.281-4.904-4.268-5.053-4.467-.148-.199-1.207-1.605-1.207-3.062 0-1.457.764-2.174 1.035-2.471.271-.297.592-.371.789-.371.197 0 .395.002.568.01.182.008.426-.069.666.508.246.592.838 2.047.912 2.195.074.148.123.32.025.518-.099.197-.148.32-.297.494-.148.173-.312.386-.445.518-.148.148-.303.309-.13.605.173.297.768 1.267 1.648 2.052 1.133 1.01 2.088 1.324 2.385 1.472.297.148.469.124.643-.074.173-.197.74-.863.938-1.16.197-.297.395-.247.666-.148.271.099 1.727.814 2.023.963.297.148.494.222.568.346.074.123.074.715-.172 1.406z" />
+    </svg>
+  </a>
+
+  <!-- ======================================================================= -->
+  <!-- FIXED BOTTOM AUDIO PLAYER ("THE BRIDGE MUSIC PLAYER")                   -->
+  <!-- ======================================================================= -->
+  <footer class="fixed bottom-0 inset-x-0 z-40 bg-[#090c14]/95 backdrop-blur-xl border-t border-white/10">
+    <div onclick="seekAudio(event)" class="w-full h-1.5 bg-white/10 cursor-pointer relative group">
+      <div id="player-progress-bar" class="h-full w-0 bg-gradient-to-r from-cyan-400 to-pink-500 transition-all duration-150"></div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-3 sm:px-4 py-2.5 flex items-center justify-between gap-2 sm:gap-4">
+      <div class="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
+        <div id="player-cover-box" class="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-400/30 flex items-center justify-center shrink-0 overflow-hidden">
+          <span class="text-[10px] font-extrabold text-cyan-400">Music</span>
+        </div>
+        <div class="min-w-0">
+          <div id="player-track-title" class="text-xs sm:text-sm font-bold text-white truncate">Select a Track</div>
+          <div class="flex items-center gap-2 text-[10px] sm:text-[11px] font-medium text-cyan-400 truncate">
+            <span id="player-track-artist" class="truncate">The Bridge Music Player</span>
+            <span id="player-time-display" class="text-gray-400 shrink-0">0:00 / 0:00</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 sm:gap-3.5 shrink-0">
+        <button type="button" onclick="prevTrack()" aria-label="Previous Track" class="p-1.5 text-gray-300 hover:text-white transition cursor-pointer">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" />
+          </svg>
+        </button>
+
+        <button type="button" onclick="togglePlayPause()" aria-label="Play or Pause" class="w-11 h-11 rounded-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 flex items-center justify-center shadow-lg shadow-cyan-400/35 transition cursor-pointer">
+          <svg id="main-play-icon" class="w-5 h-5 translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+          <svg id="main-pause-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+          </svg>
+        </button>
+
+        <button type="button" onclick="nextTrack()" aria-label="Next Track" class="p-1.5 text-gray-300 hover:text-white transition cursor-pointer">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="flex items-center gap-2 shrink-0">
+        <button type="button" onclick="downloadCurrentTrack()" title="Download or Unlock Current Track" class="p-2 rounded-full bg-white/10 hover:bg-white/20 text-cyan-300 transition cursor-pointer">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" />
+          </svg>
+        </button>
+
+        <button type="button" onclick="openTipModal()" class="px-3 py-1.5 rounded-full text-xs font-extrabold bg-amber-400 hover:bg-amber-300 text-slate-950 shadow-md shadow-amber-400/25 transition cursor-pointer">
+          💛 Tip
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================================================================= -->
+  <!-- MODAL 0: CEO LOGIN GATE                                                 -->
+  <!-- ======================================================================= -->
+  <div id="ceo-login-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
+    <div class="w-full max-w-sm rounded-3xl bg-[#111623] border border-amber-400/45 p-6 shadow-2xl my-auto">
+      <div class="flex items-center justify-between mb-3">
+        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-amber-400/20 text-amber-300 border border-amber-400/35">
+          👑 CEO Control Gate
+        </span>
+        <button type="button" onclick="closeCeoLoginModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 flex items-center justify-center cursor-pointer">✕</button>
+      </div>
+
+      <h3 id="ceo-vault-title" class="font-display text-xl font-extrabold text-white mb-1">Fatkiss Official CEO Login</h3>
+      <p id="ceo-vault-subtitle" class="text-xs text-gray-400 mb-4">
+        Enter your CEO PIN or Password to unlock Photo Studio, Music Uploads, and Street Gossip controls. (Initial setup code: <strong class="text-amber-300">2026</strong>)
+      </p>
+
+      <!-- Brute-Force Lockout Banner -->
+      <div id="ceo-lockout-banner" class="hidden mb-3 p-3 rounded-xl bg-red-500/15 border border-red-500/40 text-red-300 text-xs font-bold text-center">
+        🚨 Too many failed attempts. Locked for <span id="ceo-lockout-timer">30</span>s.
+      </div>
+
+      <form onsubmit="submitCeoLogin(event)" class="space-y-3 text-xs">
+        <div id="ceo-email-field-wrap" class="hidden">
+          <label class="block text-gray-300 font-bold mb-1">CEO Admin Email</label>
+          <input id="ceo-login-email-input" type="email" value="thebridgemusic@gmail.com" autocomplete="username" class="w-full px-3.5 py-2.5 rounded-xl bg-[#0c0f17] border border-white/15 text-white focus:outline-none focus:border-cyan-400" />
+        </div>
+
+        <div>
+          <label id="ceo-pass-label" class="block text-amber-300 font-bold mb-1">CEO Password or PIN *</label>
+          <input id="ceo-login-pass-input" type="password" required minlength="4" autocomplete="current-password" placeholder="Enter PIN (2026) or CEO password" class="w-full px-3.5 py-3 rounded-xl bg-[#0c0f17] border border-amber-400/35 text-white text-sm focus:outline-none focus:border-amber-400" />
+        </div>
+
+        <button id="ceo-login-submit-btn" type="submit" class="w-full py-3 rounded-xl font-extrabold bg-gradient-to-r from-amber-400 to-cyan-400 text-slate-950 shadow-lg hover:opacity-95 transition cursor-pointer">
+          🔓 Unlock CEO Command Mode
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- MODAL 1: PAID TRACK CHECKOUT (MTN MOMO, AIRTEL MONEY & CARD UNLOCK)     -->
+  <!-- ======================================================================= -->
+  <div id="checkout-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
+    <div class="w-full max-w-md rounded-3xl bg-[#111623] border border-amber-400/40 p-5 sm:p-6 shadow-2xl my-auto">
+      <div class="flex items-center justify-between mb-3">
+        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-amber-400/20 text-amber-300 border border-amber-400/35">
+          💎 Master MP3 Download
+        </span>
+        <button type="button" onclick="closeCheckoutModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 flex items-center justify-center cursor-pointer">✕</button>
+      </div>
+
+      <h3 id="checkout-track-title" class="font-display text-xl font-extrabold text-white">Track Title</h3>
+      <p id="checkout-track-artist" class="text-xs text-cyan-400 font-semibold mb-3.5">Fatkiss Official</p>
+
+      <div class="p-3 rounded-2xl bg-[#0b0e16] border border-white/10 mb-3.5 flex items-center justify-between">
+        <div>
+          <div class="text-[10px] text-gray-400">Official Fan Price</div>
+          <div id="checkout-price-ugx" class="font-display text-lg sm:text-xl font-extrabold text-amber-300">UGX 1,500</div>
+        </div>
+        <div class="text-right">
+          <div class="text-[10px] text-gray-400">International</div>
+          <div id="checkout-price-usd" class="text-xs font-bold text-gray-200">~$0.50 USD</div>
+        </div>
+      </div>
+
+      <div class="space-y-2.5 text-xs">
+        <div class="text-[11px] font-bold text-gray-300">
+          Step 1: Send <strong id="checkout-momo-amount" class="text-amber-300">UGX 1,500</strong> via MTN MoMo or Airtel Money:
+        </div>
+
+        <div class="p-3 rounded-2xl bg-[#1d190b] border border-yellow-400/45 flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2.5 min-w-0">
+            <span class="px-2 py-1 rounded-lg bg-yellow-400 text-slate-950 font-display font-black text-[10px] shrink-0">MTN</span>
+            <div class="min-w-0">
+              <div class="text-[10px] font-bold text-yellow-300">MTN Mobile Money</div>
+              <div id="checkout-mtn-number" class="font-mono font-extrabold text-white text-sm truncate">0768 444 578</div>
+              <div class="text-[10px] text-gray-400 truncate">+256 768 444 578 • Fatkiss Official</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <a href="tel:+256768444578" class="px-2.5 py-1.5 rounded-lg bg-yellow-400/15 hover:bg-yellow-400/25 text-yellow-300 font-bold text-[11px]">Dial</a>
+            <button type="button" onclick="copySpecificNumber('mtn')" class="px-2.5 py-1.5 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-extrabold text-[11px] cursor-pointer">Copy</button>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-2xl bg-[#1f0d12] border border-red-500/45 flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2.5 min-w-0">
+            <span class="px-2 py-1 rounded-lg bg-red-600 text-white font-display font-black text-[10px] shrink-0">airtel</span>
+            <div class="min-w-0">
+              <div class="text-[10px] font-bold text-red-400">Airtel Money</div>
+              <div id="checkout-airtel-number" class="font-mono font-extrabold text-white text-sm truncate">0702 105 197</div>
+              <div class="text-[10px] text-gray-400 truncate">+256 702 105 197 • Kisa Pius</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <a href="tel:+256702105197" class="px-2.5 py-1.5 rounded-lg bg-red-500/15 hover:bg-red-500/25 text-red-300 font-bold text-[11px]">Dial</a>
+            <button type="button" onclick="copySpecificNumber('airtel')" class="px-2.5 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-extrabold text-[11px] cursor-pointer">Copy</button>
+          </div>
+        </div>
+
+        <a id="checkout-pay-link" href="#" target="_blank" rel="noopener noreferrer" class="block w-full py-2.5 px-4 rounded-xl text-center font-extrabold bg-white/10 hover:bg-white/15 text-amber-300 border border-amber-400/30 transition">
+          💳 Or Pay Online with Visa / Mastercard / Checkout Link
+        </a>
+
+        <form onsubmit="confirmPaymentUnlock(event)" class="pt-1 space-y-2">
+          <label class="block text-[11px] font-semibold text-gray-300">Step 2: Enter MoMo / Airtel Transaction ID to Unlock MP3:</label>
+          <div class="flex gap-2">
+            <input id="checkout-tx-ref" type="text" required placeholder="e.g. MP261120.1405.A9281" class="flex-1 px-3 py-2.5 rounded-xl bg-[#0c0f17] border border-white/15 text-white text-xs focus:outline-none focus:border-cyan-400" />
+            <button type="submit" class="px-4 py-2.5 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-extrabold text-xs cursor-pointer">
+              Unlock MP3
+            </button>
+          </div>
+        </form>
+
+        <a id="checkout-whatsapp-confirm" href="#" target="_blank" rel="noopener noreferrer" class="block w-full py-2.5 px-4 rounded-xl text-center font-extrabold bg-[#25D366]/20 hover:bg-[#25D366]/30 text-emerald-300 border border-emerald-500/35 transition">
+          ✅ Confirm Payment via WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- MODAL 2: TIP / SUPPORT FATKISS OFFICIAL (MTN MOMO & AIRTEL MONEY)       -->
+  <!-- ======================================================================= -->
+  <div id="tip-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
+    <div class="w-full max-w-md rounded-3xl bg-[#111623] border border-amber-400/35 p-5 sm:p-6 shadow-2xl my-auto">
+      <div class="flex items-center justify-between mb-2.5">
+        <h3 class="font-display text-lg font-extrabold text-white">💛 Support / Tip Fatkiss Official</h3>
+        <button type="button" onclick="closeTipModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 flex items-center justify-center cursor-pointer">✕</button>
+      </div>
+      <p class="text-xs text-gray-300 mb-3.5">
+        Fuel upcoming studio sessions and 4K Legends Visuals video shoots directly via MTN Mobile Money or Airtel Money.
+      </p>
+
+      <div class="grid grid-cols-4 gap-2 mb-3">
+        <button type="button" onclick="selectTipAmount(2000, this)" class="tip-amt-btn py-2 rounded-xl text-xs font-extrabold bg-amber-400 text-slate-950 cursor-pointer">2,000</button>
+        <button type="button" onclick="selectTipAmount(5000, this)" class="tip-amt-btn py-2 rounded-xl text-xs font-bold bg-white/10 text-gray-200 hover:bg-white/15 cursor-pointer">5,000</button>
+        <button type="button" onclick="selectTipAmount(10000, this)" class="tip-amt-btn py-2 rounded-xl text-xs font-bold bg-white/10 text-gray-200 hover:bg-white/15 cursor-pointer">10,000</button>
+        <button type="button" onclick="selectTipAmount(25000, this)" class="tip-amt-btn py-2 rounded-xl text-xs font-bold bg-white/10 text-gray-200 hover:bg-white/15 cursor-pointer">25,000</button>
+      </div>
+
+      <div class="mb-3.5">
+        <label class="block text-[11px] text-gray-400 mb-1">Custom Support Amount (UGX)</label>
+        <input id="tip-custom-amount" type="number" min="500" value="2000" oninput="updateTipWhatsAppLink()" class="w-full px-3.5 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-sm font-bold text-amber-300 focus:outline-none focus:border-amber-400" />
+      </div>
+
+      <div class="space-y-2.5 text-xs">
+        <div class="p-3 rounded-2xl bg-[#1d190b] border border-yellow-400/45 flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2.5 min-w-0">
+            <span class="px-2 py-1 rounded-lg bg-yellow-400 text-slate-950 font-display font-black text-[10px] shrink-0">MTN</span>
+            <div class="min-w-0">
+              <div class="text-[10px] font-bold text-yellow-300">MTN Mobile Money</div>
+              <div id="tip-mtn-display" class="font-mono font-extrabold text-white text-sm truncate">0768 444 578</div>
+              <div class="text-[10px] text-gray-400 truncate">+256 768 444 578 • Fatkiss Official</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <a href="tel:+256768444578" class="px-2.5 py-1.5 rounded-lg bg-yellow-400/15 hover:bg-yellow-400/25 text-yellow-300 font-bold text-[11px]">Dial</a>
+            <button type="button" onclick="copySpecificNumber('mtn')" class="px-2.5 py-1.5 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-extrabold text-[11px] cursor-pointer">Copy</button>
+          </div>
+        </div>
+
+        <div class="p-3 rounded-2xl bg-[#1f0d12] border border-red-500/45 flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2.5 min-w-0">
+            <span class="px-2 py-1 rounded-lg bg-red-600 text-white font-display font-black text-[10px] shrink-0">airtel</span>
+            <div class="min-w-0">
+              <div class="text-[10px] font-bold text-red-400">Airtel Money</div>
+              <div id="tip-airtel-display" class="font-mono font-extrabold text-white text-sm truncate">0702 105 197</div>
+              <div class="text-[10px] text-gray-400 truncate">+256 702 105 197 • Kisa Pius</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <a href="tel:+256702105197" class="px-2.5 py-1.5 rounded-lg bg-red-500/15 hover:bg-red-500/25 text-red-300 font-bold text-[11px]">Dial</a>
+            <button type="button" onclick="copySpecificNumber('airtel')" class="px-2.5 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-extrabold text-[11px] cursor-pointer">Copy</button>
+          </div>
+        </div>
+
+        <a id="tip-whatsapp-confirm" href="https://wa.me/256702105197?text=Hello%20Fatkiss%20Official!%20I%20just%20sent%20a%20fan%20support%20tip%20of%20UGX%202%2C000%20via%20Mobile%20Money!" target="_blank" rel="noopener noreferrer" class="block w-full py-3 rounded-xl text-center font-extrabold bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 shadow-lg hover:opacity-95 transition">
+          ✅ Confirm Payment via WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- MODAL 3: CEO-ONLY PHOTO STUDIO (BACKGROUND + HERO AVATAR)               -->
+  <!-- ======================================================================= -->
+  <div id="photo-studio-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
+    <div class="w-full max-w-lg rounded-3xl bg-[#111623] border border-cyan-400/35 p-5 sm:p-6 shadow-2xl my-auto">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h3 class="font-display text-lg font-extrabold text-white">🖼️ CEO Background &amp; Avatar Photo Studio</h3>
+          <p class="text-xs text-gray-400">Upload your photo across the entire website background &amp; center circle</p>
+        </div>
+        <button type="button" onclick="closePhotoStudio()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 flex items-center justify-center cursor-pointer">✕</button>
+      </div>
+
+      <div class="space-y-4 text-xs">
+        <div class="p-3.5 rounded-2xl bg-[#0c0f17] border border-white/10">
+          <label class="block font-bold text-cyan-400 mb-1.5">1. Full-Page Website Background Photo</label>
+          <input type="file" accept="image/*" onchange="handleBgPhotoUpload(event)" class="block w-full text-xs text-gray-300 file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-cyan-400 file:text-slate-950 hover:file:bg-cyan-300 cursor-pointer" />
+          <p class="text-[10px] text-gray-400 mt-1">Auto-optimized so your website stays fast on mobile &amp; saves bandwidth.</p>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-[#0c0f17] border border-white/10">
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="font-bold text-pink-400">2. Hero Center Circle Photo</label>
+            <button type="button" id="avatar-mode-btn" onclick="toggleAvatarMode()" class="px-2.5 py-1 rounded-full bg-white/10 hover:bg-white/20 text-[11px] font-semibold text-gray-200 cursor-pointer">
+              Switch to Text Badge
+            </button>
+          </div>
+          <input type="file" accept="image/*" onchange="handleAvatarPhotoUpload(event)" class="block w-full text-xs text-gray-300 file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-pink-500 file:text-white hover:file:bg-pink-400 cursor-pointer" />
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-[#0c0f17] border border-white/10 space-y-3">
+          <div>
+            <div class="flex justify-between text-gray-300 font-semibold mb-1">
+              <span>Background Visibility / Brightness</span>
+              <span id="bg-opacity-val" class="text-cyan-400">55%</span>
+            </div>
+            <input id="bg-opacity-slider" type="range" min="15" max="90" value="55" oninput="updateBgStyling()" class="w-full" />
+          </div>
+
+          <div>
+            <div class="flex justify-between text-gray-300 font-semibold mb-1">
+              <span>Vertical Photo Position (Face Framing)</span>
+              <span id="bg-pos-val" class="text-cyan-400">20%</span>
+            </div>
+            <input id="bg-pos-slider" type="range" min="0" max="100" value="20" oninput="updateBgStyling()" class="w-full" />
+          </div>
+
+          <div>
+            <div class="flex justify-between text-gray-300 font-semibold mb-1">
+              <span>Background Soft Blur</span>
+              <span id="bg-blur-val" class="text-cyan-400">0px</span>
+            </div>
+            <input id="bg-blur-slider" type="range" min="0" max="12" value="0" oninput="updateBgStyling()" class="w-full" />
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-2 pt-1">
+          <button type="button" onclick="resetPhotos()" class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-gray-300 font-bold cursor-pointer">
+            Reset Default
+          </button>
+          <button type="button" onclick="exportSiteHtml()" class="flex-1 px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-400 to-pink-500 text-slate-950 font-extrabold shadow-lg cursor-pointer">
+            ⬇️ Save &amp; Export Updated index.html
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- MODAL 4: CEO-ONLY MUSIC UPLOAD STUDIO                                   -->
+  <!-- ======================================================================= -->
+  <div id="upload-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
+    <div class="w-full max-w-lg rounded-3xl bg-[#111623] border border-cyan-400/35 p-5 sm:p-6 shadow-2xl my-auto">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h3 class="font-display text-lg font-extrabold text-white">+ CEO Music Track Publisher</h3>
+          <p class="text-xs text-gray-400">Upload official MP3s, cover art, pricing &amp; royalty stream links</p>
+        </div>
+        <button type="button" onclick="closeUploadModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 flex items-center justify-center cursor-pointer">✕</button>
+      </div>
+
+      <form onsubmit="submitNewTrack(event)" class="space-y-3 text-xs">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-gray-300 font-semibold mb-1">Track Title *</label>
+            <input id="up-title" type="text" required placeholder="e.g. Kampala Nights" class="w-full px-3 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400" />
+          </div>
+          <div>
+            <label class="block text-gray-300 font-semibold mb-1">Artist Name *</label>
+            <input id="up-artist" type="text" required value="Fatkiss Official" class="w-full px-3 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-gray-300 font-semibold mb-1">Category</label>
+            <select id="up-category" class="w-full px-3 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400">
+              <option value="trending">🎵 Trending MP3s</option>
+              <option value="visuals">🎬 Video Shoots</option>
+              <option value="promo">⭐ Artist Promo</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-gray-300 font-semibold mb-1">Download Pricing</label>
+            <select id="up-pricing-mode" onchange="toggleUploadPriceFields()" class="w-full px-3 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400">
+              <option value="free">🆓 Free MP3 Download</option>
+              <option value="paid">💎 Paid Master MP3 (UGX)</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="up-paid-fields" class="hidden grid-cols-1 sm:grid-cols-2 gap-3 p-3 rounded-2xl bg-amber-400/10 border border-amber-400/25">
+          <div>
+            <label class="block text-amber-300 font-semibold mb-1">Download Price (UGX)</label>
+            <input id="up-price-ugx" type="number" min="500" value="1500" class="w-full px-3 py-2 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-amber-400" />
+          </div>
+          <div>
+            <label class="block text-amber-300 font-semibold mb-1">Payment Link (Selar/Flutterwave)</label>
+            <input id="up-payment-url" type="url" placeholder="https://selar.co/your-song" class="w-full px-3 py-2 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-amber-400" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-gray-300 font-semibold mb-1">Official Spotify / YouTube Stream Link (Earns Royalties)</label>
+          <input id="up-stream-url" type="url" placeholder="https://open.spotify.com/track/... or YouTube link" class="w-full px-3 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400" />
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="p-3 rounded-2xl bg-[#0c0f17] border border-white/10">
+            <label class="block text-cyan-400 font-bold mb-1">Audio File (.MP3 / .WAV) *</label>
+            <input id="up-audio-file" type="file" accept="audio/*" required class="block w-full text-[11px] text-gray-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:font-bold file:bg-cyan-400 file:text-slate-950 cursor-pointer" />
+          </div>
+          <div class="p-3 rounded-2xl bg-[#0c0f17] border border-white/10">
+            <label class="block text-pink-400 font-bold mb-1">Cover Art Image (Optional)</label>
+            <input id="up-cover-file" type="file" accept="image/*" class="block w-full text-[11px] text-gray-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:font-bold file:bg-pink-500 file:text-white cursor-pointer" />
+          </div>
+        </div>
+
+        <button id="up-submit-btn" type="submit" class="w-full py-3 rounded-xl font-extrabold bg-gradient-to-r from-cyan-400 to-pink-500 text-slate-950 shadow-lg hover:opacity-95 transition cursor-pointer">
+          🚀 Publish Track to Hub
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- MODAL 5: CEO CLOUD & SECURITY SETUP                                     -->
+  <!-- ======================================================================= -->
+  <div id="setup-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
+    <div class="w-full max-w-xl rounded-3xl bg-[#111623] border border-amber-400/40 p-5 sm:p-6 shadow-2xl my-auto">
+      <div class="flex items-center justify-between mb-3">
+        <div>
+          <h3 class="font-display text-lg font-extrabold text-white">🛡️ CEO Cloud &amp; Security Setup</h3>
+          <p class="text-xs text-gray-400">Connect Supabase cloud sync, set your custom CEO password &amp; export HTML</p>
+        </div>
+        <button type="button" onclick="closeSetupModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 flex items-center justify-center cursor-pointer">✕</button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div class="p-3.5 rounded-2xl bg-[#0c0f17] border border-cyan-400/30 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-cyan-400">1. Supabase Cloud Storage &amp; Database</span>
+            <button type="button" onclick="copyHardenedSql()" class="px-2.5 py-1 rounded-lg bg-cyan-400/15 hover:bg-cyan-400/25 text-cyan-300 border border-cyan-400/35 font-bold text-[10px] cursor-pointer">
+              📋 Copy RLS SQL Script
+            </button>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">Supabase Project URL</label>
+              <input id="cfg-sb-url" type="url" placeholder="https://xyz.supabase.co" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white" />
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">Supabase Anon Public Key</label>
+              <input id="cfg-sb-key" type="text" placeholder="eyJhbGciOiJIUzI1NiIs..." class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white" />
+            </div>
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-[#0c0f17] border border-amber-400/30 space-y-2">
+          <div class="font-bold text-amber-300">2. Set Custom CEO Password / PIN</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">New CEO Password / PIN (Min 4 chars)</label>
+              <input id="cfg-new-vault-pass" type="password" placeholder="Leave blank to keep current" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-amber-400/35 text-white" />
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">Confirm New Password / PIN</label>
+              <input id="cfg-confirm-vault-pass" type="password" placeholder="Re-type new password" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-amber-400/35 text-white" />
+            </div>
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-[#0c0f17] border border-white/10 space-y-2.5">
+          <div class="font-bold text-emerald-300">3. Mobile Money Numbers &amp; Spotify URL</div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div>
+              <label class="block text-[11px] text-yellow-300 mb-1">MTN Mobile Money Number</label>
+              <input id="cfg-mtn-num" type="text" value="0768 444 578" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-yellow-400/30 text-white" />
+            </div>
+            <div>
+              <label class="block text-[11px] text-red-400 mb-1">Airtel Money Number</label>
+              <input id="cfg-airtel-num" type="text" value="0702 105 197" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-red-500/30 text-white" />
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">Card Checkout Link (Optional)</label>
+              <input id="cfg-tip-url" type="url" placeholder="https://selar.co/fatkissofficial" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white" />
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">Spotify Artist Profile URL</label>
+              <input id="cfg-spotify-url" type="url" value="https://open.spotify.com" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white" />
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-2 pt-1">
+          <button type="button" onclick="saveCloudAndPaySettings()" class="flex-1 py-2.5 px-4 rounded-xl font-extrabold bg-emerald-400 hover:bg-emerald-300 text-slate-950 cursor-pointer">
+            ✅ Save Settings
+          </button>
+          <button type="button" onclick="exportSiteHtml()" class="flex-1 py-2.5 px-4 rounded-xl font-extrabold bg-cyan-400 hover:bg-cyan-300 text-slate-950 cursor-pointer">
+            ⬇️ Export Final index.html for GitHub
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- MODAL 6: BOOKING & MANAGEMENT REQUEST                                   -->
+  <!-- ======================================================================= -->
+  <div id="booking-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
+    <div class="w-full max-w-md rounded-3xl bg-[#111623] border border-pink-500/35 p-5 sm:p-6 shadow-2xl my-auto">
+      <div class="flex items-center justify-between mb-3">
+        <div>
+          <h3 class="font-display text-lg font-extrabold text-white">📅 Book Fatkiss Official / Legends Visuals</h3>
+          <p class="text-[11px] text-cyan-300 font-semibold">The Bridge Music Management • Manager: Kisa Pius</p>
+        </div>
+        <button type="button" onclick="closeBookingModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 flex items-center justify-center cursor-pointer">✕</button>
+      </div>
+
+      <form onsubmit="submitBooking(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block text-gray-300 font-semibold mb-1">Your Name / Brand</label>
+          <input id="book-name" type="text" required placeholder="e.g. DJ Alex / Kampala Events" class="w-full px-3.5 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400" />
+        </div>
+        <div>
+          <label class="block text-gray-300 font-semibold mb-1">Service Needed</label>
+          <select id="book-service" class="w-full px-3.5 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400">
+            <option>Live Show / Club Performance</option>
+            <option>4K Music Video Shoot (Legends Visuals)</option>
+            <option>Song Feature / Studio Collaboration</option>
+            <option>Motion Graphics / Cover Art Visualizer</option>
+            <option>The Bridge Music Label &amp; Artist Inquiry</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-gray-300 font-semibold mb-1">Event Date &amp; Location Details</label>
+          <textarea id="book-details" rows="3" required placeholder="Share date, location, and budget..." class="w-full px-3.5 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400"></textarea>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+          <button type="submit" class="py-3 px-3 rounded-xl font-extrabold bg-[#25D366] hover:bg-emerald-400 text-slate-950 shadow-lg transition cursor-pointer">
+            📲 Send via WhatsApp
+          </button>
+          <button type="button" onclick="sendEmailBooking()" class="py-3 px-3 rounded-xl font-extrabold bg-gradient-to-r from-cyan-400 to-pink-500 text-slate-950 shadow-lg transition cursor-pointer">
+            ✉️ Email Label
+          </button>
+        </div>
+
+        <div class="text-center pt-1">
+          <button type="button" onclick="copyManagementEmail()" class="text-[11px] text-gray-400 hover:text-cyan-300 underline cursor-pointer">
+            Copy Official Label Email: thebridgemusic@gmail.com
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- MODAL 7: STREET GOSSIP & VIBES READER                                   -->
+  <!-- ======================================================================= -->
+  <div id="gossip-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
+    <div class="w-full max-w-lg rounded-3xl bg-[#111623] border border-white/15 overflow-hidden shadow-2xl my-auto">
+      <div id="gossip-modal-hero" class="relative h-44 bg-gradient-to-br from-[#0e1726] via-[#1b1124] to-[#0a101b] flex items-center justify-center p-6 border-b border-white/10">
+        <img id="gossip-modal-img" src="" alt="" class="hidden absolute inset-0 w-full h-full object-cover" />
+        <div id="gossip-modal-img-shade" class="hidden absolute inset-0 bg-gradient-to-t from-[#111623] via-black/45 to-black/30"></div>
+        <h3 id="gossip-modal-banner" class="relative z-10 font-display text-xl sm:text-2xl font-extrabold text-cyan-300 text-center drop-shadow-md"></h3>
+        <button type="button" onclick="closeGossipModal()" class="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center cursor-pointer">✕</button>
+      </div>
+
+      <div class="p-5 sm:p-6">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+          <span id="gossip-modal-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-pink-500/20 text-pink-400 border border-pink-500/30">HOT SCOOP</span>
+          <span id="gossip-modal-date" class="text-[11px] text-gray-400"></span>
+        </div>
+
+        <h4 id="gossip-modal-title" class="font-display text-lg sm:text-xl font-extrabold text-white mb-3 leading-snug"></h4>
+        <div id="gossip-modal-body" class="text-xs sm:text-sm text-gray-300 leading-relaxed whitespace-pre-line mb-5"></div>
+
+        <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-white/10">
+          <a id="gossip-modal-action-link" href="#" target="_blank" rel="noopener noreferrer" class="hidden px-4 py-2.5 rounded-xl text-xs font-extrabold bg-cyan-400 hover:bg-cyan-300 text-slate-950 transition">
+            🎬 Watch / Listen Now
+          </a>
+          <a id="gossip-modal-share-wa" href="#" target="_blank" rel="noopener noreferrer" class="flex-1 py-2.5 px-4 rounded-xl text-center text-xs font-extrabold bg-[#25D366]/20 hover:bg-[#25D366]/30 text-emerald-300 border border-emerald-500/35 transition">
+            📲 Share Scoop on WhatsApp
+          </a>
+          <button id="gossip-modal-edit-btn" type="button" onclick="editCurrentScoop()" class="hidden px-3.5 py-2.5 rounded-xl text-xs font-bold bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 border border-amber-400/35 cursor-pointer">
+            ✏️ Edit
+          </button>
+          <button id="gossip-modal-delete-btn" type="button" onclick="deleteCurrentScoop()" class="hidden px-3.5 py-2.5 rounded-xl text-xs font-bold bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/35 cursor-pointer">
+            🗑 Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- MODAL 8: CEO-ONLY STREET GOSSIP & VIBES PUBLISHER STUDIO                -->
+  <!-- ======================================================================= -->
+  <div id="gossip-composer-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
+    <div class="w-full max-w-lg rounded-3xl bg-[#111623] border border-pink-500/35 p-5 sm:p-6 shadow-2xl my-auto">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h3 id="gossip-composer-heading" class="font-display text-lg font-extrabold text-white">🔥 CEO Street Gossip &amp; Vibes Studio</h3>
+          <p class="text-xs text-gray-400">Publish entertainment scoops, studio vibes &amp; artist alerts directly from your phone</p>
+        </div>
+        <button type="button" onclick="closeGossipComposer()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 flex items-center justify-center cursor-pointer">✕</button>
+      </div>
+
+      <form onsubmit="submitGossipPost(event)" class="space-y-3 text-xs">
+        <input id="gc-edit-id" type="hidden" value="" />
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-gray-300 font-semibold mb-1">Category Badge *</label>
+            <select id="gc-badge" class="w-full px-3 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-pink-400">
+              <option value="HOT SCOOP">🔥 HOT SCOOP</option>
+              <option value="VIBES">✨ VIBES</option>
+              <option value="STUDIO NEWS">🎬 STUDIO NEWS</option>
+              <option value="ARTIST ALERT">🎤 ARTIST ALERT</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-gray-300 font-semibold mb-1">Short Banner Title *</label>
+            <input id="gc-banner-title" type="text" required placeholder="e.g. Kampala Club Tour" class="w-full px-3 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-gray-300 font-semibold mb-1">Article Headline *</label>
+          <input id="gc-headline" type="text" required placeholder="e.g. Fatkiss Official Announces Exclusive Weekend Show" class="w-full px-3 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400" />
+        </div>
+
+        <div>
+          <label class="block text-gray-300 font-semibold mb-1">Full Story / Gossip Write-Up *</label>
+          <textarea id="gc-body" rows="4" required placeholder="Write the full entertainment scoop, studio update, or vibe details..." class="w-full px-3 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400"></textarea>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div class="p-3 rounded-2xl bg-[#0c0f17] border border-white/10">
+            <label class="block text-pink-400 font-bold mb-1">Scoop / Studio Photo (Optional)</label>
+            <input id="gc-photo-file" type="file" accept="image/*" class="block w-full text-[11px] text-gray-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:font-bold file:bg-pink-500 file:text-white cursor-pointer" />
+          </div>
+          <div>
+            <label class="block text-gray-300 font-semibold mb-1">Video / Track Link (Optional)</label>
+            <input id="gc-action-url" type="url" placeholder="https://youtube.com/... or TikTok link" class="w-full px-3 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400" />
+          </div>
+        </div>
+
+        <button id="gc-submit-btn" type="submit" class="w-full py-3 rounded-xl font-extrabold bg-gradient-to-r from-pink-500 to-cyan-400 text-slate-950 shadow-lg hover:opacity-95 transition cursor-pointer">
+          🚀 Publish Scoop Live
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast-banner" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-full bg-cyan-400 text-slate-950 text-xs font-extrabold shadow-lg opacity-0 pointer-events-none transition-opacity duration-200">
+    Action completed!
+  </div>
+
+  <audio id="real-audio-player" class="hidden"></audio>
+
+  <script>
+    // =========================================================================
+    // 1. CONFIGURATION & SANITIZATION HELPERS
+    // =========================================================================
+    const BAKED_CONFIG = {
+      supabaseUrl: '',
+      supabaseKey: '',
+      ceoEmail: 'thebridgemusic@gmail.com',
+      tipUrl: '',
+      mtnNumber: '0768 444 578',
+      airtelNumber: '0702 105 197',
+      managementEmail: 'thebridgemusic@gmail.com',
+      spotifyUrl: 'https://open.spotify.com'
+    };
+
+    const STORAGE_KEYS = {
+      config: 'fatkiss_hub_config_v8',
+      vaultHash: 'fatkiss_ceo_sha256_vault_v8',
+      vaultSalt: 'fatkiss_ceo_salt_v8',
+      lockoutState: 'fatkiss_ceo_lockout_v8',
+      ceoSession: 'fatkiss_ceo_session_v8',
+      tracks: 'fatkiss_hub_tracks_v8',
+      scoops: 'fatkiss_hub_scoops_v8',
+      unlocked: 'fatkiss_unlocked_tracks_v8',
+      bg: 'fatkiss_bg_data_v8',
+      avatar: 'fatkiss_avatar_data_v8',
+      avatarMode: 'fatkiss_avatar_mode_v8',
+      bgSettings: 'fatkiss_bg_settings_v8'
+    };
+
+    let hubConfig = { ...BAKED_CONFIG };
+    let supabaseClient = null;
+    let isCeoAuthenticated = false;
+    let authProviderMode = 'none';
+    let unlockedTrackIds = new Set();
+    let logoTapCount = 0;
+    let logoTapTimer = null;
+    let inactivityTimer = null;
+    let lockoutCountdownTimer = null;
+
+    function escapeHTML(value) {
+      if (value === null || value === undefined) return '';
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function sanitizeURL(url, allowMediaData = false) {
+      if (!url) return '';
+      const trimmed = String(url).trim();
+      if (/^https?:\/\//i.test(trimmed)) return trimmed;
+      if (/^blob:/i.test(trimmed)) return trimmed;
+      if (allowMediaData && /^data:(image|audio)\//i.test(trimmed)) return trimmed;
+      return '';
+    }
+
+    async function computeSaltedSha256(password, saltHex) {
+      if (window.crypto && window.crypto.subtle) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(`${saltHex}::${password}`);
+        const hashBuffer = await window.crypto.subtle.digest('SHA-256', data);
+        return Array.from(new Uint8Array(hashBuffer))
+          .map((b) => b.toString(16).padStart(2, '0'))
+          .join('');
+      }
+      // Fallback hash if crypto.subtle is unavailable on non-HTTPS local preview
+      let h = 2166136261;
+      const str = `${saltHex}::${password}`;
+      for (let i = 0; i < str.length; i++) {
+        h ^= str.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+      }
+      return (h >>> 0).toString(16).padStart(8, '0');
+    }
+
+    function generateRandomSaltHex() {
+      const arr = new Uint8Array(16);
+      if (window.crypto && window.crypto.getRandomValues) {
+        window.crypto.getRandomValues(arr);
+      } else {
+        for (let i = 0; i < arr.length; i++) arr[i] = Math.floor(Math.random() * 256);
+      }
+      return Array.from(arr)
+        .map((b) => b.toString(16).padStart(2, '0'))
+        .join('');
+    }
+
+    // =========================================================================
+    // 2. BRUTE-FORCE LOCKOUT & AUTO-TIMEOUT ENGINE
+    // =========================================================================
+    function getLockoutData() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEYS.lockoutState);
+        if (raw) return JSON.parse(raw);
+      } catch (e) {}
+      return { failures: 0, lockedUntil: 0 };
+    }
+
+    function saveLockoutData(data) {
+      try {
+        localStorage.setItem(STORAGE_KEYS.lockoutState, JSON.stringify(data));
+      } catch (e) {}
+    }
+
+    function recordFailedLoginAttempt() {
+      const state = getLockoutData();
+      state.failures = (state.failures || 0) + 1;
+      if (state.failures >= 3) {
+        const penaltySeconds = state.failures === 3 ? 30 : state.failures === 4 ? 120 : 600;
+        state.lockedUntil = Date.now() + penaltySeconds * 1000;
+      }
+      saveLockoutData(state);
+      checkAndRenderLockout();
+    }
+
+    function clearFailedLoginAttempts() {
+      saveLockoutData({ failures: 0, lockedUntil: 0 });
+      checkAndRenderLockout();
+    }
+
+    function checkAndRenderLockout() {
+      const state = getLockoutData();
+      const banner = document.getElementById('ceo-lockout-banner');
+      const timerEl = document.getElementById('ceo-lockout-timer');
+      const submitBtn = document.getElementById('ceo-login-submit-btn');
+      if (!banner || !submitBtn) return false;
+
+      clearInterval(lockoutCountdownTimer);
+      const remainingMs = (state.lockedUntil || 0) - Date.now();
+
+      if (remainingMs > 0) {
+        banner.classList.remove('hidden');
+        submitBtn.disabled = true;
+        submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        timerEl.textContent = Math.ceil(remainingMs / 1000);
+
+        lockoutCountdownTimer = setInterval(() => {
+          const left = (getLockoutData().lockedUntil || 0) - Date.now();
+          if (left <= 0) {
+            clearInterval(lockoutCountdownTimer);
+            banner.classList.add('hidden');
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+          } else {
+            timerEl.textContent = Math.ceil(left / 1000);
+          }
+        }, 500);
+        return true;
+      } else {
+        banner.classList.add('hidden');
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        return false;
+      }
+    }
+
+    function resetInactivityAutoLock() {
+      clearTimeout(inactivityTimer);
+      if (!isCeoAuthenticated) return;
+      inactivityTimer = setTimeout(() => {
+        lockCeoMode(true);
+      }, 20 * 60 * 1000);
+    }
+
+    ['click', 'keydown', 'touchstart'].forEach((evt) => {
+      window.addEventListener(evt, () => {
+        if (isCeoAuthenticated) resetInactivityAutoLock();
+      }, { passive: true });
+    });
+
+    // =========================================================================
+    // 3. CEO LOGIN & ACCESS CONTROL
+    // =========================================================================
+    function handleSecretLogoTap() {
+      logoTapCount++;
+      clearTimeout(logoTapTimer);
+      logoTapTimer = setTimeout(() => {
+        logoTapCount = 0;
+      }, 1600);
+
+      if (logoTapCount >= 5) {
+        logoTapCount = 0;
+        if (isCeoAuthenticated) {
+          showToast('CEO Command Mode is already active');
+        } else {
+          openCeoLoginModal();
+        }
+      }
+    }
+
+    function openCeoLoginModal() {
+      if (isCeoAuthenticated) {
+        showToast('CEO Command Mode already unlocked');
+        return;
+      }
+
+      const hasSupabase = Boolean(supabaseClient);
+      const hasCustomVault = Boolean(localStorage.getItem(STORAGE_KEYS.vaultHash));
+
+      const titleEl = document.getElementById('ceo-vault-title');
+      const subEl = document.getElementById('ceo-vault-subtitle');
+      const emailWrap = document.getElementById('ceo-email-field-wrap');
+      const passLabel = document.getElementById('ceo-pass-label');
+      const submitBtn = document.getElementById('ceo-login-submit-btn');
+
+      document.getElementById('ceo-login-email-input').value = hubConfig.ceoEmail || 'thebridgemusic@gmail.com';
+      document.getElementById('ceo-login-pass-input').value = '';
+
+      if (hasSupabase) {
+        emailWrap.classList.remove('hidden');
+        titleEl.textContent = 'CEO Server Authentication';
+        subEl.textContent = 'Sign in with your Supabase CEO email & password to unlock full control.';
+        passLabel.textContent = 'CEO Supabase Password *';
+        submitBtn.textContent = '🔓 Sign In as CEO';
+      } else if (!hasCustomVault) {
+        emailWrap.classList.add('hidden');
+        titleEl.textContent = 'Fatkiss Official CEO Login';
+        subEl.innerHTML = 'Enter initial setup code <strong class="text-amber-300">2026</strong> (then set your custom password inside Cloud &amp; Security).';
+        passLabel.textContent = 'CEO Setup Code / Password *';
+        submitBtn.textContent = '🔓 Unlock CEO Command Mode';
+      } else {
+        emailWrap.classList.add('hidden');
+        titleEl.textContent = 'Fatkiss Official CEO Login';
+        subEl.textContent = 'Enter your custom CEO password to unlock Photo Studio, Music Uploads & Street Gossip.';
+        passLabel.textContent = 'Master CEO Password *';
+        submitBtn.textContent = '🔓 Unlock CEO Command Mode';
+      }
+
+      checkAndRenderLockout();
+      const m = document.getElementById('ceo-login-modal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+      setTimeout(() => document.getElementById('ceo-login-pass-input').focus(), 80);
+    }
+
+    function closeCeoLoginModal() {
+      const m = document.getElementById('ceo-login-modal');
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+    }
+
+    async function submitCeoLogin(event) {
+      event.preventDefault();
+      if (checkAndRenderLockout()) return;
+
+      const passInput = document.getElementById('ceo-login-pass-input').value.trim();
+      const emailInput = document.getElementById('ceo-login-email-input').value.trim();
+
+      if (!passInput || passInput.length < 4) {
+        showToast('Please enter at least 4 characters');
+        return;
+      }
+
+      // 1. Supabase Server Authentication (when configured)
+      if (supabaseClient) {
+        const submitBtn = document.getElementById('ceo-login-submit-btn');
+        submitBtn.disabled = true;
+        submitBtn.textContent = '⏳ Verifying...';
+
+        try {
+          const { data, error } = await supabaseClient.auth.signInWithPassword({
+            email: emailInput,
+            password: passInput
+          });
+
+          if (error || !data?.session) {
+            recordFailedLoginAttempt();
+            showToast('❌ Invalid CEO email or password');
+            return;
+          }
+
+          clearFailedLoginAttempts();
+          isCeoAuthenticated = true;
+          authProviderMode = 'supabase-jwt';
+          try { sessionStorage.setItem(STORAGE_KEYS.ceoSession, '1'); } catch (e) {}
+
+          closeCeoLoginModal();
+          syncCeoUiState();
+          resetInactivityAutoLock();
+          showToast('👑 Welcome back CEO! Full cloud control unlocked.');
+        } catch (err) {
+          showToast('Network error verifying credentials');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = '🔓 Sign In as CEO';
+        }
+        return;
+      }
+
+      // 2. Local SHA-256 Vault (or initial setup code 2026)
+      const existingHash = localStorage.getItem(STORAGE_KEYS.vaultHash);
+      const existingSalt = localStorage.getItem(STORAGE_KEYS.vaultSalt);
+
+      if (!existingHash || !existingSalt) {
+        if (passInput !== '2026') {
+          recordFailedLoginAttempt();
+          showToast('❌ Invalid setup code. Enter 2026 to initialize CEO mode.');
+          return;
+        }
+        const newSalt = generateRandomSaltHex();
+        const newHash = await computeSaltedSha256('2026', newSalt);
+        localStorage.setItem(STORAGE_KEYS.vaultSalt, newSalt);
+        localStorage.setItem(STORAGE_KEYS.vaultHash, newHash);
+
+        clearFailedLoginAttempts();
+        isCeoAuthenticated = true;
+        authProviderMode = 'sha256-vault';
+        try { sessionStorage.setItem(STORAGE_KEYS.ceoSession, '1'); } catch (e) {}
+
+        closeCeoLoginModal();
+        syncCeoUiState();
+        resetInactivityAutoLock();
+        showToast('👑 CEO Command Mode Unlocked! Set a custom password in Cloud & Security.');
+        return;
+      }
+
+      const candidateHash = await computeSaltedSha256(passInput, existingSalt);
+      if (candidateHash !== existingHash) {
+        recordFailedLoginAttempt();
+        showToast('❌ Access Denied: Wrong CEO password');
+        return;
+      }
+
+      clearFailedLoginAttempts();
+      isCeoAuthenticated = true;
+      authProviderMode = 'sha256-vault';
+      try { sessionStorage.setItem(STORAGE_KEYS.ceoSession, '1'); } catch (e) {}
+
+      closeCeoLoginModal();
+      syncCeoUiState();
+      resetInactivityAutoLock();
+      showToast('👑 CEO Command Mode Unlocked! Welcome back Fatkiss Official.');
+    }
+
+    async function lockCeoMode(isAutoTimeout = false) {
+      isCeoAuthenticated = false;
+      authProviderMode = 'none';
+      clearTimeout(inactivityTimer);
+
+      try { sessionStorage.removeItem(STORAGE_KEYS.ceoSession); } catch (e) {}
+
+      if (supabaseClient) {
+        try { await supabaseClient.auth.signOut(); } catch (err) {}
+      }
+
+      syncCeoUiState();
+      showToast(
+        isAutoTimeout
+          ? '⏱️ Session auto-locked after 20m of inactivity.'
+          : '🔒 Site locked — Public fan view restored.'
+      );
+    }
+
+    function requireCeoAccess() {
+      if (!isCeoAuthenticated) {
+        openCeoLoginModal();
+        return false;
+      }
+      resetInactivityAutoLock();
+      return true;
+    }
+
+    function syncCeoUiState() {
+      const cmdBar = document.getElementById('ceo-command-bar');
+      const modeBadge = document.getElementById('ceo-auth-mode-badge');
+      const tracksActions = document.getElementById('ceo-tracks-actions');
+      const postGossipBtn = document.getElementById('ceo-post-gossip-btn');
+      const footerLoginBtn = document.getElementById('footer-ceo-login-btn');
+
+      if (isCeoAuthenticated) {
+        if (cmdBar) cmdBar.classList.remove('hidden');
+        if (modeBadge) {
+          modeBadge.textContent =
+            authProviderMode === 'supabase-jwt'
+              ? '• Cloud JWT & RLS Enforced'
+              : '• Full Site Control Active';
+        }
+        if (tracksActions) {
+          tracksActions.classList.remove('hidden');
+          tracksActions.classList.add('flex');
+        }
+        if (postGossipBtn) postGossipBtn.classList.remove('hidden');
+        if (footerLoginBtn) {
+          footerLoginBtn.innerHTML = '<span>👑 CEO Active (Lock Site)</span>';
+          footerLoginBtn.onclick = () => lockCeoMode(false);
+        }
+      } else {
+        if (cmdBar) cmdBar.classList.add('hidden');
+        if (tracksActions) {
+          tracksActions.classList.add('hidden');
+          tracksActions.classList.remove('flex');
+        }
+        if (postGossipBtn) postGossipBtn.classList.add('hidden');
+        if (footerLoginBtn) {
+          footerLoginBtn.innerHTML = '<span>🔐 CEO Login</span>';
+          footerLoginBtn.onclick = openCeoLoginModal;
+        }
+      }
+
+      renderTracks();
+      renderScoops();
+    }
+
+    // =========================================================================
+    // 4. DEFAULT CATALOG & STREET GOSSIP DATA
+    // =========================================================================
+    const defaultScoops = [
+      {
+        id: 'launch',
+        badge: 'HOT SCOOP',
+        banner_title: 'The Bridge Digital Launch',
+        headline: 'Fatkiss Official Unveils Direct Fan Hub & HQ Downloads',
+        body: 'Fatkiss Official and Legends Visuals have officially launched The Bridge Music Hub (fatkissofficial.com) to connect fans directly with new Afro-Zouk, Afrobeats, and Hip-Hop releases.\n\nVisitors across Uganda and East Africa can now stream free previews, unlock studio-mastered MP3 downloads via MTN Mobile Money or Airtel Money, and book cinematic 4K video shoots directly with The Bridge Music management.',
+        image_url: null,
+        action_url: '',
+        created_at: new Date().toISOString()
+      },
+      {
+        id: 'wave',
+        badge: 'VIBES',
+        banner_title: 'Emerging Artists Wave',
+        headline: 'Afro-Zouk Meets Street Hip-Hop in New Studio Sessions',
+        body: 'Behind the scenes at Legends Visuals as fresh collaborations, 4K music video treatments, and viral TikTok soundtracks take over the streets.\n\nStay locked on The Bridge Music Hub for exclusive street drops, studio freestyle clips, and upcoming weekend show announcements.',
+        image_url: null,
+        action_url: '',
+        created_at: new Date().toISOString()
+      }
+    ];
+
+    let scoops = [...defaultScoops];
+    let activeGossipFilter = 'all';
+    let activeReaderScoopIndex = -1;
+
+    const defaultTracks = [
+      {
+        id: 'cwinya',
+        title: 'Cwinya',
+        artist: 'Fatkiss Official',
+        downloads: 3420,
+        category: 'trending',
+        badgeColor: 'text-cyan-400',
+        bpm: 104,
+        notes: [261.63, 329.63, 392.0, 493.88],
+        audio_url: null,
+        cover_url: null,
+        price_ugx: 0,
+        payment_url: '',
+        stream_url: 'https://open.spotify.com'
+      },
+      {
+        id: 'matum-ungo',
+        title: 'Matum-Ungo',
+        artist: 'Fatkiss Official',
+        downloads: 5180,
+        category: 'trending',
+        badgeColor: 'text-pink-400',
+        bpm: 112,
+        notes: [293.66, 349.23, 440.0, 523.25],
+        audio_url: null,
+        cover_url: null,
+        price_ugx: 0,
+        payment_url: '',
+        stream_url: 'https://www.youtube.com/@fatkissofficial'
+      },
+      {
+        id: 'jakwo',
+        title: 'Jakwo',
+        artist: 'Fatkiss Official',
+        downloads: 2890,
+        category: 'visuals',
+        badgeColor: 'text-cyan-400',
+        bpm: 98,
+        notes: [220.0, 261.63, 329.63, 392.0],
+        audio_url: null,
+        cover_url: null,
+        price_ugx: 0,
+        payment_url: '',
+        stream_url: 'https://open.spotify.com'
+      },
+      {
+        id: 'jamusuma',
+        title: 'Jamusuma',
+        artist: 'Fatkiss Official',
+        downloads: 4110,
+        category: 'promo',
+        badgeColor: 'text-amber-300',
+        bpm: 118,
+        notes: [246.94, 311.13, 369.99, 493.88],
+        audio_url: null,
+        cover_url: null,
+        price_ugx: 0,
+        payment_url: '',
+        stream_url: 'https://www.youtube.com/@fatkissofficial'
+      }
+    ];
+
+    let tracks = [...defaultTracks];
+    let activeCategory = 'all';
+    let currentTrackIndex = -1;
+    let pendingCheckoutIndex = -1;
+    let isPlaying = false;
+    let audioCtx = null;
+    let synthInterval = null;
+    let progressInterval = null;
+    let simulatedProgress = 0;
+
+    async function initSupabase() {
+      if (hubConfig.supabaseUrl && hubConfig.supabaseKey && window.supabase) {
+        try {
+          supabaseClient = window.supabase.createClient(hubConfig.supabaseUrl, hubConfig.supabaseKey);
+          const { data } = await supabaseClient.auth.getSession();
+          if (data?.session) {
+            isCeoAuthenticated = true;
+            authProviderMode = 'supabase-jwt';
+            resetInactivityAutoLock();
+          }
+          syncCeoUiState();
+          fetchCloudTracks();
+          fetchCloudScoops();
+        } catch (err) {
+          supabaseClient = null;
+        }
+      }
+    }
+
+    async function fetchCloudTracks() {
+      if (!supabaseClient) return;
+      try {
+        const { data, error } = await supabaseClient
+          .from('tracks')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (!error && Array.isArray(data) && data.length > 0) {
+          tracks = data.map((row) => ({
+            id: String(row.id),
+            dbId: row.id,
+            title: row.title,
+            artist: row.artist,
+            downloads: row.downloads || 0,
+            category: row.category || 'trending',
+            badgeColor: row.price_ugx > 0 ? 'text-amber-300' : 'text-cyan-400',
+            bpm: 108,
+            notes: [261.63, 329.63, 392.0, 523.25],
+            audio_url: sanitizeURL(row.audio_url, true),
+            cover_url: sanitizeURL(row.cover_url, true),
+            price_ugx: Number(row.price_ugx || 0),
+            payment_url: sanitizeURL(row.payment_url),
+            stream_url: sanitizeURL(row.stream_url)
+          }));
+          renderTracks();
+        }
+      } catch (err) {}
+    }
+
+    async function fetchCloudScoops() {
+      if (!supabaseClient) return;
+      try {
+        const { data, error } = await supabaseClient
+          .from('scoops')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (!error && Array.isArray(data) && data.length > 0) {
+          scoops = data.map((row) => ({
+            id: String(row.id),
+            dbId: row.id,
+            badge: row.badge || 'HOT SCOOP',
+            banner_title: row.banner_title,
+            headline: row.headline,
+            body: row.body,
+            image_url: sanitizeURL(row.image_url, true) || null,
+            action_url: sanitizeURL(row.action_url),
+            created_at: row.created_at || new Date().toISOString()
+          }));
+          renderScoops();
+        }
+      } catch (err) {}
+    }
+
+    function renderTracks() {
+      const grid = document.getElementById('tracks-grid');
+      if (!grid) return;
+      const searchEl = document.getElementById('track-search-input');
+      const query = searchEl ? searchEl.value.trim().toLowerCase() : '';
+
+      const filtered = tracks.filter((t) => {
+        const matchesCat =
+          activeCategory === 'all' ||
+          (activeCategory === 'paid' && Number(t.price_ugx) > 0) ||
+          t.category === activeCategory;
+
+        const matchesQuery =
+          t.title.toLowerCase().includes(query) ||
+          t.artist.toLowerCase().includes(query) ||
+          (query === 'free' && Number(t.price_ugx) === 0) ||
+          (query === 'paid' && Number(t.price_ugx) > 0);
+
+        return matchesCat && matchesQuery;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="col-span-full text-center py-8 text-xs text-gray-400 glass-panel rounded-2xl">No matching tracks found. Try another keyword!</div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered
+        .map((track) => {
+          const originalIndex = tracks.findIndex((item) => item.id === track.id);
+          const isCurrentPlaying = originalIndex === currentTrackIndex && isPlaying;
+          const isPaid = Number(track.price_ugx) > 0;
+          const isUnlocked = !isPaid || unlockedTrackIds.has(String(track.id));
+          const safeTitle = escapeHTML(track.title);
+          const safeArtist = escapeHTML(track.artist);
+          const safeStreamUrl = sanitizeURL(track.stream_url);
+          const safeCoverUrl = sanitizeURL(track.cover_url, true);
+
+          const priceBadge = !isPaid
+            ? `<span class="px-2 py-0.5 rounded-full text-[9px] font-extrabold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">FREE MP3</span>`
+            : isUnlocked
+            ? `<span class="px-2 py-0.5 rounded-full text-[9px] font-extrabold bg-cyan-500/20 text-cyan-300 border border-cyan-400/35">✓ UNLOCKED</span>`
+            : `<span class="px-2 py-0.5 rounded-full text-[9px] font-extrabold bg-amber-400/20 text-amber-300 border border-amber-400/40">🔒 UGX ${Number(track.price_ugx).toLocaleString()}</span>`;
+
+          const streamLinkHtml = safeStreamUrl
+            ? `<a href="${escapeHTML(safeStreamUrl)}" target="_blank" rel="noopener noreferrer" title="Stream on Spotify / YouTube" class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-white/10 hover:bg-emerald-500/25 text-gray-200 hover:text-emerald-300 border border-white/10 transition">🎧 Royalty Stream</a>`
+            : '';
+
+          const coverHtml = safeCoverUrl
+            ? `<img src="${escapeHTML(safeCoverUrl)}" alt="${safeTitle}" class="w-full h-full object-cover" />`
+            : `<span class="text-[10px] font-extrabold ${escapeHTML(track.badgeColor)} truncate px-1">${safeTitle}</span>`;
+
+          const ceoDeleteHtml = isCeoAuthenticated
+            ? `<button type="button" onclick="deleteTrack(${originalIndex})" title="CEO Delete Track" class="w-8 h-8 rounded-full bg-red-500/20 hover:bg-red-500/35 text-red-300 text-xs font-bold flex items-center justify-center border border-red-500/35 cursor-pointer">🗑</button>`
+            : '';
+
+          return `
+            <div class="glass-card rounded-2xl p-3.5 flex items-center justify-between gap-3">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="w-12 h-12 rounded-xl bg-[#0b0f19] border border-white/10 flex items-center justify-center shrink-0 overflow-hidden text-center">
+                  ${coverHtml}
+                </div>
+                <div class="min-w-0">
+                  <div class="flex flex-wrap items-center gap-1.5">
+                    <h3 class="text-sm font-bold text-white truncate max-w-[140px] sm:max-w-[175px]">${safeTitle}</h3>
+                    ${priceBadge}
+                  </div>
+                  <div class="text-xs text-gray-400 truncate">${safeArtist}</div>
+                  <div class="flex flex-wrap items-center gap-2 mt-1">
+                    <span class="text-[11px] text-pink-400 font-semibold">↓ ${Number(track.downloads).toLocaleString()} MP3s</span>
+                    ${streamLinkHtml}
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                ${ceoDeleteHtml}
+                <button type="button" onclick="playTrack(${originalIndex})" aria-label="Play ${safeTitle}" class="w-10 h-10 rounded-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 flex items-center justify-center shadow-md shadow-cyan-400/25 transition cursor-pointer">
+                  ${
+                    isCurrentPlaying
+                      ? `<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>`
+                      : `<svg class="w-4 h-4 translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`
+                  }
+                </button>
+                <button type="button" onclick="handleDownloadClick(${originalIndex})" aria-label="Download ${safeTitle}" class="w-10 h-10 rounded-full ${
+                  isPaid && !isUnlocked
+                    ? 'bg-amber-400/20 hover:bg-amber-400/35 text-amber-300 border-amber-400/40'
+                    : 'bg-white/10 hover:bg-white/20 text-gray-200 border-white/10'
+                } flex items-center justify-center border transition cursor-pointer">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                    <path d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          `;
+        })
+        .join('');
+    }
+
+    function setCategoryFilter(cat, btn) {
+      activeCategory = cat;
+      document.querySelectorAll('.filter-pill').forEach((el) => {
+        el.className = 'filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-gray-300 border border-white/10 hover:border-cyan-400/40 cursor-pointer';
+      });
+      btn.className = 'filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-cyan-400 text-slate-950 shadow-md shadow-cyan-400/25 cursor-pointer';
+      renderTracks();
+    }
+
+    // =========================================================================
+    // 5. FREEMIUM DOWNLOAD & MOBILE MONEY / CARD CHECKOUT
+    // =========================================================================
+    function handleDownloadClick(index) {
+      const track = tracks[index];
+      if (!track) return;
+      const isPaid = Number(track.price_ugx) > 0;
+      const isUnlocked = !isPaid || unlockedTrackIds.has(String(track.id));
+
+      if (isPaid && !isUnlocked) {
+        openCheckoutModal(index);
+      } else {
+        executeTrackDownload(index);
+      }
+    }
+
+    function downloadCurrentTrack() {
+      const idx = currentTrackIndex >= 0 ? currentTrackIndex : 0;
+      handleDownloadClick(idx);
+    }
+
+    function openCheckoutModal(index) {
+      pendingCheckoutIndex = index;
+      const track = tracks[index];
+      const ugx = Number(track.price_ugx);
+      const usdEst = (ugx / 3700).toFixed(2);
+      const mtnNum = hubConfig.mtnNumber || '0768 444 578';
+      const airtelNum = hubConfig.airtelNumber || '0702 105 197';
+
+      document.getElementById('checkout-track-title').textContent = track.title;
+      document.getElementById('checkout-track-artist').textContent = track.artist;
+      document.getElementById('checkout-price-ugx').textContent = `UGX ${ugx.toLocaleString()}`;
+      document.getElementById('checkout-price-usd').textContent = `~$${usdEst} USD`;
+      document.getElementById('checkout-momo-amount').textContent = `UGX ${ugx.toLocaleString()}`;
+      document.getElementById('checkout-mtn-number').textContent = mtnNum;
+      document.getElementById('checkout-airtel-number').textContent = airtelNum;
+
+      const waMsg = encodeURIComponent(
+        `Hello Fatkiss Official! I just paid UGX ${ugx.toLocaleString()} via Mobile Money (MTN ${mtnNum} / Airtel ${airtelNum}) to unlock "${track.title}" Master MP3.`
+      );
+      const waConfirmUrl = `https://wa.me/256702105197?text=${waMsg}`;
+      document.getElementById('checkout-whatsapp-confirm').href = waConfirmUrl;
+
+      const payLinkEl = document.getElementById('checkout-pay-link');
+      payLinkEl.href = sanitizeURL(track.payment_url) || sanitizeURL(hubConfig.tipUrl) || waConfirmUrl;
+
+      const m = document.getElementById('checkout-modal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+    }
+
+    function closeCheckoutModal() {
+      const m = document.getElementById('checkout-modal');
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+    }
+
+    function confirmPaymentUnlock(event) {
+      event.preventDefault();
+      if (pendingCheckoutIndex < 0) return;
+      const ref = document.getElementById('checkout-tx-ref').value.trim();
+      if (ref.length < 4) {
+        showToast('Please enter a valid MoMo or receipt reference');
+        return;
+      }
+
+      const track = tracks[pendingCheckoutIndex];
+      unlockedTrackIds.add(String(track.id));
+      try {
+        localStorage.setItem(STORAGE_KEYS.unlocked, JSON.stringify([...unlockedTrackIds]));
+      } catch (e) {}
+
+      document.getElementById('checkout-tx-ref').value = '';
+      closeCheckoutModal();
+      renderTracks();
+      executeTrackDownload(pendingCheckoutIndex);
+      showToast(`Payment verified (${ref})! Downloading "${track.title}"...`);
+    }
+
+    function executeTrackDownload(index) {
+      const track = tracks[index];
+      if (!track) return;
+      track.downloads = Number(track.downloads || 0) + 1;
+      renderTracks();
+
+      const a = document.createElement('a');
+      const safeAudio = sanitizeURL(track.audio_url, true);
+      if (safeAudio) {
+        a.href = safeAudio;
+        a.download = `${track.title} - ${track.artist}.mp3`;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+      } else {
+        const infoBlob = new Blob(
+          [
+            `FATKISS OFFICIAL — THE BRIDGE MUSIC HUB\nTrack: ${track.title}\nArtist: ${track.artist}\nOfficial Hub: https://fatkissofficial.com\nManagement & Bookings: thebridgemusic@gmail.com | +256 702 105 197`
+          ],
+          { type: 'text/plain' }
+        );
+        a.href = URL.createObjectURL(infoBlob);
+        a.download = `${track.title} - Fatkiss Official.txt`;
+      }
+      a.click();
+      showToast(`Downloading "${track.title}"...`);
+    }
+
+    // =========================================================================
+    // 6. TIP / SUPPORT MODAL (MTN MOMO & AIRTEL MONEY)
+    // =========================================================================
+    function openTipModal() {
+      document.getElementById('tip-mtn-display').textContent = hubConfig.mtnNumber || '0768 444 578';
+      document.getElementById('tip-airtel-display').textContent = hubConfig.airtelNumber || '0702 105 197';
+      updateTipWhatsAppLink();
+      const m = document.getElementById('tip-modal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+    }
+
+    function closeTipModal() {
+      const m = document.getElementById('tip-modal');
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+    }
+
+    function selectTipAmount(amount, btn) {
+      document.getElementById('tip-custom-amount').value = amount;
+      document.querySelectorAll('.tip-amt-btn').forEach((el) => {
+        el.className = 'tip-amt-btn py-2 rounded-xl text-xs font-bold bg-white/10 text-gray-200 hover:bg-white/15 cursor-pointer';
+      });
+      btn.className = 'tip-amt-btn py-2 rounded-xl text-xs font-extrabold bg-amber-400 text-slate-950 cursor-pointer';
+      updateTipWhatsAppLink();
+    }
+
+    function updateTipWhatsAppLink() {
+      const amount = Number(document.getElementById('tip-custom-amount').value || 2000).toLocaleString();
+      const mtnNum = hubConfig.mtnNumber || '0768 444 578';
+      const airtelNum = hubConfig.airtelNumber || '0702 105 197';
+      const btn = document.getElementById('tip-whatsapp-confirm');
+      const waMsg = encodeURIComponent(
+        `Hello Fatkiss Official! I just sent a fan support tip of UGX ${amount} via Mobile Money (MTN ${mtnNum} / Airtel ${airtelNum}).`
+      );
+      btn.href = `https://wa.me/256702105197?text=${waMsg}`;
+    }
+
+    function copySpecificNumber(network) {
+      const isMtn = network === 'mtn';
+      const rawNum = isMtn
+        ? (hubConfig.mtnNumber || '0768 444 578')
+        : (hubConfig.airtelNumber || '0702 105 197');
+      const cleanDigits = rawNum.replace(/\s+/g, '');
+
+      const temp = document.createElement('input');
+      temp.value = cleanDigits;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+
+      showToast(
+        isMtn
+          ? `Copied MTN Mobile Money: ${rawNum}`
+          : `Copied Airtel Money: ${rawNum}`
+      );
+    }
+
+    // =========================================================================
+    // 7. CEO-ONLY PHOTO STUDIO (AUTO-COMPRESSED FOR FAST GITHUB/NETLIFY HOSTING)
+    // =========================================================================
+    let currentBgDataUrl = '';
+    let currentAvatarDataUrl = '';
+
+    function compressPhotoForHub(file, maxWidth, quality) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const scale = img.width > maxWidth ? maxWidth / img.width : 1;
+            canvas.width = Math.round(img.width * scale);
+            canvas.height = Math.round(img.height * scale);
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            resolve(canvas.toDataURL('image/jpeg', quality));
+          };
+          img.onerror = () => resolve(e.target.result);
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function openPhotoStudio() {
+      if (!requireCeoAccess()) return;
+      const modal = document.getElementById('photo-studio-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closePhotoStudio() {
+      const modal = document.getElementById('photo-studio-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    async function handleBgPhotoUpload(event) {
+      if (!requireCeoAccess()) return;
+      const file = event.target.files[0];
+      if (!file) return;
+      showToast('Optimizing background photo...');
+      currentBgDataUrl = await compressPhotoForHub(file, 1200, 0.80);
+      applyBackgroundImage(currentBgDataUrl);
+      try {
+        localStorage.setItem(STORAGE_KEYS.bg, currentBgDataUrl);
+      } catch (err) {}
+      showToast('Your photo is now live across the entire website background!');
+    }
+
+    async function handleAvatarPhotoUpload(event) {
+      if (!requireCeoAccess()) return;
+      const file = event.target.files[0];
+      if (!file) return;
+      currentAvatarDataUrl = await compressPhotoForHub(file, 450, 0.85);
+      applyAvatarImage(currentAvatarDataUrl);
+      try {
+        localStorage.setItem(STORAGE_KEYS.avatar, currentAvatarDataUrl);
+        localStorage.setItem(STORAGE_KEYS.avatarMode, 'photo');
+      } catch (err) {}
+      showToast('Hero circle avatar photo updated!');
+    }
+
+    function applyBackgroundImage(dataUrl) {
+      const safeUrl = sanitizeURL(dataUrl, true);
+      const bgLayer = document.getElementById('site-bg-layer');
+      bgLayer.style.backgroundImage = safeUrl ? `url('${safeUrl}')` : '';
+      updateBgStyling();
+    }
+
+    function applyAvatarImage(dataUrl) {
+      const safeUrl = sanitizeURL(dataUrl, true);
+      const imgEl = document.getElementById('hero-avatar-img');
+      const textEl = document.getElementById('hero-avatar-text');
+      const modeBtn = document.getElementById('avatar-mode-btn');
+
+      if (safeUrl) {
+        imgEl.src = safeUrl;
+        imgEl.classList.remove('hidden');
+        textEl.classList.add('hidden');
+        if (modeBtn) modeBtn.textContent = 'Switch to Text Badge';
+      } else {
+        imgEl.classList.add('hidden');
+        textEl.classList.remove('hidden');
+        if (modeBtn) modeBtn.textContent = 'Switch to Photo Badge';
+      }
+    }
+
+    function toggleAvatarMode() {
+      if (!requireCeoAccess()) return;
+      const imgEl = document.getElementById('hero-avatar-img');
+      const textEl = document.getElementById('hero-avatar-text');
+      const modeBtn = document.getElementById('avatar-mode-btn');
+      const isShowingPhoto = !imgEl.classList.contains('hidden');
+
+      if (isShowingPhoto) {
+        imgEl.classList.add('hidden');
+        textEl.classList.remove('hidden');
+        if (modeBtn) modeBtn.textContent = 'Switch to Photo Badge';
+        try { localStorage.setItem(STORAGE_KEYS.avatarMode, 'text'); } catch (e) {}
+        showToast('Switched to glowing text emblem');
+      } else {
+        if (!currentAvatarDataUrl && currentBgDataUrl) {
+          currentAvatarDataUrl = currentBgDataUrl;
+          imgEl.src = currentAvatarDataUrl;
+        }
+        if (currentAvatarDataUrl) {
+          imgEl.classList.remove('hidden');
+          textEl.classList.add('hidden');
+          if (modeBtn) modeBtn.textContent = 'Switch to Text Badge';
+          try { localStorage.setItem(STORAGE_KEYS.avatarMode, 'photo'); } catch (e) {}
+          showToast('Switched to circular artist photo');
+        } else {
+          showToast('Upload a circle photo above first!');
+        }
+      }
+    }
+
+    function updateBgStyling() {
+      const visibility = document.getElementById('bg-opacity-slider').value;
+      const posY = document.getElementById('bg-pos-slider').value;
+      const blurPx = document.getElementById('bg-blur-slider').value;
+
+      document.getElementById('bg-opacity-val').textContent = `${visibility}%`;
+      document.getElementById('bg-pos-val').textContent = `${posY}%`;
+      document.getElementById('bg-blur-val').textContent = `${blurPx}px`;
+
+      const bgLayer = document.getElementById('site-bg-layer');
+      const overlay = document.getElementById('site-bg-overlay');
+
+      bgLayer.style.backgroundPosition = `center ${posY}%`;
+      bgLayer.style.filter = blurPx > 0 ? `blur(${blurPx}px)` : 'none';
+
+      const darknessTop = (100 - visibility) / 100;
+      const darknessMid = Math.min(0.95, darknessTop + 0.22);
+
+      overlay.style.background = `
+        radial-gradient(circle at 50% 12%, rgba(0, 242, 254, 0.14), transparent 48%),
+        radial-gradient(circle at 82% 28%, rgba(255, 0, 127, 0.12), transparent 45%),
+        linear-gradient(180deg, rgba(8, 9, 13, ${darknessTop.toFixed(2)}) 0%, rgba(8, 9, 13, ${darknessMid.toFixed(2)}) 60%, #08090d 100%)
+      `;
+
+      try {
+        localStorage.setItem(STORAGE_KEYS.bgSettings, JSON.stringify({ visibility, posY, blurPx }));
+      } catch (e) {}
+    }
+
+    function resetPhotos() {
+      if (!requireCeoAccess()) return;
+      currentBgDataUrl = '';
+      currentAvatarDataUrl = '';
+      localStorage.removeItem(STORAGE_KEYS.bg);
+      localStorage.removeItem(STORAGE_KEYS.avatar);
+      localStorage.removeItem(STORAGE_KEYS.avatarMode);
+      localStorage.removeItem(STORAGE_KEYS.bgSettings);
+      document.getElementById('bg-opacity-slider').value = 55;
+      document.getElementById('bg-pos-slider').value = 20;
+      document.getElementById('bg-blur-slider').value = 0;
+      applyBackgroundImage('');
+      applyAvatarImage('');
+      showToast('Background & avatar reset to default neon theme');
+    }
+
+    // =========================================================================
+    // 8. CEO-ONLY MUSIC UPLOAD STUDIO
+    // =========================================================================
+    function openUploadModal() {
+      if (!requireCeoAccess()) return;
+      const m = document.getElementById('upload-modal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+    }
+
+    function closeUploadModal() {
+      const m = document.getElementById('upload-modal');
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+    }
+
+    function toggleUploadPriceFields() {
+      const mode = document.getElementById('up-pricing-mode').value;
+      const box = document.getElementById('up-paid-fields');
+      if (mode === 'paid') {
+        box.classList.remove('hidden');
+        box.classList.add('grid');
+      } else {
+        box.classList.add('hidden');
+        box.classList.remove('grid');
+      }
+    }
+
+    async function submitNewTrack(event) {
+      event.preventDefault();
+      if (!requireCeoAccess()) return;
+
+      const submitBtn = document.getElementById('up-submit-btn');
+      const title = document.getElementById('up-title').value.trim();
+      const artist = document.getElementById('up-artist').value.trim();
+      const category = document.getElementById('up-category').value;
+      const pricingMode = document.getElementById('up-pricing-mode').value;
+      const priceUgx = pricingMode === 'paid' ? Number(document.getElementById('up-price-ugx').value || 1500) : 0;
+      const paymentUrl = sanitizeURL(document.getElementById('up-payment-url').value.trim());
+      const streamUrl = sanitizeURL(document.getElementById('up-stream-url').value.trim());
+      const audioFile = document.getElementById('up-audio-file').files[0];
+      const coverFile = document.getElementById('up-cover-file').files[0];
+
+      if (!audioFile) return;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = '⏳ Uploading Track...';
+
+      try {
+        let finalAudioUrl = URL.createObjectURL(audioFile);
+        let finalCoverUrl = coverFile ? await compressPhotoForHub(coverFile, 400, 0.82) : null;
+        let dbId = null;
+
+        if (supabaseClient) {
+          const safeAudioName = `${Date.now()}-${audioFile.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
+          const { error: audioErr } = await supabaseClient.storage
+            .from('music')
+            .upload(`audio/${safeAudioName}`, audioFile, { upsert: true });
+
+          if (audioErr) {
+            showToast(`Upload blocked: ${audioErr.message}`);
+            return;
+          }
+
+          const { data: pubAudio } = supabaseClient.storage.from('music').getPublicUrl(`audio/${safeAudioName}`);
+          finalAudioUrl = pubAudio.publicUrl;
+
+          if (coverFile) {
+            const safeCoverName = `${Date.now()}-${coverFile.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
+            const { error: coverErr } = await supabaseClient.storage
+              .from('music')
+              .upload(`covers/${safeCoverName}`, coverFile, { upsert: true });
+
+            if (!coverErr) {
+              const { data: pubCover } = supabaseClient.storage.from('music').getPublicUrl(`covers/${safeCoverName}`);
+              finalCoverUrl = pubCover.publicUrl;
+            }
+          }
+
+          const { data: insertedRows, error: dbErr } = await supabaseClient
+            .from('tracks')
+            .insert([
+              {
+                title,
+                artist,
+                category,
+                audio_url: finalAudioUrl,
+                cover_url: finalCoverUrl,
+                downloads: 0,
+                price_ugx: priceUgx,
+                payment_url: paymentUrl,
+                stream_url: streamUrl
+              }
+            ])
+            .select();
+
+          if (dbErr) {
+            showToast(`Database error: ${dbErr.message}`);
+            return;
+          }
+
+          if (insertedRows && insertedRows[0]) {
+            dbId = insertedRows[0].id;
+          }
+        }
+
+        tracks.unshift({
+          id: dbId ? String(dbId) : 'local-' + Date.now(),
+          dbId,
+          title,
+          artist,
+          downloads: 0,
+          category,
+          badgeColor: priceUgx > 0 ? 'text-amber-300' : 'text-cyan-400',
+          bpm: 110,
+          notes: [261.63, 329.63, 392.0, 523.25],
+          audio_url: finalAudioUrl,
+          cover_url: finalCoverUrl,
+          price_ugx: priceUgx,
+          payment_url: paymentUrl,
+          stream_url: streamUrl
+        });
+
+        event.target.reset();
+        toggleUploadPriceFields();
+        closeUploadModal();
+        renderTracks();
+        playTrack(0);
+        showToast(
+          supabaseClient
+            ? `"${title}" uploaded & live globally!`
+            : `"${title}" added! Connect Supabase in Cloud Setup so all fans can download it.`
+        );
+      } catch (err) {
+        showToast('Upload error—please try again.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = '🚀 Publish Track to Hub';
+      }
+    }
+
+    async function deleteTrack(index) {
+      if (!requireCeoAccess()) return;
+      const track = tracks[index];
+      if (!track) return;
+      if (supabaseClient && track.dbId) {
+        const { error } = await supabaseClient.from('tracks').delete().eq('id', track.dbId);
+        if (error) {
+          showToast(`Server blocked delete: ${error.message}`);
+          return;
+        }
+      }
+      tracks.splice(index, 1);
+      renderTracks();
+      showToast(`CEO Deleted "${track.title}"`);
+    }
+
+    // =========================================================================
+    // 9. CEO CLOUD & SECURITY SETUP MODAL + HTML EXPORTER
+    // =========================================================================
+    function openSetupModal() {
+      if (!requireCeoAccess()) return;
+      document.getElementById('cfg-sb-url').value = hubConfig.supabaseUrl || '';
+      document.getElementById('cfg-sb-key').value = hubConfig.supabaseKey || '';
+      document.getElementById('cfg-new-vault-pass').value = '';
+      document.getElementById('cfg-confirm-vault-pass').value = '';
+      document.getElementById('cfg-mtn-num').value = hubConfig.mtnNumber || '0768 444 578';
+      document.getElementById('cfg-airtel-num').value = hubConfig.airtelNumber || '0702 105 197';
+      document.getElementById('cfg-tip-url').value = hubConfig.tipUrl || '';
+      document.getElementById('cfg-spotify-url').value = hubConfig.spotifyUrl || 'https://open.spotify.com';
+
+      const m = document.getElementById('setup-modal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+    }
+
+    function closeSetupModal() {
+      const m = document.getElementById('setup-modal');
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+    }
+
+    function copyHardenedSql() {
+      const sqlScript = `-- HARDENED CEO-ONLY SUPABASE RLS SECURITY SCRIPT
+create table if not exists tracks (
+  id bigint generated by default as identity primary key,
+  title text not null,
+  artist text not null,
+  category text default 'trending',
+  audio_url text not null,
+  cover_url text,
+  downloads integer default 0,
+  price_ugx integer default 0,
+  payment_url text,
+  stream_url text,
+  created_at time

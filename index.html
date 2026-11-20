@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Strict Content Security Policy: Blocks unauthorized external script injections (XSS defense) -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://*.supabase.co https://placehold.co; media-src 'self' data: blob: https://*.supabase.co; connect-src 'self' https://*.supabase.co wss://*.supabase.co;" />
   <title>FATKISS OFFICIAL — The Bridge Music Hub</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -129,12 +131,12 @@
   <div id="site-bg-layer"></div>
   <div id="site-bg-overlay"></div>
 
-  <!-- CEO COMMAND BAR (STRICTLY HIDDEN FROM PUBLIC VISITORS) -->
+  <!-- CEO COMMAND BAR (STRICTLY HIDDEN UNTIL AUTHENTICATED) -->
   <div id="ceo-command-bar" class="hidden sticky top-0 z-50 bg-gradient-to-r from-amber-500/95 via-yellow-400/95 to-cyan-400/95 text-slate-950 border-b border-amber-300 shadow-xl">
     <div class="max-w-6xl mx-auto px-3 sm:px-6 py-2 flex flex-wrap items-center justify-between gap-2">
       <div class="flex items-center gap-2 text-xs font-black tracking-wide uppercase">
-        <span class="px-2 py-0.5 rounded-full bg-slate-950 text-amber-300 text-[10px]">👑 CEO COMMAND MODE</span>
-        <span id="ceo-cloud-badge" class="hidden sm:inline text-[11px] font-extrabold text-slate-900">• Full Control Active</span>
+        <span class="px-2 py-0.5 rounded-full bg-slate-950 text-amber-300 text-[10px]">🛡️ CEO VERIFIED SESSION</span>
+        <span id="ceo-auth-mode-badge" class="hidden sm:inline text-[11px] font-extrabold text-slate-900">• Hardened Protection Active</span>
       </div>
 
       <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar text-[11px] font-extrabold">
@@ -148,10 +150,10 @@
           📸 Edit Photos
         </button>
         <button type="button" onclick="openSetupModal()" class="shrink-0 px-3 py-1.5 rounded-full bg-slate-950 text-amber-300 hover:bg-slate-900 transition cursor-pointer">
-          ⚙️ CEO Settings &amp; Cloud
+          🛡️ Security &amp; Cloud Setup
         </button>
-        <button type="button" onclick="lockCeoMode()" class="shrink-0 px-3 py-1.5 rounded-full bg-red-600 text-white hover:bg-red-700 transition cursor-pointer">
-          🔒 Lock Site
+        <button type="button" onclick="lockCeoMode(false)" class="shrink-0 px-3 py-1.5 rounded-full bg-red-600 text-white hover:bg-red-700 transition cursor-pointer">
+          🔒 Lock &amp; Sign Out
         </button>
       </div>
     </div>
@@ -242,55 +244,48 @@
 
       <!-- Crisp Authentic Vector Social Media Pills -->
       <div class="mt-6 flex flex-wrap items-center justify-center gap-2.5 max-w-2xl">
-        <!-- WhatsApp -->
-        <a href="https://wa.me/256702105197?text=Hello%20Fatkiss%20Official!%20Visiting%20from%20The%20Bridge%20Music%20Hub." target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold bg-[#123829]/90 hover:bg-[#174a36] text-emerald-300 border border-emerald-500/35 transition">
+        <a href="https://wa.me/256702105197?text=Hello%20Fatkiss%20Official!%20Visiting%20from%20The%20Bridge%20Music%20Hub." target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold bg-[#123829]/90 hover:bg-[#174a36] text-emerald-300 border border-emerald-500/35 transition">
           <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 24 24">
             <path d="M12.031 2c-5.516 0-9.969 4.453-9.969 9.969 0 1.758.459 3.473 1.332 4.986L2 22l5.188-1.359a9.927 9.927 0 004.843 1.258h.004c5.515 0 9.969-4.454 9.969-9.969A9.924 9.924 0 0019.08 4.92 9.918 9.918 0 0012.031 2zm5.82 14.254c-.246.691-1.432 1.322-1.979 1.404-.508.076-1.152.109-1.859-.115-.43-.137-.98-.32-1.686-.625-2.967-1.281-4.904-4.268-5.053-4.467-.148-.199-1.207-1.605-1.207-3.062 0-1.457.764-2.174 1.035-2.471.271-.297.592-.371.789-.371.197 0 .395.002.568.01.182.008.426-.069.666.508.246.592.838 2.047.912 2.195.074.148.123.32.025.518-.099.197-.148.32-.297.494-.148.173-.312.386-.445.518-.148.148-.303.309-.13.605.173.297.768 1.267 1.648 2.052 1.133 1.01 2.088 1.324 2.385 1.472.297.148.469.124.643-.074.173-.197.74-.863.938-1.16.197-.297.395-.247.666-.148.271.099 1.727.814 2.023.963.297.148.494.222.568.346.074.123.074.715-.172 1.406z" />
           </svg>
           <span>WhatsApp</span>
         </a>
 
-        <!-- TikTok -->
-        <a href="https://www.tiktok.com/@fatkissofficial" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold bg-[#1a1d28]/90 hover:bg-[#252938] text-gray-100 border border-white/15 transition">
+        <a href="https://www.tiktok.com/@fatkissofficial" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold bg-[#1a1d28]/90 hover:bg-[#252938] text-gray-100 border border-white/15 transition">
           <svg class="w-4 h-4 text-cyan-300" fill="currentColor" viewBox="0 0 24 24">
             <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z" />
           </svg>
           <span>TikTok</span>
         </a>
 
-        <!-- Instagram -->
-        <a href="https://www.instagram.com/fatkissofficial" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold bg-[#33182b]/90 hover:bg-[#47213b] text-pink-300 border border-pink-500/35 transition">
+        <a href="https://www.instagram.com/fatkissofficial" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold bg-[#33182b]/90 hover:bg-[#47213b] text-pink-300 border border-pink-500/35 transition">
           <svg class="w-4 h-4 text-pink-400" fill="currentColor" viewBox="0 0 24 24">
             <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
           </svg>
           <span>Instagram</span>
         </a>
 
-        <!-- YouTube -->
-        <a href="https://www.youtube.com/@fatkissofficial" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold bg-[#38161a]/90 hover:bg-[#4d1e24] text-rose-300 border border-rose-500/35 transition">
+        <a href="https://www.youtube.com/@fatkissofficial" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold bg-[#38161a]/90 hover:bg-[#4d1e24] text-rose-300 border border-rose-500/35 transition">
           <svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 24 24">
             <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
           </svg>
           <span>YouTube</span>
         </a>
 
-        <!-- Facebook -->
-        <a href="https://www.facebook.com/fatkissofficial" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold bg-[#142744]/90 hover:bg-[#1b365e] text-blue-300 border border-blue-500/35 transition">
+        <a href="https://www.facebook.com/fatkissofficial" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold bg-[#142744]/90 hover:bg-[#1b365e] text-blue-300 border border-blue-500/35 transition">
           <svg class="w-4 h-4 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
             <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z" />
           </svg>
           <span>Facebook</span>
         </a>
 
-        <!-- X -->
-        <a href="https://x.com/fatkissofficial" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-bold bg-[#1a1d26]/90 hover:bg-[#262a37] text-gray-200 border border-white/15 transition">
+        <a href="https://x.com/fatkissofficial" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-bold bg-[#1a1d26]/90 hover:bg-[#262a37] text-gray-200 border border-white/15 transition">
           <svg class="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 24 24">
             <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
           </svg>
           <span>X</span>
         </a>
 
-        <!-- Share Hub -->
         <button type="button" onclick="shareHub()" class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-400/35 transition cursor-pointer">
           <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <circle cx="18" cy="5" r="3" />
@@ -315,682 +310,5 @@
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
-          <a id="link-mdundo" href="https://mdundo.com" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#0e131e]/90 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 transition">
-            <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
-            </svg>
-            <span>Mdundo</span>
-          </a>
-
-          <a id="link-youtube" href="https://www.youtube.com/@fatkissofficial" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#0e131e]/90 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 transition">
-            <svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-            </svg>
-            <span>YouTube</span>
-          </a>
-
-          <a id="link-spotify" href="https://open.spotify.com" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#0e131e]/90 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 transition">
-            <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
-            </svg>
-            <span>Spotify</span>
-          </a>
-
-          <a id="link-apple" href="https://music.apple.com" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#0e131e]/90 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 transition">
-            <svg class="w-4 h-4 text-rose-400" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.96 6.35c.64-.78 1.08-1.86.96-2.94-.93.04-2.06.62-2.72 1.4-.58.68-1.1 1.78-.96 2.84 1.04.08 2.08-.52 2.72-1.3z" />
-            </svg>
-            <span>Apple Music</span>
-          </a>
-
-          <a id="link-audiomack" href="https://audiomack.com" target="_blank" rel="noopener" class="col-span-2 sm:col-span-1 flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#0e131e]/90 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 transition">
-            <svg class="w-4 h-4 text-orange-400" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-            </svg>
-            <span>Audiomack</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- THE BRIDGE MUSIC TRACK DOWNLOADS -->
-    <section id="music-downloads" class="py-6">
-      <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
-        <div class="flex items-center gap-2.5">
-          <span class="w-1 h-5 rounded-full bg-gradient-to-b from-cyan-400 to-pink-500"></span>
-          <div>
-            <h2 class="font-display text-base sm:text-lg font-extrabold tracking-wide uppercase text-white">
-              THE BRIDGE MUSIC <span class="text-cyan-400">TRACK DOWNLOADS</span>
-            </h2>
-            <p class="text-[11px] text-gray-400">Official catalog • Free preview streams &amp; high-quality MP3 downloads</p>
-          </div>
-        </div>
-
-        <!-- CEO-Only Track Upload Button (Hidden from Public Visitors) -->
-        <div id="ceo-tracks-actions" class="hidden items-center gap-2">
-          <button type="button" onclick="openUploadModal()" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-extrabold bg-gradient-to-r from-cyan-400 to-pink-500 text-slate-950 shadow-lg shadow-cyan-500/20 hover:opacity-95 cursor-pointer transition">
-            <span>⬆️ Upload New Track</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Live Search Bar -->
-      <div class="relative mb-4">
-        <svg class="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <circle cx="11" cy="11" r="8" />
-          <path d="M21 21l-4.35-4.35" />
-        </svg>
-        <input
-          id="track-search-input"
-          type="text"
-          oninput="renderTracks()"
-          placeholder="Search tracks by title, artist, free or paid..."
-          class="w-full pl-11 pr-4 py-3 rounded-2xl bg-[#101420]/90 border border-white/10 text-xs sm:text-sm text-white placeholder-gray-400 focus:outline-none focus:border-cyan-400/50 transition"
-        />
-      </div>
-
-      <!-- Filter Pills -->
-      <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-3 text-xs font-bold">
-        <button type="button" onclick="setCategoryFilter('all', this)" class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-cyan-400 text-slate-950 shadow-md shadow-cyan-400/25 cursor-pointer">
-          🔥 All Updates
-        </button>
-        <button type="button" onclick="setCategoryFilter('trending', this)" class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-gray-300 border border-white/10 hover:border-cyan-400/40 cursor-pointer">
-          🎵 Trending MP3s
-        </button>
-        <button type="button" onclick="setCategoryFilter('paid', this)" class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-amber-300 border border-amber-400/25 hover:border-amber-400/50 cursor-pointer">
-          💎 Exclusive / Paid MP3s
-        </button>
-        <button type="button" onclick="setCategoryFilter('visuals', this)" class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-gray-300 border border-white/10 hover:border-cyan-400/40 cursor-pointer">
-          🎬 Video Shoots
-        </button>
-        <button type="button" onclick="setCategoryFilter('promo', this)" class="filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-gray-300 border border-white/10 hover:border-cyan-400/40 cursor-pointer">
-          ⭐ Artist Promo
-        </button>
-      </div>
-
-      <!-- Track Cards Grid -->
-      <div id="tracks-grid" class="grid grid-cols-1 md:grid-cols-2 gap-3.5"></div>
-    </section>
-
-    <!-- STREET GOSSIP & ENTERTAINMENT SCOOPS -->
-    <section id="street-gossip" class="py-6">
-      <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
-        <div class="flex items-center gap-2.5">
-          <span class="w-1 h-5 rounded-full bg-gradient-to-b from-pink-500 to-cyan-400"></span>
-          <div>
-            <h2 class="font-display text-base sm:text-lg font-extrabold tracking-wide uppercase text-white">
-              STREET GOSSIP &amp; <span class="text-pink-500">ENTERTAINMENT SCOOPS</span>
-            </h2>
-            <p class="text-[11px] text-gray-400">Official news, studio vibes &amp; exclusive announcements from The Bridge Music</p>
-          </div>
-        </div>
-
-        <!-- CEO-Only Post Gossip Button (Hidden from Public Visitors) -->
-        <button id="ceo-post-gossip-btn" type="button" onclick="openGossipComposer()" class="hidden inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-extrabold bg-gradient-to-r from-pink-500 to-cyan-400 text-slate-950 shadow-lg shadow-pink-500/20 hover:opacity-95 cursor-pointer transition">
-          <span>+ Post Gossip / Vibe</span>
-        </button>
-      </div>
-
-      <!-- Gossip & Vibes Filter Pills -->
-      <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-3 text-xs font-bold">
-        <button type="button" onclick="setGossipFilter('all', this)" class="gossip-filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-pink-500 text-white shadow-md shadow-pink-500/25 cursor-pointer">
-          📰 All Scoops
-        </button>
-        <button type="button" onclick="setGossipFilter('HOT SCOOP', this)" class="gossip-filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-pink-300 border border-pink-500/25 hover:border-pink-400/50 cursor-pointer">
-          🔥 Hot Scoop
-        </button>
-        <button type="button" onclick="setGossipFilter('VIBES', this)" class="gossip-filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-cyan-300 border border-cyan-500/25 hover:border-cyan-400/50 cursor-pointer">
-          ✨ Vibes
-        </button>
-        <button type="button" onclick="setGossipFilter('STUDIO NEWS', this)" class="gossip-filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-amber-300 border border-amber-500/25 hover:border-amber-400/50 cursor-pointer">
-          🎬 Studio News
-        </button>
-        <button type="button" onclick="setGossipFilter('ARTIST ALERT', this)" class="gossip-filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-[#131826]/90 text-purple-300 border border-purple-500/25 hover:border-purple-400/50 cursor-pointer">
-          🎤 Artist Alert
-        </button>
-      </div>
-
-      <!-- Dynamic Street Gossip Cards Grid -->
-      <div id="gossip-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-    </section>
-
-    <!-- LEGENDS VISUALS & ARTIST PROMO -->
-    <section id="legends-visuals" class="py-6">
-      <div class="flex items-center gap-2.5 mb-4">
-        <span class="w-1 h-5 rounded-full bg-gradient-to-b from-cyan-400 to-pink-500"></span>
-        <h2 class="font-display text-base sm:text-lg font-extrabold tracking-wide uppercase text-white">
-          LEGENDS VISUALS <span class="text-cyan-400">PRODUCTIONS</span>
-        </h2>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-        <div class="glass-card rounded-2xl p-4">
-          <div class="text-cyan-400 font-display font-bold text-sm mb-1">🎬 4K Music Video Shoots</div>
-          <p class="text-xs text-gray-300 leading-relaxed">
-            Cinematic storytelling, color grading, gimbal choreography, and high-impact visuals directed by Fatkiss Official.
-          </p>
-        </div>
-        <div class="glass-card rounded-2xl p-4">
-          <div class="text-pink-400 font-display font-bold text-sm mb-1">✨ Motion Graphics &amp; Visualizers</div>
-          <p class="text-xs text-gray-300 leading-relaxed">
-            Custom 3D cover art animations, Spotify Canvas loops, lyric videos, and promotional teasers built to trend.
-          </p>
-        </div>
-        <div class="glass-card rounded-2xl p-4">
-          <div class="text-emerald-400 font-display font-bold text-sm mb-1">🚀 Digital Artist Rollouts</div>
-          <p class="text-xs text-gray-300 leading-relaxed">
-            Distribution strategy, street promo campaigns, and spotlight placement right here on The Bridge Music Hub.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROMO & BOOKING SECTION -->
-    <section id="promo-booking" class="py-6">
-      <div class="glass-panel rounded-3xl p-5 sm:p-7 border border-cyan-400/20 space-y-5">
-        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div>
-            <span class="inline-block px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-cyan-400/15 text-cyan-300 border border-cyan-400/30 mb-2">
-              THE BRIDGE MUSIC MANAGEMENT • BOOKINGS &amp; MOBILE MONEY
-            </span>
-            <h3 class="font-display text-xl sm:text-2xl font-extrabold text-white">
-              Book Fatkiss Official or Legends Visuals
-            </h3>
-            <p class="text-xs sm:text-sm text-gray-300 mt-1">
-              Managed by <strong class="text-cyan-300">The Bridge Music</strong> • Manager: <strong class="text-white">Kisa Pius</strong> • Email:
-              <a href="mailto:thebridgemusic@gmail.com" class="text-pink-300 hover:text-pink-200 underline decoration-pink-400/40 font-semibold">thebridgemusic@gmail.com</a>
-            </p>
-          </div>
-          <div class="flex flex-wrap gap-2 shrink-0">
-            <button type="button" onclick="openTipModal()" class="px-4 py-3 rounded-2xl text-xs sm:text-sm font-extrabold bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 border border-amber-400/40 transition cursor-pointer">
-              💛 Support / Tip
-            </button>
-            <button type="button" onclick="openBookingModal()" class="px-5 py-3 rounded-2xl text-xs sm:text-sm font-extrabold bg-gradient-to-r from-cyan-400 to-pink-500 text-slate-950 shadow-lg shadow-cyan-500/20 hover:opacity-95 transition cursor-pointer">
-              📅 Request Booking
-            </button>
-          </div>
-        </div>
-
-        <!-- Official MTN MoMo & Airtel Money Direct Cards -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-          <!-- MTN Mobile Money Card -->
-          <div class="rounded-2xl p-3.5 bg-[#1b180b]/90 border border-yellow-400/40 flex items-center justify-between gap-3">
-            <div class="flex items-center gap-3 min-w-0">
-              <div class="w-10 h-10 rounded-xl bg-yellow-400 text-slate-950 font-display font-black text-xs flex items-center justify-center shrink-0 shadow-md shadow-yellow-400/20">
-                MTN
-              </div>
-              <div class="min-w-0">
-                <div class="text-[10px] font-extrabold uppercase tracking-wider text-yellow-300">MTN Mobile Money</div>
-                <a href="tel:+256768444578" id="booking-mtn-display" class="font-mono text-sm sm:text-base font-extrabold text-white hover:text-yellow-300 transition block truncate">
-                  0768 444 578
-                </a>
-                <div class="text-[10px] text-gray-400 truncate">+256 768 444 578 • Fatkiss Official</div>
-              </div>
-            </div>
-            <div class="flex items-center gap-1.5 shrink-0">
-              <a href="tel:+256768444578" aria-label="Call or Dial MTN MoMo" class="px-2.5 py-1.5 rounded-lg bg-yellow-400/15 hover:bg-yellow-400/25 text-yellow-300 border border-yellow-400/30 text-[11px] font-bold transition">
-                Dial
-              </a>
-              <button type="button" onclick="copySpecificNumber('mtn')" class="px-3 py-1.5 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-slate-950 text-[11px] font-extrabold cursor-pointer transition">
-                Copy
-              </button>
-            </div>
-          </div>
-
-          <!-- Airtel Money Card -->
-          <div class="rounded-2xl p-3.5 bg-[#1d0d11]/90 border border-red-500/40 flex items-center justify-between gap-3">
-            <div class="flex items-center gap-3 min-w-0">
-              <div class="w-10 h-10 rounded-xl bg-red-600 text-white font-display font-black text-[10px] flex items-center justify-center shrink-0 shadow-md shadow-red-600/25">
-                airtel
-              </div>
-              <div class="min-w-0">
-                <div class="text-[10px] font-extrabold uppercase tracking-wider text-red-400">Airtel Money</div>
-                <a href="tel:+256702105197" id="booking-airtel-display" class="font-mono text-sm sm:text-base font-extrabold text-white hover:text-red-300 transition block truncate">
-                  0702 105 197
-                </a>
-                <div class="text-[10px] text-gray-400 truncate">+256 702 105 197 • Kisa Pius</div>
-              </div>
-            </div>
-            <div class="flex items-center gap-1.5 shrink-0">
-              <a href="tel:+256702105197" aria-label="Call or Dial Airtel Money" class="px-2.5 py-1.5 rounded-lg bg-red-500/15 hover:bg-red-500/25 text-red-300 border border-red-500/30 text-[11px] font-bold transition">
-                Dial
-              </a>
-              <button type="button" onclick="copySpecificNumber('airtel')" class="px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white text-[11px] font-extrabold cursor-pointer transition">
-                Copy
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Discreet Footer with CEO Login Trigger -->
-    <section class="pt-2 pb-10 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-gray-500 border-t border-white/5">
-      <div>© 2026 FATKISS OFFICIAL • THE BRIDGE MUSIC &amp; LEGENDS VISUALS</div>
-      <button type="button" id="footer-ceo-login-btn" onclick="openCeoLoginModal()" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 hover:bg-white/10 text-gray-400 hover:text-amber-300 border border-white/10 transition cursor-pointer">
-        <span>🔐 CEO Login</span>
-      </button>
-    </section>
-  </main>
-
-  <!-- Floating WhatsApp Quick-Chat Button -->
-  <a
-    href="https://wa.me/256702105197?text=Hello%20Fatkiss%20Official!%20I%20would%20like%20to%20connect."
-    target="_blank"
-    rel="noopener"
-    aria-label="Chat on WhatsApp"
-    class="fixed right-4 bottom-24 z-40 w-12 h-12 rounded-full bg-[#25D366] hover:scale-105 text-white flex items-center justify-center shadow-lg shadow-emerald-500/35 transition"
-  >
-    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M12.031 2c-5.516 0-9.969 4.453-9.969 9.969 0 1.758.459 3.473 1.332 4.986L2 22l5.188-1.359a9.927 9.927 0 004.843 1.258h.004c5.515 0 9.969-4.454 9.969-9.969A9.924 9.924 0 0019.08 4.92 9.918 9.918 0 0012.031 2zm5.82 14.254c-.246.691-1.432 1.322-1.979 1.404-.508.076-1.152.109-1.859-.115-.43-.137-.98-.32-1.686-.625-2.967-1.281-4.904-4.268-5.053-4.467-.148-.199-1.207-1.605-1.207-3.062 0-1.457.764-2.174 1.035-2.471.271-.297.592-.371.789-.371.197 0 .395.002.568.01.182.008.426-.069.666.508.246.592.838 2.047.912 2.195.074.148.123.32.025.518-.099.197-.148.32-.297.494-.148.173-.312.386-.445.518-.148.148-.303.309-.13.605.173.297.768 1.267 1.648 2.052 1.133 1.01 2.088 1.324 2.385 1.472.297.148.469.124.643-.074.173-.197.74-.863.938-1.16.197-.297.395-.247.666-.148.271.099 1.727.814 2.023.963.297.148.494.222.568.346.074.123.074.715-.172 1.406z" />
-    </svg>
-  </a>
-
-  <!-- Sticky Bottom "The Bridge Music Player" Bar -->
-  <footer class="fixed bottom-0 inset-x-0 z-40 bg-[#090c14]/95 backdrop-blur-xl border-t border-white/10">
-    <!-- Interactive Seek Scrubber -->
-    <div onclick="seekAudio(event)" class="w-full h-1.5 bg-white/10 cursor-pointer relative group">
-      <div id="player-progress-bar" class="h-full w-0 bg-gradient-to-r from-cyan-400 to-pink-500 transition-all duration-150"></div>
-    </div>
-
-    <div class="max-w-6xl mx-auto px-3 sm:px-4 py-2.5 flex items-center justify-between gap-2 sm:gap-4">
-      <!-- Current Track Info -->
-      <div class="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
-        <div id="player-cover-box" class="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-400/30 flex items-center justify-center shrink-0 overflow-hidden">
-          <span class="text-[10px] font-extrabold text-cyan-400">Music</span>
-        </div>
-        <div class="min-w-0">
-          <div id="player-track-title" class="text-xs sm:text-sm font-bold text-white truncate">Select a Track</div>
-          <div class="flex items-center gap-2 text-[10px] sm:text-[11px] font-medium text-cyan-400 truncate">
-            <span id="player-track-artist" class="truncate">The Bridge Music Player</span>
-            <span id="player-time-display" class="text-gray-400 shrink-0">0:00 / 0:00</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Transport Controls -->
-      <div class="flex items-center gap-2 sm:gap-3.5 shrink-0">
-        <button type="button" onclick="prevTrack()" aria-label="Previous Track" class="p-1.5 text-gray-300 hover:text-white transition cursor-pointer">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" />
-          </svg>
-        </button>
-
-        <button type="button" onclick="togglePlayPause()" aria-label="Play or Pause" class="w-11 h-11 rounded-full bg-cyan-400 hover:bg-cyan-300 text-slate-950 flex items-center justify-center shadow-lg shadow-cyan-400/35 transition cursor-pointer">
-          <svg id="main-play-icon" class="w-5 h-5 translate-x-[1px]" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M8 5v14l11-7z" />
-          </svg>
-          <svg id="main-pause-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-          </svg>
-        </button>
-
-        <button type="button" onclick="nextTrack()" aria-label="Next Track" class="p-1.5 text-gray-300 hover:text-white transition cursor-pointer">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
-          </svg>
-        </button>
-      </div>
-
-      <!-- Volume & Tip Artist Button -->
-      <div class="hidden sm:flex items-center gap-3 shrink-0">
-        <div class="flex items-center gap-1.5">
-          <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" />
-          </svg>
-          <input id="player-volume-slider" type="range" min="0" max="100" value="85" oninput="setVolume(this.value)" class="w-16" />
-        </div>
-
-        <button type="button" onclick="openTipModal()" class="px-3 py-1.5 rounded-full text-xs font-extrabold bg-amber-400 hover:bg-amber-300 text-slate-950 shadow-md shadow-amber-400/25 transition cursor-pointer">
-          💛 Tip Artist
-        </button>
-      </div>
-    </div>
-  </footer>
-
-  <!-- ======================================================================= -->
-  <!-- MODAL 0: CEO-ONLY PRIVATE LOGIN GATE                                    -->
-  <!-- ======================================================================= -->
-  <div id="ceo-login-modal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
-    <div class="w-full max-w-sm rounded-3xl bg-[#111623] border border-amber-400/45 p-6 shadow-2xl my-auto">
-      <div class="flex items-center justify-between mb-3">
-        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-amber-400/20 text-amber-300 border border-amber-400/35">
-          👑 CEO Restricted Access
-        </span>
-        <button type="button" onclick="closeCeoLoginModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 flex items-center justify-center cursor-pointer">✕</button>
-      </div>
-
-      <h3 class="font-display text-xl font-extrabold text-white mb-1">Fatkiss Official CEO Login</h3>
-      <p class="text-xs text-gray-400 mb-4">
-        Enter your private CEO PIN / Password to unlock full website editing, music uploads, Street Gossip publishing, and background controls.
-      </p>
-
-      <form onsubmit="submitCeoLogin(event)" class="space-y-3 text-xs">
-        <div>
-          <label class="block text-amber-300 font-bold mb-1">Private CEO PIN / Password *</label>
-          <input id="ceo-login-pin-input" type="password" required placeholder="Enter CEO PIN" class="w-full px-3.5 py-3 rounded-xl bg-[#0c0f17] border border-amber-400/35 text-white text-sm tracking-widest focus:outline-none focus:border-amber-400" />
-        </div>
-
-        <button type="submit" class="w-full py-3 rounded-xl font-extrabold bg-gradient-to-r from-amber-400 to-cyan-400 text-slate-950 shadow-lg hover:opacity-95 transition cursor-pointer">
-          🔓 Unlock CEO Command Mode
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- ======================================================================= -->
-  <!-- MODAL 1: PAID TRACK CHECKOUT (MTN MOMO, AIRTEL MONEY & CARD UNLOCK)     -->
-  <!-- ======================================================================= -->
-  <div id="checkout-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
-    <div class="w-full max-w-md rounded-3xl bg-[#111623] border border-amber-400/40 p-5 sm:p-6 shadow-2xl my-auto">
-      <div class="flex items-center justify-between mb-3">
-        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-amber-400/20 text-amber-300 border border-amber-400/35">
-          💎 Master MP3 Download
-        </span>
-        <button type="button" onclick="closeCheckoutModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 flex items-center justify-center cursor-pointer">✕</button>
-      </div>
-
-      <h3 id="checkout-track-title" class="font-display text-xl font-extrabold text-white">Track Title</h3>
-      <p id="checkout-track-artist" class="text-xs text-cyan-400 font-semibold mb-3.5">Fatkiss Official</p>
-
-      <div class="p-3 rounded-2xl bg-[#0b0e16] border border-white/10 mb-3.5 flex items-center justify-between">
-        <div>
-          <div class="text-[10px] text-gray-400">Official Fan Price</div>
-          <div id="checkout-price-ugx" class="font-display text-lg sm:text-xl font-extrabold text-amber-300">UGX 1,500</div>
-        </div>
-        <div class="text-right">
-          <div class="text-[10px] text-gray-400">International</div>
-          <div id="checkout-price-usd" class="text-xs font-bold text-gray-200">~$0.50 USD</div>
-        </div>
-      </div>
-
-      <div class="space-y-2.5 text-xs">
-        <div class="text-[11px] font-bold text-gray-300">
-          Step 1: Send <strong id="checkout-momo-amount" class="text-amber-300">UGX 1,500</strong> via MTN MoMo or Airtel Money:
-        </div>
-
-        <!-- MTN Mobile Money Accent Card -->
-        <div class="p-3 rounded-2xl bg-[#1d190b] border border-yellow-400/45 flex items-center justify-between gap-2">
-          <div class="flex items-center gap-2.5 min-w-0">
-            <span class="px-2 py-1 rounded-lg bg-yellow-400 text-slate-950 font-display font-black text-[10px] shrink-0">MTN</span>
-            <div class="min-w-0">
-              <div class="text-[10px] font-bold text-yellow-300">MTN Mobile Money</div>
-              <div id="checkout-mtn-number" class="font-mono font-extrabold text-white text-sm truncate">0768 444 578</div>
-              <div class="text-[10px] text-gray-400 truncate">+256 768 444 578 • Fatkiss Official</div>
-            </div>
-          </div>
-          <div class="flex items-center gap-1.5 shrink-0">
-            <a href="tel:+256768444578" class="px-2.5 py-1.5 rounded-lg bg-yellow-400/15 hover:bg-yellow-400/25 text-yellow-300 font-bold text-[11px]">Dial</a>
-            <button type="button" onclick="copySpecificNumber('mtn')" class="px-2.5 py-1.5 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-extrabold text-[11px] cursor-pointer">Copy</button>
-          </div>
-        </div>
-
-        <!-- Airtel Money Accent Card -->
-        <div class="p-3 rounded-2xl bg-[#1f0d12] border border-red-500/45 flex items-center justify-between gap-2">
-          <div class="flex items-center gap-2.5 min-w-0">
-            <span class="px-2 py-1 rounded-lg bg-red-600 text-white font-display font-black text-[10px] shrink-0">airtel</span>
-            <div class="min-w-0">
-              <div class="text-[10px] font-bold text-red-400">Airtel Money</div>
-              <div id="checkout-airtel-number" class="font-mono font-extrabold text-white text-sm truncate">0702 105 197</div>
-              <div class="text-[10px] text-gray-400 truncate">+256 702 105 197 • Kisa Pius</div>
-            </div>
-          </div>
-          <div class="flex items-center gap-1.5 shrink-0">
-            <a href="tel:+256702105197" class="px-2.5 py-1.5 rounded-lg bg-red-500/15 hover:bg-red-500/25 text-red-300 font-bold text-[11px]">Dial</a>
-            <button type="button" onclick="copySpecificNumber('airtel')" class="px-2.5 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-extrabold text-[11px] cursor-pointer">Copy</button>
-          </div>
-        </div>
-
-        <!-- Optional Card / Selar / Flutterwave Link -->
-        <a id="checkout-pay-link" href="#" target="_blank" rel="noopener" class="block w-full py-2.5 px-4 rounded-xl text-center font-extrabold bg-white/10 hover:bg-white/15 text-amber-300 border border-amber-400/30 transition">
-          💳 Or Pay Online with Visa / Mastercard / Checkout Link
-        </a>
-
-        <!-- Transaction ID Unlock + Instant WhatsApp Confirmation -->
-        <form onsubmit="confirmPaymentUnlock(event)" class="pt-1 space-y-2">
-          <label class="block text-[11px] font-semibold text-gray-300">Step 2: Enter MoMo / Airtel Transaction ID to Unlock MP3:</label>
-          <div class="flex gap-2">
-            <input id="checkout-tx-ref" type="text" required placeholder="e.g. MP261120.1405.A9281" class="flex-1 px-3 py-2.5 rounded-xl bg-[#0c0f17] border border-white/15 text-white text-xs focus:outline-none focus:border-cyan-400" />
-            <button type="submit" class="px-4 py-2.5 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-extrabold text-xs cursor-pointer">
-              Unlock MP3
-            </button>
-          </div>
-        </form>
-
-        <a id="checkout-whatsapp-confirm" href="#" target="_blank" rel="noopener" class="block w-full py-2.5 px-4 rounded-xl text-center font-extrabold bg-[#25D366]/20 hover:bg-[#25D366]/30 text-emerald-300 border border-emerald-500/35 transition">
-          ✅ Confirm Payment via WhatsApp
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- ======================================================================= -->
-  <!-- MODAL 2: TIP / SUPPORT FATKISS OFFICIAL (MTN MOMO & AIRTEL MONEY)       -->
-  <!-- ======================================================================= -->
-  <div id="tip-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
-    <div class="w-full max-w-md rounded-3xl bg-[#111623] border border-amber-400/35 p-5 sm:p-6 shadow-2xl my-auto">
-      <div class="flex items-center justify-between mb-2.5">
-        <h3 class="font-display text-lg font-extrabold text-white">💛 Support / Tip Fatkiss Official</h3>
-        <button type="button" onclick="closeTipModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 flex items-center justify-center cursor-pointer">✕</button>
-      </div>
-      <p class="text-xs text-gray-300 mb-3.5">
-        Fuel upcoming studio sessions and 4K Legends Visuals video shoots directly via MTN Mobile Money or Airtel Money.
-      </p>
-
-      <!-- Quick Tip Amount Buttons -->
-      <div class="grid grid-cols-4 gap-2 mb-3">
-        <button type="button" onclick="selectTipAmount(2000, this)" class="tip-amt-btn py-2 rounded-xl text-xs font-extrabold bg-amber-400 text-slate-950 cursor-pointer">2,000</button>
-        <button type="button" onclick="selectTipAmount(5000, this)" class="tip-amt-btn py-2 rounded-xl text-xs font-bold bg-white/10 text-gray-200 hover:bg-white/15 cursor-pointer">5,000</button>
-        <button type="button" onclick="selectTipAmount(10000, this)" class="tip-amt-btn py-2 rounded-xl text-xs font-bold bg-white/10 text-gray-200 hover:bg-white/15 cursor-pointer">10,000</button>
-        <button type="button" onclick="selectTipAmount(25000, this)" class="tip-amt-btn py-2 rounded-xl text-xs font-bold bg-white/10 text-gray-200 hover:bg-white/15 cursor-pointer">25,000</button>
-      </div>
-
-      <div class="mb-3.5">
-        <label class="block text-[11px] text-gray-400 mb-1">Custom Support Amount (UGX)</label>
-        <input id="tip-custom-amount" type="number" min="500" value="2000" oninput="updateTipWhatsAppLink()" class="w-full px-3.5 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-sm font-bold text-amber-300 focus:outline-none focus:border-amber-400" />
-      </div>
-
-      <div class="space-y-2.5 text-xs">
-        <!-- MTN Mobile Money Accent Card -->
-        <div class="p-3 rounded-2xl bg-[#1d190b] border border-yellow-400/45 flex items-center justify-between gap-2">
-          <div class="flex items-center gap-2.5 min-w-0">
-            <span class="px-2 py-1 rounded-lg bg-yellow-400 text-slate-950 font-display font-black text-[10px] shrink-0">MTN</span>
-            <div class="min-w-0">
-              <div class="text-[10px] font-bold text-yellow-300">MTN Mobile Money</div>
-              <div id="tip-mtn-display" class="font-mono font-extrabold text-white text-sm truncate">0768 444 578</div>
-              <div class="text-[10px] text-gray-400 truncate">+256 768 444 578 • Fatkiss Official</div>
-            </div>
-          </div>
-          <div class="flex items-center gap-1.5 shrink-0">
-            <a href="tel:+256768444578" class="px-2.5 py-1.5 rounded-lg bg-yellow-400/15 hover:bg-yellow-400/25 text-yellow-300 font-bold text-[11px]">Dial</a>
-            <button type="button" onclick="copySpecificNumber('mtn')" class="px-2.5 py-1.5 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-extrabold text-[11px] cursor-pointer">Copy</button>
-          </div>
-        </div>
-
-        <!-- Airtel Money Accent Card -->
-        <div class="p-3 rounded-2xl bg-[#1f0d12] border border-red-500/45 flex items-center justify-between gap-2">
-          <div class="flex items-center gap-2.5 min-w-0">
-            <span class="px-2 py-1 rounded-lg bg-red-600 text-white font-display font-black text-[10px] shrink-0">airtel</span>
-            <div class="min-w-0">
-              <div class="text-[10px] font-bold text-red-400">Airtel Money</div>
-              <div id="tip-airtel-display" class="font-mono font-extrabold text-white text-sm truncate">0702 105 197</div>
-              <div class="text-[10px] text-gray-400 truncate">+256 702 105 197 • Kisa Pius</div>
-            </div>
-          </div>
-          <div class="flex items-center gap-1.5 shrink-0">
-            <a href="tel:+256702105197" class="px-2.5 py-1.5 rounded-lg bg-red-500/15 hover:bg-red-500/25 text-red-300 font-bold text-[11px]">Dial</a>
-            <button type="button" onclick="copySpecificNumber('airtel')" class="px-2.5 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-extrabold text-[11px] cursor-pointer">Copy</button>
-          </div>
-        </div>
-
-        <!-- Confirm Tip via WhatsApp -->
-        <a id="tip-whatsapp-confirm" href="https://wa.me/256702105197?text=Hello%20Fatkiss%20Official!%20I%20just%20sent%20a%20fan%20support%20tip%20of%20UGX%202%2C000%20via%20Mobile%20Money!" target="_blank" rel="noopener" class="block w-full py-3 rounded-xl text-center font-extrabold bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 shadow-lg hover:opacity-95 transition">
-          ✅ Confirm Payment via WhatsApp
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- ======================================================================= -->
-  <!-- MODAL 3: CEO-ONLY MUSIC UPLOAD STUDIO                                   -->
-  <!-- ======================================================================= -->
-  <div id="upload-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
-    <div class="w-full max-w-lg rounded-3xl bg-[#111623] border border-cyan-400/35 p-5 sm:p-6 shadow-2xl my-auto">
-      <div class="flex items-center justify-between mb-4">
-        <div>
-          <h3 class="font-display text-lg font-extrabold text-white">⬆️ CEO Track Publisher</h3>
-          <p class="text-xs text-gray-400">Upload official MP3s, cover art, pricing &amp; royalty stream links</p>
-        </div>
-        <button type="button" onclick="closeUploadModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 flex items-center justify-center cursor-pointer">✕</button>
-      </div>
-
-      <form onsubmit="submitNewTrack(event)" class="space-y-3 text-xs">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block text-gray-300 font-semibold mb-1">Track Title *</label>
-            <input id="up-title" type="text" required placeholder="e.g. Kampala Nights" class="w-full px-3 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400" />
-          </div>
-          <div>
-            <label class="block text-gray-300 font-semibold mb-1">Artist Name *</label>
-            <input id="up-artist" type="text" required value="Fatkiss Official" class="w-full px-3 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400" />
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label class="block text-gray-300 font-semibold mb-1">Category</label>
-            <select id="up-category" class="w-full px-3 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400">
-              <option value="trending">🎵 Trending MP3s</option>
-              <option value="visuals">🎬 Video Shoots</option>
-              <option value="promo">⭐ Artist Promo</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-gray-300 font-semibold mb-1">Download Pricing</label>
-            <select id="up-pricing-mode" onchange="toggleUploadPriceFields()" class="w-full px-3 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400">
-              <option value="free">🆓 Free MP3 Download</option>
-              <option value="paid">💎 Paid Master MP3 (UGX)</option>
-            </select>
-          </div>
-        </div>
-
-        <div id="up-paid-fields" class="hidden grid-cols-1 sm:grid-cols-2 gap-3 p-3 rounded-2xl bg-amber-400/10 border border-amber-400/25">
-          <div>
-            <label class="block text-amber-300 font-semibold mb-1">Download Price (UGX)</label>
-            <input id="up-price-ugx" type="number" min="500" value="1500" class="w-full px-3 py-2 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-amber-400" />
-          </div>
-          <div>
-            <label class="block text-amber-300 font-semibold mb-1">Payment Link (Selar/Flutterwave)</label>
-            <input id="up-payment-url" type="url" placeholder="https://selar.co/your-song" class="w-full px-3 py-2 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-amber-400" />
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-gray-300 font-semibold mb-1">Official Spotify / YouTube Stream Link (Earns Royalties)</label>
-          <input id="up-stream-url" type="url" placeholder="https://open.spotify.com/track/... or YouTube link" class="w-full px-3 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400" />
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div class="p-3 rounded-2xl bg-[#0c0f17] border border-white/10">
-            <label class="block text-cyan-400 font-bold mb-1">Audio File (.MP3 / .WAV) *</label>
-            <input id="up-audio-file" type="file" accept="audio/*" required class="block w-full text-[11px] text-gray-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:font-bold file:bg-cyan-400 file:text-slate-950 cursor-pointer" />
-          </div>
-          <div class="p-3 rounded-2xl bg-[#0c0f17] border border-white/10">
-            <label class="block text-pink-400 font-bold mb-1">Cover Art Image (Optional)</label>
-            <input id="up-cover-file" type="file" accept="image/*" class="block w-full text-[11px] text-gray-300 file:mr-2 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:font-bold file:bg-pink-500 file:text-white cursor-pointer" />
-          </div>
-        </div>
-
-        <button id="up-submit-btn" type="submit" class="w-full py-3 rounded-xl font-extrabold bg-gradient-to-r from-cyan-400 to-pink-500 text-slate-950 shadow-lg hover:opacity-95 transition cursor-pointer">
-          🚀 Publish Track to Hub
-        </button>
-      </form>
-    </div>
-  </div>
-
-  <!-- ======================================================================= -->
-  <!-- MODAL 4: CEO SETTINGS, SECURITY PIN, SUPABASE RLS & HTML EXPORTER       -->
-  <!-- ======================================================================= -->
-  <div id="setup-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
-    <div class="w-full max-w-xl rounded-3xl bg-[#111623] border border-amber-400/40 p-5 sm:p-6 shadow-2xl my-auto">
-      <div class="flex items-center justify-between mb-3">
-        <div>
-          <h3 class="font-display text-lg font-extrabold text-white">👑 CEO Control Center &amp; Security Settings</h3>
-          <p class="text-xs text-gray-400">Manage your private CEO PIN, Supabase RLS protection, Mobile Money &amp; GitHub HTML export</p>
-        </div>
-        <button type="button" onclick="closeSetupModal()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 flex items-center justify-center cursor-pointer">✕</button>
-      </div>
-
-      <div class="space-y-3 text-xs">
-        <!-- Private CEO PIN & Supabase Server Auth -->
-        <div class="p-3.5 rounded-2xl bg-[#0c0f17] border border-amber-400/30 space-y-2.5">
-          <div class="font-bold text-amber-300">1. CEO Private Security PIN &amp; Server Authentication</div>
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-            <div>
-              <label class="block text-[11px] text-gray-300 mb-1">Your Private CEO PIN</label>
-              <input id="cfg-admin-pin" type="text" value="2026" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-amber-400/35 text-amber-300 font-bold" />
-            </div>
-            <div>
-              <label class="block text-[11px] text-gray-400 mb-1">CEO Supabase Email (Optional)</label>
-              <input id="cfg-ceo-email" type="email" placeholder="thebridgemusic@gmail.com" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white" />
-            </div>
-            <div>
-              <label class="block text-[11px] text-gray-400 mb-1">CEO Supabase Password</label>
-              <input id="cfg-ceo-pass" type="password" placeholder="••••••••" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white" />
-            </div>
-          </div>
-          <p class="text-[10px] text-gray-400">
-            Change your default PIN (`2026`) above and export `index.html` so only your PIN unlocks CEO Command Mode.
-          </p>
-        </div>
-
-        <!-- Supabase Keys & CEO-Only RLS SQL -->
-        <div class="p-3.5 rounded-2xl bg-[#0c0f17] border border-white/10 space-y-2.5">
-          <div class="font-bold text-cyan-400">2. Supabase Cloud Backend (CEO-Only Write Protection)</div>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            <div>
-              <label class="block text-[11px] text-gray-400 mb-1">Supabase Project URL</label>
-              <input id="cfg-sb-url" type="url" placeholder="https://xyz.supabase.co" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white" />
-            </div>
-            <div>
-              <label class="block text-[11px] text-gray-400 mb-1">Supabase Anon Public Key</label>
-              <input id="cfg-sb-key" type="text" placeholder="eyJhbGciOiJIUzI1NiIs..." class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white" />
-            </div>
-          </div>
-
-          <details class="text-[11px] text-gray-300">
-            <summary class="cursor-pointer text-cyan-300 font-semibold">Show CEO-Only Supabase SQL Security Script (Blocks Public Edits)</summary>
-            <pre class="mt-2 p-2.5 rounded-xl bg-black/70 text-[10px] text-emerald-300 overflow-x-auto select-all">-- Run in Supabase SQL Editor so ONLY authenticated CEO can insert/update/delete
-create table if not exists tracks (
-  id bigint generated by default as identity primary key,
-  title text not null,
-  artist text not null,
-  category text default 'trending',
-  audio_url text not null,
-  cover_url text,
-  downloads integer default 0,
-  price_ugx integer default 0,
-  payment_url text,
-  stream_url text,
-  created_at timestamp with time zone default now()
-);
-create table if not exists scoops (
-  id bigint generated by default as identity primary key,
-  badge text default 'HOT SCOOP',
-  banner_title text not null,
-  headline text not null,
-  body text not null,
-  image_url text,
-  action_url text,
-  created_at timestamp with time zone default now()
-);
-alter table tracks enable row level security;
-alter table scoops enable row level security;
-create policy "Public read tracks" on tracks for select using (true);
-create policy "CEO write tracks" on tracks for all to authenticated using (true) with check (true);
-create policy "Public read scoops" on scoops for select using (true);
-create policy "CEO write scoops" on scoops for all to authenticated using (true) with check (true);
-insert into storage.buckets (id, name, public) values ('music', 'music', true) on conflict do nothing;
-create policy "Public view music" on storage.objects for select using (bucket_id = 'music');
-create policy "CEO upload music" on storage.objects for insert to authenticated with check (bucket_id = 'music');
-create policy "CEO delete music" on storage.objects for delete to authenticated using (bucket_id = 'music');
+          <a id="link-mdundo" href="https://mdundo.com" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-[#0e131e]/90 hover:bg-white/10 border border-white/10 text-xs font-bold text-gray-200 transition">
+            <svg class="w-4 h-4 text-amber-400" fill="currentColor" v

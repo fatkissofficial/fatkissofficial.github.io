@@ -1933,13 +1933,9 @@ Stay locked on The Bridge Music Hub for exclusive street drops, studio freestyle
             resetInactivityAutoLock();
           }
           syncCeoUiState();
-          fetchCloudTracks();
-          fetchCloudScoops();
-        } catch (err) {
-          supabaseClient = null;
-        }
-      }
-    }
+      fetchCloudTracks();
+      fetchCloudScoops();
+      fetchCloudVisuals();
 
     async function fetchCloudTracks() {
       if (!supabaseClient) return;
@@ -2752,6 +2748,74 @@ create policy "CEO delete music" on storage.objects for delete to authenticated 
       a.download = 'index.html';
       a.click();
       showToast('Exported updated index.html with your photos & settings!');
+    }async function handleBgPhotoUpload(event) {
+  if (!requireCeoAccess()) return;
+  const file = event.target.files[0];
+  if (!file) return;
+  showToast('Optimizing & publishing background globally...');
+  currentBgDataUrl = await compressPhotoForHub(file, 1200, 0.80);
+  applyBackgroundImage(currentBgDataUrl);
+  try {
+    localStorage.setItem(STORAGE_KEYS.bg, currentBgDataUrl);
+  } catch (err) {}
+
+  if (supabaseClient) {
+    const { error } = await supabaseClient
+      .from('site_settings')
+      .upsert({ id: 'hero_bg_url', value: currentBgDataUrl }, { onConflict: 'id' });
+
+    if (error) {
+      showToast('Saved locally, but cloud sync failed: ' + error.message);
+      return;
+    }
+  }
+  showToast('Your photo is now LIVE globally across the entire website!');
+}
+
+async function handleAvatarPhotoUpload(event) {
+  if (!requireCeoAccess()) return;
+  const file = event.target.files[0];
+  if (!file) return;
+  showToast('Optimizing & publishing avatar globally...');
+  currentAvatarDataUrl = await compressPhotoForHub(file, 450, 0.85);
+  applyAvatarImage(currentAvatarDataUrl);
+  try {
+    localStorage.setItem(STORAGE_KEYS.avatar, currentAvatarDataUrl);
+  } catch (err) {}
+
+  if (supabaseClient) {
+    const { error } = await supabaseClient
+      .from('site_settings')
+      .upsert({ id: 'hero_avatar_url', value: currentAvatarDataUrl }, { onConflict: 'id' });
+
+    if (error) {
+      showToast('Saved locally, but cloud sync failed: ' + error.message);
+      return;
+    }
+  }
+  showToast('Avatar is now LIVE globally for all visitors!');
+}
+
+async function fetchCloudVisuals() {
+  if (!supabaseClient) return;
+  const { data, error } = await supabaseClient
+    .from('site_settings')
+    .select('id, value')
+    .in('id', ['hero_bg_url', 'hero_avatar_url']);
+
+  if (error || !data) return;
+  data.forEach(row => {
+    if (row.id === 'hero_bg_url' && row.value) {
+      currentBgDataUrl = row.value;
+      applyBackgroundImage(row.value);
+      try { localStorage.setItem(STORAGE_KEYS.bg, row.value); } catch (e) {}
+    }
+    if (row.id === 'hero_avatar_url' && row.value) {
+      currentAvatarDataUrl = row.value;
+      applyAvatarImage(row.value);
+      try { localStorage.setItem(STORAGE_KEYS.avatar, row.value); } catch (e) {}
+    }
+  });
     }
 
     // =========================================================================

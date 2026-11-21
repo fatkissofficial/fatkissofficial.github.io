@@ -1092,8 +1092,11 @@ Stay locked on The Bridge Music Hub for exclusive street drops, studio freestyle
           </div>
           <div>
             <label class="block text-gray-300 font-semibold mb-1">Artist Name *</label>
-            <input id="up-artist" type="text" required="" value="Fatkiss Official" class="w-full px-3 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400">
-          </div>
+            <input id="up-artist" type="text" list="label-artists-list" required placeholder="Type any artist name (e.g. Fatkiss Official)" class="w-full px-3 py-2.5 rounded-xl bg-[#0c0f17] border border-white/10 text-white focus:outline-none focus:border-cyan-400">
+<datalist id="label-artists-list">
+  <option value="Fatkiss Official">
+  <option value="The Bridge Music">
+</datalist>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -2178,8 +2181,7 @@ Stay locked on The Bridge Music Hub for exclusive street drops, studio freestyle
     function executeTrackDownload(index) {
       const track = tracks[index];
       if (!track) return;
-      track.downloads = Number(track.downloads || 0) + 1;
-      renderTracks();
+      incrementTrackStat(track.id, 'downloads');
 
       const a = document.createElement('a');
       const safeAudio = sanitizeURL(track.audio_url, true);
@@ -2827,7 +2829,40 @@ async function fetchCloudVisuals() {
       const s = Math.floor(sec % 60);
       return `${m}:${s < 10 ? '0' : ''}${s}`;
     }
+async function incrementTrackStat(trackId, field) {
+  if (!supabaseClient || !trackId || String(trackId).startsWith('local-')) return;
+  const track = tracks.find(t => String(t.id) === String(trackId));
+  if (!track) return;
 
+  const newValue = (Number(track[field]) || 0) + 1;
+  track[field] = newValue;
+
+  await supabaseClient
+    .from('tracks')
+    .update({ [field]: newValue })
+    .eq('id', track.dbId || track.id);
+
+  if (typeof renderTracks === 'function') renderTracks();
+  updateCeoAnalyticsBadge();
+}
+
+function updateCeoAnalyticsBadge() {
+  const totalPlays = tracks.reduce((sum, t) => sum + (Number(t.plays) || 0), 0);
+  const totalDownloads = tracks.reduce((sum, t) => sum + (Number(t.downloads) || 0), 0);
+  let badge = document.getElementById('ceo-live-stats-badge');
+  if (!badge) {
+    const ceoHeader = document.querySelector('#ceo-command-bar, .ceo-command-bar, [id*="ceo"]');
+    if (ceoHeader) {
+      badge = document.createElement('span');
+      badge.id = 'ceo-live-stats-badge';
+      badge.className = 'text-[11px] font-bold px-2.5 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 ml-2';
+      ceoHeader.appendChild(badge);
+    }
+  }
+  if (badge) {
+    badge.textContent = `▶ ${totalPlays} Plays • ⬇ ${totalDownloads} Downloads`;
+  }
+    }
     function stopAllAudio() {
       const realAudio = document.getElementById('real-audio-player');
       if (realAudio) realAudio.pause();
@@ -2850,6 +2885,7 @@ async function fetchCloudVisuals() {
 
       const track = tracks[index];
       if (!track) return;
+        incrementTrackStat(track.id, 'plays');
       document.getElementById('player-track-title').textContent = track.title;
       document.getElementById('player-track-artist').textContent = track.artist;
 

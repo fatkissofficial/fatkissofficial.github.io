@@ -1939,7 +1939,11 @@ Stay locked on The Bridge Music Hub for exclusive street drops, studio freestyle
       fetchCloudTracks();
       fetchCloudScoops();
       fetchCloudVisuals();
-
+        } catch (err) {
+          supabaseClient = null;
+        }
+      }
+    }
     async function fetchCloudTracks() {
       if (!supabaseClient) return;
       try {

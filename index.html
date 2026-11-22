@@ -205,6 +205,8 @@ input[type="range"]::-webkit-slider-thumb {
         </button>
         <button type="button" onclick="openGossipComposer()" class="shrink-0 px-3 py-1.5 rounded-full bg-slate-950 text-pink-300 hover:bg-slate-900 transition cursor-pointer">
           + Post Gossip/Vibe
+        </button>          <button type="button" onclick="openPromoStudio()" class="shrink-0 px-2.5 py-1 rounded-lg bg-slate-950/90 text-cyan-300 font-bold border border-cyan-400/30 hover:bg-slate-900">
+            🎬 Promo &amp; Ads
         </button>
         <button type="button" onclick="openSetupModal()" class="shrink-0 px-3 py-1.5 rounded-full bg-slate-950 text-amber-300 hover:bg-slate-900 transition cursor-pointer">
           🛡️ Cloud &amp; Security
@@ -704,6 +706,7 @@ Stay locked on The Bridge Music Hub for exclusive street drops, studio freestyle
             <div class="relative rounded-xl overflow-hidden border border-white/10 mb-3 bg-slate-900/90">
               <!-- Replace src with your .mp4 link from Supabase/GitHub when ready -->
               <video
+                id="promo-video-1"
                 src=""
                 poster="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=800&q=80"
                 autoplay
@@ -733,6 +736,7 @@ Stay locked on The Bridge Music Hub for exclusive street drops, studio freestyle
             <div class="relative rounded-xl overflow-hidden border border-white/10 mb-3 bg-slate-900/90">
               <!-- Replace src with your 3D animation .mp4 link when ready -->
               <video
+                id="promo-video-2"
                 src=""
                 poster="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80"
                 autoplay
@@ -779,21 +783,23 @@ Stay locked on The Bridge Music Hub for exclusive street drops, studio freestyle
         </div>
       </div>
 
-      <!-- 2. Direct Sponsor / Featured Ad Banner (Swap in paid client flyers or videos anytime) -->
-      <div class="glass-card rounded-2xl p-4 border border-amber-400/30 bg-gradient-to-r from-amber-500/10 via-slate-900/80 to-pink-500/10">
+            <!-- 2. Direct Sponsor / Featured Ad Banner -->
+      <div id="sponsored-ad-card" class="glass-card rounded-2xl p-4 border border-amber-400/30 bg-gradient-to-r from-amber-500/10 via-slate-900/80 to-pink-500/10">
+        <img id="sponsored-ad-img" src="" alt="Sponsored Ad" class="hidden w-full max-h-48 object-cover rounded-xl mb-3 border border-white/10" />
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-amber-400/20 text-amber-300 border border-amber-400/30 mb-1.5">
-              📢 Sponsored Ad Space Available
+              📢 Sponsored Spotlight
             </div>
-            <h3 class="font-display text-sm sm:text-base font-extrabold text-white">
+            <h3 id="sponsored-ad-title" class="font-display text-sm sm:text-base font-extrabold text-white">
               Advertise Your Brand, Event, or New Release Here
             </h3>
-            <p class="text-xs text-gray-300 mt-0.5">
+            <p id="sponsored-ad-desc" class="text-xs text-gray-300 mt-0.5">
               Feature your flyer, product banner, or 30-second promo video in front of Fatkiss Official &amp; The Bridge Music Hub visitors.
             </p>
           </div>
           <a
+            id="sponsored-ad-link"
             href="https://wa.me/256702105197?text=Hello%20Fatkiss%2C%20I%20want%20to%20book%20sponsored%20ad%20space%20on%20The%20Bridge%20Music%20Hub"
             target="_blank"
             rel="noopener"
@@ -1524,7 +1530,50 @@ Stay locked on The Bridge Music Hub for exclusive street drops, studio freestyle
       </form>
     </div>
   </div>
+  <!-- ========================================================= -->
+  <!-- MODAL: CEO PROMO VIDEO & SPONSORED AD STUDIO              -->
+  <!-- ========================================================= -->
+  <div id="modal-promo-studio" class="hidden hub-modal-backdrop fixed inset-0 z-50 bg-black/80 backdrop-blur-md items-center justify-center p-4 overflow-y-auto">
+    <div class="w-full max-w-lg rounded-3xl bg-[#111623] border border-cyan-400/30 p-5 shadow-2xl my-auto">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h3 class="font-display text-lg font-extrabold text-white">🎬 CEO Promo Video &amp; Ad Studio</h3>
+          <p class="text-xs text-gray-400">Upload short MP4 reels (&le;50s) &amp; update Sponsor Ads live</p>
+        </div>
+        <button type="button" onclick="closePromoStudio()" class="w-8 h-8 rounded-full bg-white/10 text-gray-300 hover:text-white">✕</button>
+      </div>
 
+      <form onsubmit="savePromoStudio(event)" class="space-y-3 text-xs">
+        <!-- Video 1 -->
+        <div class="p-3 rounded-2xl bg-[#0c0f17] border border-white/10 space-y-2">
+          <label class="block font-bold text-cyan-400">1. Card 1 Video / Animation (4K Reel MP4)</label>
+          <input id="ps-video1-file" type="file" accept="video/mp4,video/webm" class="block w-full text-gray-300" />
+          <input id="ps-video1-url" type="url" placeholder="Or paste existing .mp4 video URL..." class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white" />
+        </div>
+
+        <!-- Video 2 -->
+        <div class="p-3 rounded-2xl bg-[#0c0f17] border border-white/10 space-y-2">
+          <label class="block font-bold text-pink-400">2. Card 2 Animation / Visualizer (3D Motion MP4)</label>
+          <input id="ps-video2-file" type="file" accept="video/mp4,video/webm" class="block w-full text-gray-300" />
+          <input id="ps-video2-url" type="url" placeholder="Or paste existing .mp4 animation URL..." class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white" />
+        </div>
+
+        <!-- Sponsor Ad Banner -->
+        <div class="p-3 rounded-2xl bg-[#0c0f17] border border-amber-400/20 space-y-2">
+          <label class="block font-bold text-amber-400">3. Sponsored Ad Banner &amp; Client Flyer</label>
+          <input id="ps-ad-file" type="file" accept="image/*" class="block w-full text-gray-300" />
+          <input id="ps-ad-img-url" type="url" placeholder="Flyer image URL (leave blank to hide flyer)" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white" />
+          <input id="ps-ad-title" type="text" placeholder="Sponsor Headline (e.g. Advertise Your Brand Here)" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white" />
+          <input id="ps-ad-desc" type="text" placeholder="Short promo description..." class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white" />
+          <input id="ps-ad-link" type="url" placeholder="Destination link (WhatsApp or website URL)" class="w-full px-3 py-2 rounded-xl bg-black/50 border border-white/10 text-white" />
+        </div>
+
+        <button id="ps-save-btn" type="submit" class="w-full py-2.5 rounded-xl font-extrabold bg-gradient-to-r from-cyan-400 to-pink-500 text-slate-950 hover:opacity-95">
+          Publish Promo Videos &amp; Ad Live
+        </button>
+      </form>
+    </div>
+  </div>
   <!-- Toast Notification -->
   <div id="toast-banner" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-[10000] px-4 py-2 rounded-full bg-cyan-400 text-slate-950 text-xs font-extrabold shadow-lg pointer-events-none transition-opacity duration-200 opacity-0">Hero circle avatar photo updated!</div>
 
@@ -3618,13 +3667,133 @@ function updateCeoAnalyticsBadge() {
 
       syncCeoUiState();
       await initSupabase();
-
+     await loadPromoMedia();
       // Auto-open stealth CEO login modal if #ceo is in URL
       if (window.location.hash.toLowerCase() === '#ceo' && !isCeoAuthenticated) {
         openCeoLoginModal();
       }
     });
-  </script>
+        function openPromoStudio() {
+     if (!requireCeoAccess()) return;
+     openModalById('modal-promo-studio');
+   }
 
+   function closePromoStudio() {
+     closeModalById('modal-promo-studio');
+   }
 
-</body></html>
+   function applyPromoMediaToPage(cfg) {
+     if (!cfg) return;
+     const v1 = document.getElementById('promo-video-1');
+     const v2 = document.getElementById('promo-video-2');
+     if (v1 && cfg.video1) { v1.src = cfg.video1; v1.load(); }
+     if (v2 && cfg.video2) { v2.src = cfg.video2; v2.load(); }
+
+     const adImg = document.getElementById('sponsored-ad-img');
+     const adTitle = document.getElementById('sponsored-ad-title');
+     const adDesc = document.getElementById('sponsored-ad-desc');
+     const adLink = document.getElementById('sponsored-ad-link');
+
+     if (adImg) {
+       if (cfg.adImg) {
+         adImg.src = cfg.adImg;
+         adImg.classList.remove('hidden');
+       } else {
+         adImg.classList.add('hidden');
+       }
+     }
+     if (adTitle && cfg.adTitle) adTitle.textContent = cfg.adTitle;
+     if (adDesc && cfg.adDesc) adDesc.textContent = cfg.adDesc;
+     if (adLink && cfg.adLink) adLink.href = cfg.adLink;
+
+     // Pre-fill CEO modal inputs
+     const setVal = (id, val) => { const el = document.getElementById(id); if (el && val) el.value = val; };
+     setVal('ps-video1-url', cfg.video1);
+     setVal('ps-video2-url', cfg.video2);
+     setVal('ps-ad-img-url', cfg.adImg);
+     setVal('ps-ad-title', cfg.adTitle);
+     setVal('ps-ad-desc', cfg.adDesc);
+     setVal('ps-ad-link', cfg.adLink);
+   }
+
+   async function loadPromoMedia() {
+     try {
+       const cached = localStorage.getItem('fatkiss_promo_media_v1');
+       if (cached) applyPromoMediaToPage(JSON.parse(cached));
+     } catch (e) {}
+
+     if (!supabaseClient) return;
+     try {
+       const { data } = await supabaseClient
+         .from('scoops')
+         .select('*')
+         .eq('badge', 'PROMO_MEDIA')
+         .order('created_at', { ascending: false })
+         .limit(1);
+
+       if (data && data.length > 0 && data[0].body) {
+         const parsed = JSON.parse(data[0].body);
+         applyPromoMediaToPage(parsed);
+         try { localStorage.setItem('fatkiss_promo_media_v1', JSON.stringify(parsed)); } catch (e) {}
+       }
+     } catch (err) {}
+   }
+
+   async function uploadPromoFileToBucket(file, folder) {
+     const cleanName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
+     const path = `${folder}/${cleanName}`;
+     const { error } = await supabaseClient.storage.from('music').upload(path, file, { upsert: true });
+     if (error) throw error;
+     const { data } = supabaseClient.storage.from('music').getPublicUrl(path);
+     return data.publicUrl;
+   }
+
+   async function savePromoStudio(event) {
+     event.preventDefault();
+     if (!requireCeoAccess()) return;
+     const btn = document.getElementById('ps-save-btn');
+     btn.disabled = true;
+     btn.textContent = '⏳ Uploading & Publishing...';
+
+     try {
+       let video1 = document.getElementById('ps-video1-url').value.trim();
+       let video2 = document.getElementById('ps-video2-url').value.trim();
+       let adImg = document.getElementById('ps-ad-img-url').value.trim();
+       const adTitle = document.getElementById('ps-ad-title').value.trim();
+       const adDesc = document.getElementById('ps-ad-desc').value.trim();
+       const adLink = document.getElementById('ps-ad-link').value.trim();
+
+       const f1 = document.getElementById('ps-video1-file').files[0];
+       const f2 = document.getElementById('ps-video2-file').files[0];
+       const fAd = document.getElementById('ps-ad-file').files[0];
+
+       if (supabaseClient) {
+         if (f1) video1 = await uploadPromoFileToBucket(f1, 'promos');
+         if (f2) video2 = await uploadPromoFileToBucket(f2, 'promos');
+         if (fAd) adImg = await uploadPromoFileToBucket(fAd, 'promos');
+
+         const payload = { video1, video2, adImg, adTitle, adDesc, adLink };
+         const { error } = await supabaseClient.from('scoops').insert([{
+           badge: 'PROMO_MEDIA',
+           banner_title: 'Promo Media Config',
+           headline: 'Promo & Ad Hub Update',
+           body: JSON.stringify(payload)
+         }]);
+         if (error) throw error;
+
+         applyPromoMediaToPage(payload);
+         try { localStorage.setItem('fatkiss_promo_media_v1', JSON.stringify(payload)); } catch (e) {}
+         showToast('✅ Promo videos & sponsor ad are now live!');
+         closePromoStudio();
+       } else {
+         showToast('Connect Supabase in Cloud & Security first');
+       }
+     } catch (err) {
+       showToast('❌ Upload error: ' + (err.message || 'Check file size'));
+     } finally {
+       btn.disabled = false;
+       btn.textContent = 'Publish Promo Videos & Ad Live';
+      }
+      }
+    </script>
+  </body></html>

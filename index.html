@@ -680,38 +680,138 @@ Stay locked on The Bridge Music Hub for exclusive street drops, studio freestyle
           </div>
     </section>
 
-    <!-- ===================================================================== -->
-    <!-- LEGENDS VISUALS PRODUCTIONS                                           -->
-    <!-- ===================================================================== -->
-    <section id="legends-visuals" class="py-6">
-      <div class="flex items-center gap-2.5 mb-4">
-        <span class="w-1 h-5 rounded-full bg-gradient-to-b from-cyan-400 to-pink-500"></span>
-        <h2 class="font-display text-base sm:text-lg font-extrabold tracking-wide uppercase text-white">
-          LEGENDS VISUALS <span class="text-cyan-400">PRODUCTIONS</span>
-        </h2>
+        <!-- ========================================================= -->
+    <!-- LEGENDS VISUALS, VIDEO REELS & SPONSORED AD HUB           -->
+    <!-- ========================================================= -->
+    <section id="legends-visuals" class="py-6 space-y-5">
+      <div class="flex items-center justify-between gap-2.5">
+        <div class="flex items-center gap-2.5">
+          <span class="w-1 h-5 rounded-full bg-gradient-to-b from-cyan-400 to-pink-500"></span>
+          <h2 class="font-display text-base sm:text-lg font-extrabold tracking-wide uppercase">
+            LEGENDS VISUALS <span class="text-cyan-400">&amp; PROMO HUB</span>
+          </h2>
+        </div>
+        <button type="button" onclick="openBookingModal()" class="text-xs font-bold text-amber-400 hover:text-amber-300">
+          Book Shoot / Ad →
+        </button>
       </div>
 
+      <!-- 1. Visual & Short Video Promo Cards (50s or less MP4 / Animation Ready) -->
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-        <div class="glass-card rounded-2xl p-4">
-          <div class="text-cyan-400 font-display font-bold text-sm mb-1">🎬 4K Music Video Shoots</div>
-          <p class="text-xs text-gray-300 leading-relaxed">
-            Cinematic storytelling, color grading, gimbal choreography, and high-impact visuals directed by Fatkiss Official.
-          </p>
+        <!-- Card 1: Short Video / Animation Reel -->
+        <div class="glass-card rounded-2xl p-3.5 flex flex-col justify-between">
+          <div>
+            <div class="relative rounded-xl overflow-hidden border border-white/10 mb-3 bg-slate-900/90">
+              <!-- Replace src with your .mp4 link from Supabase/GitHub when ready -->
+              <video
+                src=""
+                poster="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=800&q=80"
+                autoplay
+                muted
+                loop
+                playsinline
+                controls
+                class="w-full h-36 object-cover">
+              </video>
+              <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-cyan-400 text-slate-950">
+                4K REEL
+              </span>
+            </div>
+            <div class="text-cyan-400 font-display font-bold text-sm mb-1">🎬 4K Music Video Shoots</div>
+            <p class="text-xs text-gray-300 leading-relaxed">
+              Cinematic storytelling, color grading, gimbal choreography, and high-impact visuals directed by Fatkiss Official.
+            </p>
+          </div>
+          <button type="button" onclick="openBookingModal()" class="mt-3 text-left text-[11px] font-bold text-cyan-300 hover:underline">
+            Book Video Shoot →
+          </button>
         </div>
-        <div class="glass-card rounded-2xl p-4">
-          <div class="text-pink-400 font-display font-bold text-sm mb-1">✨ Motion Graphics &amp; Visualizers</div>
-          <p class="text-xs text-gray-300 leading-relaxed">
-            Custom 3D cover art animations, Spotify Canvas loops, lyric videos, and promotional teasers built to trend.
-          </p>
+
+        <!-- Card 2: Custom Animation / Visualizer -->
+        <div class="glass-card rounded-2xl p-3.5 flex flex-col justify-between">
+          <div>
+            <div class="relative rounded-xl overflow-hidden border border-white/10 mb-3 bg-slate-900/90">
+              <!-- Replace src with your 3D animation .mp4 link when ready -->
+              <video
+                src=""
+                poster="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80"
+                autoplay
+                muted
+                loop
+                playsinline
+                controls
+                class="w-full h-36 object-cover">
+              </video>
+              <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-pink-500 text-white">
+                3D MOTION
+              </span>
+            </div>
+            <div class="text-pink-400 font-display font-bold text-sm mb-1">✨ Motion Graphics &amp; Visualizers</div>
+            <p class="text-xs text-gray-300 leading-relaxed">
+              Custom 3D cover art animations, Spotify Canvas loops, lyric videos, and promotional teasers built to trend.
+            </p>
+          </div>
+          <button type="button" onclick="openBookingModal()" class="mt-3 text-left text-[11px] font-bold text-pink-300 hover:underline">
+            Order Visualizer →
+          </button>
         </div>
-        <div class="glass-card rounded-2xl p-4">
-          <div class="text-emerald-400 font-display font-bold text-sm mb-1">🚀 Digital Artist Rollouts</div>
-          <p class="text-xs text-gray-300 leading-relaxed">
-            Distribution strategy, street promo campaigns, and spotlight placement right here on The Bridge Music Hub.
-          </p>
+
+        <!-- Card 3: Digital Artist Rollouts & Promo -->
+        <div class="glass-card rounded-2xl p-3.5 flex flex-col justify-between">
+          <div>
+            <div class="relative rounded-xl overflow-hidden border border-white/10 mb-3 bg-slate-900/90">
+              <img
+                src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80"
+                alt="Digital Artist Rollouts"
+                class="w-full h-36 object-cover" />
+              <span class="absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-400 text-slate-950">
+                PROMO PACK
+              </span>
+            </div>
+            <div class="text-emerald-400 font-display font-bold text-sm mb-1">🚀 Digital Artist Rollouts</div>
+            <p class="text-xs text-gray-300 leading-relaxed">
+              Distribution strategy, street promo campaigns, and spotlight placement right here on The Bridge Music Hub.
+            </p>
+          </div>
+          <button type="button" onclick="openBookingModal()" class="mt-3 text-left text-[11px] font-bold text-emerald-300 hover:underline">
+            Launch Campaign →
+          </button>
         </div>
       </div>
-    </section>
+
+      <!-- 2. Direct Sponsor / Featured Ad Banner (Swap in paid client flyers or videos anytime) -->
+      <div class="glass-card rounded-2xl p-4 border border-amber-400/30 bg-gradient-to-r from-amber-500/10 via-slate-900/80 to-pink-500/10">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-amber-400/20 text-amber-300 border border-amber-400/30 mb-1.5">
+              📢 Sponsored Ad Space Available
+            </div>
+            <h3 class="font-display text-sm sm:text-base font-extrabold text-white">
+              Advertise Your Brand, Event, or New Release Here
+            </h3>
+            <p class="text-xs text-gray-300 mt-0.5">
+              Feature your flyer, product banner, or 30-second promo video in front of Fatkiss Official &amp; The Bridge Music Hub visitors.
+            </p>
+          </div>
+          <a
+            href="https://wa.me/256702105197?text=Hello%20Fatkiss%2C%20I%20want%20to%20book%20sponsored%20ad%20space%20on%20The%20Bridge%20Music%20Hub"
+            target="_blank"
+            rel="noopener"
+            class="shrink-0 inline-flex items-center justify-center px-4 py-2.5 rounded-xl text-xs font-extrabold bg-amber-400 text-slate-950 hover:bg-amber-300 transition">
+            Book Ad Slot →
+          </a>
+        </div>
+      </div>
+
+      <!-- 3. Third-Party Ad Network Slot (Paste Google AdSense / Adsterra script inside when ready) -->
+      <div id="ad-network-slot" class="glass-card rounded-2xl p-3 text-center border border-white/10">
+        <div class="text-[10px] uppercase tracking-widest text-gray-400 mb-1">Advertisement</div>
+        <div class="min-h-[60px] flex items-center justify-center text-xs text-gray-400 border border-dashed border-white/15 rounded-xl px-3 py-2">
+          <!-- PASTE GOOGLE ADSENSE / ADSTERRA BANNER CODE HERE -->
+          Partner Ad Network Banner Slot • Ready for AdSense / Adsterra
+        </div>
+      </div>
+              </section>
 
     <!-- ===================================================================== -->
     <!-- PROMO & BOOKING SECTION (THE BRIDGE MUSIC MANAGEMENT)                 -->

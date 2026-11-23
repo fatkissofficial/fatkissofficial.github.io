@@ -2245,7 +2245,7 @@ Stay locked on The Bridge Music Hub for exclusive street drops, studio freestyle
           const ceoDeleteHtml = isCeoAuthenticated
             ? `<button type="button" onclick="deleteTrack(${originalIndex})" title="CEO Delete Track" class="w-8 h-8 rounded-full bg-red-500/20 hover:bg-red-500/35 text-red-300 text-xs font-bold flex items-center justify-center border border-red-500/35 cursor-pointer">🗑</button>`
             : '';
-
+const playCount = Number(track.plays ?? track.play_count ?? track.streams ?? 0) || 0;
           return `
             <div class="glass-card rounded-2xl p-3.5 flex items-center justify-between gap-3">
               <div class="flex items-center gap-3 min-w-0">
@@ -2260,7 +2260,7 @@ Stay locked on The Bridge Music Hub for exclusive street drops, studio freestyle
                   <div class="text-xs text-gray-400 truncate">${safeArtist}</div>
                   <div class="flex flex-wrap items-center gap-2 mt-1">
                     <span class="text-[11px] text-pink-400 font-semibold">↓ ${Number(track.downloads).toLocaleString()} MP3s</span>
-                    ${streamLinkHtml}
+                    <span class="text-[11px] text-cyan-400 font-semibold">▶ ${playCount} ${playCount === 1 ? 'Play' : 'Plays'}</span>${streamLinkHtml}
                   </div>
                 </div>
               </div>

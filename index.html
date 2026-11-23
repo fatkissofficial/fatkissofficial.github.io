@@ -3274,7 +3274,16 @@ function updateCeoAnalyticsBadge() {
       btn.className = 'gossip-filter-pill shrink-0 px-3.5 py-1.5 rounded-full bg-pink-500 text-white shadow-md shadow-pink-500/25 cursor-pointer';
       renderScoops();
     }
-
+function formatCleanScoopText(rawBody) {
+  if (!rawBody) return "Latest update from Fatkiss Official & The Bridge Music Hub.";
+  const str = String(rawBody).trim();
+  if (str.startsWith("{") || str.startsWith("[") || str.includes("supabase.co/storage")) {
+    return "Official media & promo hub update. Tap to open full scoop details.";
+  }
+  const withoutUrls = str.replace(/https?:\/\/\S+/gi, "").replace(/\s{2,}/g, " ").trim();
+  const clean = withoutUrls || "Latest update from Fatkiss Official & The Bridge Music Hub.";
+  return clean.length > 115 ? clean.slice(0, 115).replace(/\s+\S*$/, "") + "..." : clean;
+    }
     function renderScoops() {
       const grid = document.getElementById('gossip-grid');
       if (!grid) return;
@@ -3292,7 +3301,7 @@ function updateCeoAnalyticsBadge() {
           const style = getBadgeStyle(scoop.badge);
           const safeBanner = escapeHTML(scoop.banner_title);
           const safeHeadline = escapeHTML(scoop.headline);
-          const safeBody = escapeHTML(scoop.body);
+          const safeBody = escapeHTML(formatCleanScoopText(scoop.body));
           const safeBadge = escapeHTML(scoop.badge);
           const safeImageUrl = sanitizeURL(scoop.image_url, true);
           const safeActionUrl = sanitizeURL(scoop.action_url);

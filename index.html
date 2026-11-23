@@ -3619,7 +3619,21 @@ function updateCeoAnalyticsBadge() {
         if (hubConfig.spotifyUrl) {
           const spEl = document.getElementById('link-spotify');
           if (spEl) spEl.href = sanitizeURL(hubConfig.spotifyUrl) || 'https://open.spotify.com';
-        }
+        }window.openBookingModal = function () {
+  const modal = document.getElementById('booking-modal') || document.getElementById('bookingModal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.style.display = 'flex';
+    return;
+  }
+  const bookingCard = document.getElementById('promo-booking') || document.querySelector('[id*="booking"]');
+  if (bookingCard) {
+    bookingCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
+  const msg = encodeURIComponent("Hello Fatkiss Official / The Bridge Music, I would like to make a booking inquiry.");
+  window.open(`https://wa.me/256702105197?text=${msg}`, '_blank');
+};
 
         if (sessionStorage.getItem(STORAGE_KEYS.ceoSession) === '1' && !hubConfig.supabaseUrl) {
           isCeoAuthenticated = true;

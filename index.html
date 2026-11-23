@@ -3620,20 +3620,22 @@ function updateCeoAnalyticsBadge() {
           const spEl = document.getElementById('link-spotify');
           if (spEl) spEl.href = sanitizeURL(hubConfig.spotifyUrl) || 'https://open.spotify.com';
         }window.openBookingModal = function () {
-  const modal = document.getElementById('booking-modal') || document.getElementById('bookingModal');
+  const modal =
+    document.getElementById('modal-booking') ||
+    document.getElementById('booking-modal') ||
+    document.getElementById('modal-request-booking');
   if (modal) {
-    modal.classList.remove('hidden');
-    modal.style.display = 'flex';
+    if (typeof openModalById === 'function' && modal.id) {
+      openModalById(modal.id);
+    } else {
+      modal.classList.remove('hidden');
+      modal.style.display = 'flex';
+    }
     return;
   }
-  const bookingCard = document.getElementById('promo-booking') || document.querySelector('[id*="booking"]');
-  if (bookingCard) {
-    bookingCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    return;
-  }
-  const msg = encodeURIComponent("Hello Fatkiss Official / The Bridge Music, I would like to make a booking inquiry.");
-  window.open(`https://wa.me/256702105197?text=${msg}`, '_blank');
+  document.getElementById('promo-booking')?.scrollIntoView({ behavior: 'smooth' });
 };
+  
 
         if (sessionStorage.getItem(STORAGE_KEYS.ceoSession) === '1' && !hubConfig.supabaseUrl) {
           isCeoAuthenticated = true;

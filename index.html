@@ -3356,7 +3356,11 @@ function formatCleanScoopText(rawBody) {
 
       document.getElementById('gossip-modal-banner').textContent = article.banner_title;
       document.getElementById('gossip-modal-title').textContent = article.headline;
-      document.getElementById('gossip-modal-body').textContent = article.body;
+      const rawStory = String(article.body || '').trim();
+const isConfigPayload = rawStory.startsWith('{') || rawStory.startsWith('[') || rawStory.includes('supabase.co/storage');
+document.getElementById('gossip-modal-body').textContent = isConfigPayload
+  ? `${article.headline || 'Promo & Ad Hub Update'}\n\nOfficial media & promotional campaign update from Fatkiss Official & The Bridge Music Hub. Tap the action link below or contact The Bridge Music Management for campaign and booking details.`
+  : (rawStory || 'Official update from Fatkiss Official & The Bridge Music Hub.');
       document.getElementById('gossip-modal-date').textContent = article.created_at
         ? new Date(article.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
         : '';

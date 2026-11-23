@@ -2202,10 +2202,12 @@ Stay locked on The Bridge Music Hub for exclusive street drops, studio freestyle
           t.category === activeCategory;
 
         const matchesQuery =
-          t.title.toLowerCase().includes(query) ||
-          t.artist.toLowerCase().includes(query) ||
-          (query === 'free' && Number(t.price_ugx) === 0) ||
-          (query === 'paid' && Number(t.price_ugx) > 0);
+  !query ||
+  String(t.title || '').toLowerCase().includes(query) ||
+  String(t.artist || '').toLowerCase().includes(query) ||
+  String(t.category || '').toLowerCase().includes(query) ||
+  (query === 'free' && Number(t.price_ugx) === 0) ||
+  (query === 'paid' && Number(t.price_ugx) > 0);
 
         return matchesCat && matchesQuery;
       });

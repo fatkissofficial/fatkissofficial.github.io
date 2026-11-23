@@ -257,7 +257,7 @@ input[type="range"]::-webkit-slider-thumb {
           <span>💛 Tip / Support</span>
         </button>
 
-        <button type="button" onclick="openBookingModal()" class="inline-flex items-center gap-1 px-3 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold bg-pink-500/20 hover:bg-pink-500/30 text-pink-300 border border-pink-500/45 transition cursor-pointer">
+        <button type="button" onclick="if(typeof openBookingModal === 'function'){openBookingModal();} document.getElementById('promo-booking')?.scrollIntoView({behavior:'smooth'});" class="inline-flex items-center gap-1 px-3 sm:px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-bold bg-pink-500/20 hover:bg-pink-500/30 text-pink-300 border border-pink-500/45 transition cursor-pointer">
           <span>Book Now</span>
         </button>
       </div>
@@ -414,7 +414,7 @@ input[type="range"]::-webkit-slider-thumb {
     <!-- ===================================================================== -->
     <!-- THE BRIDGE MUSIC TRACK DOWNLOADS                                      -->
     <!-- ===================================================================== -->
-    <section id="music-downloads" class="py-6">
+    <section id="music-downloads" class="py-6 px-4 rounded-2xl bg-[#0b0f19]/85 backdrop-blur-md border border-white/10 mb-6">
       <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
         <div class="flex items-center gap-2.5">
           <span class="w-1 h-5 rounded-full bg-gradient-to-b from-cyan-400 to-pink-500"></span>

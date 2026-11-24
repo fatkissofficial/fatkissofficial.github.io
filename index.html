@@ -2115,7 +2115,44 @@ Stay locked on The Bridge Music Hub for exclusive street drops, studio freestyle
     let synthInterval = null;
     let progressInterval = null;
     let simulatedProgress = 0;
+function selectMerchColor(colorName) {
+  const label = document.getElementById("selectedColorwayLabel");
+  if (label) {
+    label.textContent = colorName + " (Selected)";
+  }
+  if (typeof showToast === "function") {
+    showToast("Selected colorway: " + colorName);
+  }
+}
 
+function openPulseStory(storyKey) {
+  const stories = {
+    studio: {
+      title: 'Fatkiss Announces 2027 "The Bridge Music" Regional Tour Dates Across Northern Uganda',
+      body: 'Following the massive reception of "Abi Tho Piri", management confirms headline stadium dates in Gulu, Lira, and Kampala with surprise guest appearances.'
+    },
+    kampala: {
+      title: "Top East African Producers Eyeing Afro-Luo Fusion Sound After Viral Club Rotations",
+      body: "DJs in Kampala and Nairobi report heavy weekend demand for Northern Ugandan percussion blends, sparking new cross-border studio collaborations."
+    }
+  };
+  const item = stories[storyKey];
+  if (!item) return;
+
+  if (typeof showToast === "function") {
+    showToast(item.title);
+  } else {
+    alert(item.title + "\n\n" + item.body);
+  }
+}
+
+function openMerchLookbook() {
+  const msg = "Fatkiss & Legends Streetwear — Jackets (UGX 120K), Jumpers (UGX 85K), T-Shirts (UGX 45K).";
+  if (typeof showToast === "function") {
+    showToast(msg);
+  } else {
+    alert(msg);
+  }
     async function initSupabase() {
       if (hubConfig.supabaseUrl && hubConfig.supabaseKey && window.supabase) {
         try {
